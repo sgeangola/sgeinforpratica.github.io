@@ -1,0 +1,487 @@
+/* ================================
+   SGE INFORMÁTICA PRÁTICA
+   ESTILO PRINCIPAL
+================================ */
+
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f8fc;
+    color: #172033;
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+/* ================================
+   CABEÇALHO
+================================ */
+
+.cabecalho {
+    background: #063b73;
+    color: white;
+    min-height: 70px;
+    padding: 12px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.12);
+}
+
+
+/* LOGO */
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.logo span {
+    background: white;
+    color: #063b73;
+    font-size: 22px;
+    font-weight: 800;
+    padding: 5px 8px;
+    border-radius: 8px;
+}
+
+.logo strong {
+    font-size: 16px;
+}
+
+
+/* MENU */
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+nav a {
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #7dd3fc;
+}
+
+
+/* BOTÃO DO MENU */
+
+.menu-btn {
+    display: none;
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+
+/* ================================
+   HERO
+================================ */
+
+.hero {
+    background:
+        linear-gradient(
+            135deg,
+            #063b73,
+            #07569d
+        );
+
+    color: white;
+    padding: 80px 5%;
+}
+
+.hero-conteudo {
+    max-width: 900px;
+    margin: auto;
+    text-align: center;
+}
+
+.etiqueta {
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    color: #bde7ff;
+}
+
+.hero h1 {
+    font-size: 48px;
+    line-height: 1.15;
+    margin-bottom: 20px;
+}
+
+.hero h1 span {
+    display: block;
+    color: #7dd3fc;
+}
+
+.hero p {
+    max-width: 650px;
+    margin: 0 auto 30px;
+    font-size: 18px;
+    color: #e8f4ff;
+}
+
+
+/* BOTÕES */
+
+.botoes {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-block;
+    padding: 13px 24px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.principal {
+    background: white;
+    color: #063b73;
+}
+
+.principal:hover {
+    transform: translateY(-2px);
+}
+
+.secundario {
+    border: 2px solid white;
+    color: white;
+}
+
+.secundario:hover {
+    background: white;
+    color: #063b73;
+}
+
+
+/* ================================
+   SEÇÕES
+================================ */
+
+.secao {
+    max-width: 1150px;
+    margin: auto;
+    padding: 70px 5%;
+}
+
+.titulo-secao {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.titulo-secao p {
+    color: #0875c9;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.titulo-secao h2 {
+    font-size: 32px;
+    margin-top: 5px;
+}
+
+
+/* ================================
+   CARDS
+================================ */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.card {
+    background: white;
+    padding: 28px;
+    border-radius: 14px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+    border: 1px solid #e5edf5;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.icone {
+    width: 55px;
+    height: 55px;
+    background: #e7f4ff;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 27px;
+    margin-bottom: 18px;
+}
+
+.card h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #657184;
+    margin-bottom: 18px;
+}
+
+.card a {
+    color: #076bc1;
+    font-weight: bold;
+}
+
+
+/* ================================
+   INSCRIÇÃO
+================================ */
+
+.inscricao {
+    max-width: 1150px;
+    margin: 20px auto;
+    padding: 45px 5%;
+    background: #0875c9;
+    color: white;
+    border-radius: 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.inscricao h2 {
+    font-size: 30px;
+    margin: 5px 0;
+}
+
+.inscricao p {
+    color: #e5f5ff;
+}
+
+.branco {
+    background: white;
+    color: #063b73;
+    white-space: nowrap;
+}
+
+
+/* ================================
+   CATEGORIAS
+================================ */
+
+.categorias {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.categorias a {
+    background: white;
+    border: 1px solid #e2eaf2;
+    border-radius: 12px;
+    padding: 22px;
+
+    display: flex;
+    flex-direction: column;
+
+    transition: 0.3s;
+}
+
+.categorias a:hover {
+    border-color: #0875c9;
+    transform: translateY(-3px);
+}
+
+.categorias a:first-child {
+    font-size: 30px;
+}
+
+.categorias strong {
+    font-size: 18px;
+    margin-top: 8px;
+}
+
+.categorias span {
+    color: #6b7584;
+    font-size: 14px;
+}
+
+
+/* ================================
+   RODAPÉ
+================================ */
+
+footer {
+    background: #052d58;
+    color: white;
+    padding: 50px 5% 25px;
+    text-align: center;
+}
+
+footer .logo {
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+footer > p {
+    color: #cbdced;
+}
+
+.redes {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 25px 0;
+}
+
+.redes a {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 16px;
+    border-radius: 8px;
+}
+
+footer hr {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    margin: 20px 0;
+}
+
+.copyright {
+    font-size: 13px;
+    color: #aebfd1;
+}
+
+
+/* ================================
+   RESPONSIVIDADE
+================================ */
+
+@media (max-width: 850px) {
+
+    .menu-btn {
+        display: block;
+    }
+
+    nav {
+        display: none;
+
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+
+        background: #063b73;
+
+        flex-direction: column;
+        align-items: stretch;
+
+        padding: 15px 5%;
+        gap: 0;
+    }
+
+    nav.ativo {
+        display: flex;
+    }
+
+    nav a {
+        padding: 14px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .hero {
+        padding: 60px 5%;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .categorias {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .inscricao {
+        margin: 20px 5%;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+
+/* ================================
+   TELEFONES
+================================ */
+
+@media (max-width: 500px) {
+
+    .cabecalho {
+        padding: 10px 4%;
+    }
+
+    .logo strong {
+        font-size: 14px;
+    }
+
+    .hero {
+        padding: 50px 5%;
+    }
+
+    .hero h1 {
+        font-size: 32px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    .titulo-secao h2 {
+        font-size: 27px;
+    }
+
+    .categorias {
+        grid-template-columns: 1fr;
+    }
+
+    .inscricao h2 {
+        font-size: 25px;
+    }
+}
