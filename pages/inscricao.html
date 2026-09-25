@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Inscrição | SGE Informática Prática</title>
+
+    <meta name="description"
+          content="Faça a sua inscrição nos cursos do SGE Informática Prática.">
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        .formulario-container {
+            max-width: 850px;
+            margin: 50px auto;
+            padding: 0 5%;
+        }
+
+        .formulario {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+        }
+
+        .campo {
+            margin-bottom: 20px;
+        }
+
+        .campo label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .campo input,
+        .campo select,
+        .campo textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d8e1eb;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: Arial, Helvetica, sans-serif;
+            outline: none;
+        }
+
+        .campo input:focus,
+        .campo select:focus,
+        .campo textarea:focus {
+            border-color: #0875c9;
+        }
+
+        .campo textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .obrigatorio {
+            color: #d62828;
+        }
+
+        .aviso-formulario {
+            background: #eaf6ff;
+            border-left: 4px solid #0875c9;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 6px;
+            color: #234;
+        }
+
+        .btn-enviar {
+            width: 100%;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .voltar {
+            display: inline-block;
+            margin-top: 20px;
+            color: #0875c9;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="cabecalho">
+
+    <div class="logo">
+        <span>SGE</span>
+        <strong>Informática Prática</strong>
+    </div>
+
+    <button class="menu-btn" onclick="abrirMenu()">
+        ☰
+    </button>
+
+    <nav id="menu">
+
+        <a href="../index.html">Início</a>
+
+        <a href="cursos.html">Cursos</a>
+
+        <a href="conteudos.html">Conteúdos</a>
+
+        <a href="tutoriais.html">Tutoriais</a>
+
+        <a href="materiais.html">Materiais</a>
+
+        <a href="comunidade.html">Comunidade</a>
+
+        <a href="sobre.html">Sobre</a>
+
+        <a href="contactos.html">Contactos</a>
+
+    </nav>
+
+</header>
+
+
+<main>
+
+    <section class="hero">
+
+        <div class="hero-conteudo">
+
+            <p class="etiqueta">
+                🎓 INSCRIÇÃO
+            </p>
+
+            <h1>
+                Faça a sua <span>inscrição</span>
+            </h1>
+
+            <p>
+                Preencha os seus dados para manifestar
+                interesse em participar de um dos nossos cursos.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="formulario-container">
+
+        <div class="formulario">
+
+            <div class="aviso-formulario">
+
+                ℹ️ <strong>Informação:</strong>
+
+                Preencha corretamente os seus dados.
+                Nesta primeira versão, o formulário ainda
+                não envia os dados para o servidor.
+                Essa função será adicionada posteriormente.
+
+            </div>
+
+
+            <form id="formInscricao">
+
+
+                <!-- NOME -->
+
+                <div class="campo">
+
+                    <label for="nome">
+                        Nome completo
+                        <span class="obrigatorio">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nome"
+                        name="nome"
+                        placeholder="Digite o seu nome completo"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- TELEFONE -->
+
+                <div class="campo">
+
+                    <label for="telefone">
+                        Número de telefone
+                        <span class="obrigatorio">*</span>
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="telefone"
+                        name="telefone"
+                        placeholder="Ex.: 923 000 000"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="campo">
+
+                    <label for="email">
+                        E-mail
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="exemplo@email.com"
+                    >
+
+                </div>
+
+
+                <!-- CURSO -->
+
+                <div class="campo">
+
+                    <label for="curso">
+                        Curso pretendido
+                        <span class="obrigatorio">*</span>
+                    </label>
+
+                    <select
+                        id="curso"
+                        name="curso"
+                        required
+                    >
+
+                        <option value="">
+                            Selecione um curso
+                        </option>
+
+                        <option value="Informática Básica">
+                            Informática Básica
+                        </option>
+
+                        <option value="Microsoft Word">
+                            Microsoft Word
+                        </option>
+
+                        <option value="Microsoft Excel">
+                            Microsoft Excel
+                        </option>
+
+                        <option value="Microsoft PowerPoint">
+                            Microsoft PowerPoint
+                        </option>
+
+                        <option value="Internet e Segurança">
+                            Internet e Segurança
+                        </option>
+
+                        <option value="Android na Prática">
+                            Android na Prática
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- NÍVEL -->
+
+                <div class="campo">
+
+                    <label for="nivel">
+                        Nível
+                    </label>
+
+                    <select
+                        id="nivel"
+                        name="nivel"
+                    >
+
+                        <option value="Iniciante">
+                            Iniciante
+                        </option>
+
+                        <option value="Intermédio">
+                            Intermédio
+                        </option>
+
+                        <option value="Avançado">
+                            Avançado
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- MODALIDADE -->
+
+                <div class="campo">
+
+                    <label for="modalidade">
+                        Modalidade
+                    </label>
+
+                    <select
+                        id="modalidade"
+                        name="modalidade"
+                    >
+
+                        <option value="Online">
+                            Online
+                        </option>
+
+                        <option value="Presencial">
+                            Presencial
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- MUNICÍPIO -->
+
+                <div class="campo">
+
+                    <label for="municipio">
+                        Município
+                    </label>
+
+                    <input
+                        type="text"
+                        id="municipio"
+                        name="municipio"
+                        placeholder="Digite o seu município"
+                    >
+
+                </div>
+
+
+                <!-- OBSERVAÇÃO -->
+
+                <div class="campo">
+
+                    <label for="observacao">
+                        Observação
+                    </label>
+
+                    <textarea
+                        id="observacao"
+                        name="observacao"
+                        placeholder="Alguma informação adicional?"
+                    ></textarea>
+
+                </div>
+
+
+                <!-- BOTÃO -->
+
+                <button
+                    type="submit"
+                    class="btn principal btn-enviar"
+                >
+                    📝 Enviar inscrição
+                </button>
+
+
+            </form>
+
+
+            <a
+                href="cursos.html"
+                class="voltar"
+            >
+                ← Voltar para os cursos
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <div class="logo">
+
+        <span>SGE</span>
+
+        <strong>
+            Informática Prática
+        </strong>
+
+    </div>
+
+    <p>
+        Aprender informática na prática,
+        de forma simples.
+    </p>
+
+    <div class="redes">
+
+        <a href="#">
+            📘 Facebook
+        </a>
+
+        <a href="#">
+            💬 WhatsApp
+        </a>
+
+    </div>
+
+    <hr>
+
+    <p class="copyright">
+        © 2026 SGE Informática Prática.
+        Todos os direitos reservados.
+    </p>
+
+</footer>
+
+
+<script src="../js/script.js"></script>
+
+<script>
+
+document.getElementById("formInscricao")
+.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    alert(
+        "Formulário preenchido com sucesso! " +
+        "A ligação com o sistema de inscrições será adicionada na próxima etapa."
+    );
+
+});
+
+</script>
+
+</body>
+</html>
