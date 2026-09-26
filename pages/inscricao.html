@@ -156,9 +156,10 @@
                 ℹ️ <strong>Informação:</strong>
 
                 Preencha corretamente os seus dados.
-                Nesta primeira versão, o formulário ainda
-                não envia os dados para o servidor.
-                Essa função será adicionada posteriormente.
+                As inscrições são enviadas diretamente
+para o sistema SGE Informática Prática.
+Após o envio, a inscrição ficará com o estado
+"Pendente" até ser analisada pela administração.
 
             </div>
 
@@ -429,23 +430,10 @@
 </footer>
 
 
-<script src="../js/script.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 
-<script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
-document.getElementById("formInscricao")
-.addEventListener("submit", function(event) {
-
-    event.preventDefault();
-
-    alert(
-        "Formulário preenchido com sucesso! " +
-        "A ligação com o sistema de inscrições será adicionada na próxima etapa."
-    );
-
-});
-
+<script src="../js/script.js">
+    
 </script>
-
-</body>
-</html>
