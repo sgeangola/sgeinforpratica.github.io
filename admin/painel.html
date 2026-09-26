@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Painel Administrativo | SGE Informática Prática</title>
+
+    <link rel="stylesheet"
+          href="../css/style.css">
+
+    <style>
+
+        .painel-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 5%;
+        }
+
+        .topo-painel {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .topo-painel h1 {
+            margin-bottom: 8px;
+        }
+
+        .acoes-painel {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .btn {
+            border: none;
+            padding: 11px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-atualizar {
+            background: #0875c9;
+            color: white;
+        }
+
+        .btn-sair {
+            background: #d62828;
+            color: white;
+        }
+
+        .resumo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .card-resumo {
+            background: white;
+            padding: 20px;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+        }
+
+        .card-resumo h3 {
+            margin: 0 0 8px;
+        }
+
+        .numero {
+            font-size: 28px;
+            font-weight: bold;
+            color: #0875c9;
+        }
+
+        .tabela-container {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            overflow-x: auto;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+        }
+
+        th {
+            background: #f1f6fb;
+        }
+
+        .estado {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .pendente {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .confirmada {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .formacao {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .concluida {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .acoes {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .btn-pequeno {
+            padding: 7px 9px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .btn-confirmar {
+            background: #198754;
+            color: white;
+        }
+
+        .btn-formacao {
+            background: #0875c9;
+            color: white;
+        }
+
+        .btn-concluir {
+            background: #155724;
+            color: white;
+        }
+
+        .btn-eliminar {
+            background: #dc3545;
+            color: white;
+        }
+
+        .sem-dados {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+        }
+
+        .carregando {
+            text-align: center;
+            padding: 30px;
+        }
+
+        @media (max-width: 600px) {
+
+            .painel-container {
+                padding: 0 3%;
+            }
+
+            .topo-painel {
+                padding: 20px;
+            }
+
+            .tabela-container {
+                padding: 10px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="cabecalho">
+
+    <div class="logo">
+
+        <span>SGE</span>
+
+        <strong>
+            Informática Prática
+        </strong>
+
+    </div>
+
+</header>
+
+
+<main>
+
+<section class="painel-container">
+
+
+    <div class="topo-painel">
+
+        <h1>
+            📊 Painel Administrativo
+        </h1>
+
+        <p>
+            Gestão das candidaturas do
+            SGE Informática Prática.
+        </p>
+
+        <div class="acoes-painel">
+
+            <button
+                class="btn btn-atualizar"
+                onclick="carregarInscricoes()"
+            >
+                🔄 Atualizar
+            </button>
+
+            <button
+                class="btn btn-sair"
+                onclick="sair()"
+            >
+                🚪 Sair
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="resumo">
+
+        <div class="card-resumo">
+
+            <h3>
+                Total
+            </h3>
+
+            <div
+                class="numero"
+                id="total"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="card-resumo">
+
+            <h3>
+                Pendentes
+            </h3>
+
+            <div
+                class="numero"
+                id="pendentes"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="card-resumo">
+
+            <h3>
+                Confirmadas
+            </h3>
+
+            <div
+                class="numero"
+                id="confirmadas"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="card-resumo">
+
+            <h3>
+                Em formação
+            </h3>
+
+            <div
+                class="numero"
+                id="formacao"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="card-resumo">
+
+            <h3>
+                Concluídas
+            </h3>
+
+            <div
+                class="numero"
+                id="concluidas"
+            >
+                0
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="tabela-container">
+
+        <h2>
+            📋 Candidaturas recebidas
+        </h2>
+
+
+        <div
+            id="carregando"
+            class="carregando"
+        >
+            ⏳ A carregar candidaturas...
+        </div>
+
+
+        <table id="tabela" style="display:none;">
+
+            <thead>
+
+                <tr>
+
+                    <th>Nome</th>
+
+                    <th>Telefone</th>
+
+                    <th>Curso</th>
+
+                    <th>Nível</th>
+
+                    <th>Modalidade</th>
+
+                    <th>Município</th>
+
+                    <th>Estado</th>
+
+                    <th>Ações</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="listaInscricoes">
+
+            </tbody>
+
+        </table>
+
+
+        <div
+            id="semDados"
+            class="sem-dados"
+            style="display:none;"
+        >
+            Não existem candidaturas registadas.
+        </div>
+
+    </div>
+
+
+</section>
+
+</main>
+
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script src="../js/admin-painel.js"></script>
+
+
+</body>
+
+  </html>
