@@ -32,6 +32,7 @@ const auth = firebase.auth();
 
 const db = firebase.firestore();
 
+let todasInscricoes = [];
 
 // ========================================
 // VERIFICAR ADMINISTRADOR
@@ -148,11 +149,17 @@ async function carregarInscricoes() {
         let formacao = 0;
         let concluidas = 0;
 
-
+todasInscricoes = [];
+        
         resultado.forEach(function (doc) {
 
             const dados = doc.data();
 
+            todasInscricoes.push({
+    id: doc.id,
+    dados: dados
+});
+            
             total++;
 
 
@@ -438,3 +445,236 @@ async function sair() {
         "login.html";
 
 }
+
+// ========================================
+// PESQUISA E FILTROS
+// ========================================
+
+function filtrarInscricoes() {
+
+    const pesquisa =
+        document.getElementById("pesquisa")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const estado =
+        document.getElementById("filtroEstado")
+        .value;
+
+    const curso =
+        document.getElementById("filtroCurso")
+        .value;
+
+
+    const lista =
+        document.getElementById("listaInscricoes");
+
+
+    lista.innerHTML = "";
+
+
+    let encontradas = 0;
+
+
+    todasInscricoes.forEach(function (item) {
+
+        const dados = item.dados;
+
+
+        const nome =
+            (dados.nome || "").toLowerCase();
+
+        const telefone =
+            (dados.telefone || "").toLowerCase();
+
+        const email =
+            (dados.email || "").toLowerCase();
+
+
+        const correspondePesquisa =
+            !pesquisa ||
+            nome.includes(pesquisa) ||
+            telefone.includes(pesquisa) ||
+            email.includes(pesquisa);
+
+
+        const correspondeEstado =
+            !estado ||
+            dados.estado === estado;
+
+
+        const correspondeCurso =
+            !curso ||
+            dados.curso === curso;
+
+
+        if (
+            correspondePesquisa &&
+            correspondeEstado &&
+            correspondeCurso
+        ) {
+
+            encontradas++;
+
+
+            const linha =
+                document.createElement("tr");
+
+
+            const estadoAtual =
+                dados.estado || "Pendente";
+
+
+            linha.innerHTML = `
+
+                <td>${dados.nome || ""}</td>
+
+                <td>${dados.telefone || ""}</td>
+
+                <td>${dados.curso || ""}</td>
+
+                <td>${dados.nivel || ""}</td>
+
+                <td>${dados.modalidade || ""}</td>
+
+                <td>${dados.municipio || ""}</td>
+
+                <td>
+                    <span class="estado ${classeEstado(estadoAtual)}">
+                        ${estadoAtual}
+                    </span>
+                </td>
+
+                <td>
+
+                    <div class="acoes">
+
+                        <button
+                            class="btn-pequeno btn-confirmar"
+                            onclick="alterarEstado('${item.id}', 'Confirmada')"
+                        >
+                            Confirmar
+                        </button>
+
+                        <button
+                            class="btn-pequeno btn-formacao"
+                            onclick="alterarEstado('${item.id}', 'Em formação')"
+                        >
+                            Formação
+                        </button>
+
+                        <button
+                            class="btn-pequeno btn-concluir"
+                            onclick="alterarEstado('${item.id}', 'Concluída')"
+                        >
+                            Concluir
+                        </button>
+
+                        <button
+                            class="btn-pequeno btn-eliminar"
+                            onclick="eliminarInscricao('${item.id}')"
+                        >
+                            Eliminar
+                        </button>
+
+                    </div>
+
+                </td>
+
+            `;
+
+
+            lista.appendChild(linha);
+
+        }
+
+    });
+
+
+    if (encontradas === 0) {
+
+        document.getElementById("tabela")
+            .style.display = "none";
+
+        document.getElementById("semDados")
+            .style.display = "block";
+
+    } else {
+
+        document.getElementById("tabela")
+            .style.display = "table";
+
+        document.getElementById("semDados")
+            .style.display = "none";
+
+    }
+
+
+    atualizarCursos();
+}
+
+
+// ========================================
+// PREENCHER FILTRO DE CURSOS
+// ========================================
+
+function atualizarCursos() {
+
+    const select =
+        document.getElementById("filtroCurso");
+
+
+    if (!select) {
+        return;
+    }
+
+
+    const cursoAtual =
+        select.value;
+
+
+    const cursos = [];
+
+
+    todasInscricoes.forEach(function (item) {
+
+        const curso =
+            item.dados.curso;
+
+
+        if (
+            curso &&
+            !cursos.includes(curso)
+        ) {
+
+            cursos.push(curso);
+
+        }
+
+    });
+
+
+    select.innerHTML =
+        '<option value="">Todos os cursos</option>';
+
+
+    cursos.sort().forEach(function (curso) {
+
+        const option =
+            document.createElement("option");
+
+        option.value = curso;
+
+        option.textContent = curso;
+
+        select.appendChild(option);
+
+    });
+
+
+    if (cursos.includes(cursoAtual)) {
+        select.value = cursoAtual;
+    }
+
+                }
