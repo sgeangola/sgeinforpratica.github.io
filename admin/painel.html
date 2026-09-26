@@ -346,7 +346,55 @@
             📋 Candidaturas recebidas
         </h2>
 
+<div style="display:flex; gap:10px; flex-wrap:wrap; margin:20px 0;">
 
+    <input
+        type="text"
+        id="pesquisa"
+        placeholder="🔎 Nome, telefone ou e-mail"
+        oninput="filtrarInscricoes()"
+        style="
+            flex:1;
+            min-width:220px;
+            padding:12px;
+            border:1px solid #d8e1eb;
+            border-radius:8px;
+            font-size:15px;
+        "
+    >
+
+    <select
+        id="filtroEstado"
+        onchange="filtrarInscricoes()"
+        style="
+            padding:12px;
+            border:1px solid #d8e1eb;
+            border-radius:8px;
+            font-size:15px;
+        "
+    >
+        <option value="">Todos os estados</option>
+        <option value="Pendente">Pendente</option>
+        <option value="Confirmada">Confirmada</option>
+        <option value="Em formação">Em formação</option>
+        <option value="Concluída">Concluída</option>
+    </select>
+
+    <select
+        id="filtroCurso"
+        onchange="filtrarInscricoes()"
+        style="
+            padding:12px;
+            border:1px solid #d8e1eb;
+            border-radius:8px;
+            font-size:15px;
+        "
+    >
+        <option value="">Todos os cursos</option>
+    </select>
+
+</div>
+        
         <div
             id="carregando"
             class="carregando"
