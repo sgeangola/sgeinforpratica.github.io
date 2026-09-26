@@ -224,6 +224,14 @@ todasInscricoes = [];
 
                     <div class="acoes">
 
+<button
+    class="btn-pequeno"
+    style="background:#6c757d;color:white;"
+    onclick="verInscricao('${doc.id}')"
+>
+    👁️ Ver
+</button>
+
                         <button
                             class="btn-pequeno btn-confirmar"
                             onclick="alterarEstado('${doc.id}', 'Confirmada')"
@@ -550,6 +558,14 @@ function filtrarInscricoes() {
 
                     <div class="acoes">
 
+<button
+    class="btn-pequeno"
+    style="background:#6c757d;color:white;"
+    onclick="verInscricao('${item.id}')"
+>
+    👁️ Ver
+</button>
+
                         <button
                             class="btn-pequeno btn-confirmar"
                             onclick="alterarEstado('${item.id}', 'Confirmada')"
@@ -678,3 +694,101 @@ function atualizarCursos() {
     }
 
                 }
+
+// ========================================
+// VER DETALHES DA INSCRIÇÃO
+// ========================================
+
+async function verInscricao(id) {
+
+    try {
+
+        const documento =
+            await db
+                .collection("inscricoes")
+                .doc(id)
+                .get();
+
+
+        if (!documento.exists) {
+
+            alert(
+                "❌ Esta candidatura não foi encontrada."
+            );
+
+            return;
+        }
+
+
+        const dados =
+            documento.data();
+
+
+        const data =
+            dados.dataInscricao &&
+            dados.dataInscricao.toDate
+                ? dados.dataInscricao
+                    .toDate()
+                    .toLocaleString("pt-PT")
+                : "Não disponível";
+
+
+        alert(
+            "📋 DETALHES DA CANDIDATURA\n\n" +
+
+            "👤 Nome: " +
+            (dados.nome || "Não informado") +
+            "\n\n" +
+
+            "📞 Telefone: " +
+            (dados.telefone || "Não informado") +
+            "\n\n" +
+
+            "📧 E-mail: " +
+            (dados.email || "Não informado") +
+            "\n\n" +
+
+            "📚 Curso: " +
+            (dados.curso || "Não informado") +
+            "\n\n" +
+
+            "📊 Nível: " +
+            (dados.nivel || "Não informado") +
+            "\n\n" +
+
+            "💻 Modalidade: " +
+            (dados.modalidade || "Não informado") +
+            "\n\n" +
+
+            "📍 Município: " +
+            (dados.municipio || "Não informado") +
+            "\n\n" +
+
+            "📝 Observação: " +
+            (dados.observacao || "Nenhuma") +
+            "\n\n" +
+
+            "📌 Estado: " +
+            (dados.estado || "Pendente") +
+            "\n\n" +
+
+            "📅 Data: " +
+            data
+        );
+
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao visualizar candidatura:",
+            erro
+        );
+
+
+        alert(
+            "❌ Não foi possível carregar os detalhes."
+        );
+
+    }
+
+}
