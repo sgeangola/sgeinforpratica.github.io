@@ -7,6 +7,79 @@
     <title>Materiais | SGE Informática Prática</title>
 
     <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        .materiais-publicos {
+            padding: 40px 20px;
+        }
+
+        .materiais-publicos .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .lista-materiais {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .material-card {
+            background: white;
+            border-radius: 12px;
+            padding: 22px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        .material-icone {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .material-categoria {
+            display: inline-block;
+            background: #e8f3fc;
+            color: #063b73;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .material-card h3 {
+            color: #063b73;
+            margin: 8px 0;
+        }
+
+        .material-card p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .material-botao {
+            display: inline-block;
+            margin-top: 15px;
+            background: #0875c9;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .material-botao:hover {
+            opacity: 0.9;
+        }
+
+        .mensagem-materiais {
+            text-align: center;
+            padding: 25px;
+            background: #f5f8fc;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -54,92 +127,24 @@
     </section>
 
 
-    <section class="secao">
+    <section class="materiais-publicos">
 
         <div class="container">
 
             <h2>Materiais disponíveis</h2>
 
             <p>
-                Nesta área vamos disponibilizar apostilas,
-                exercícios, fichas, documentos e outros materiais
-                de apoio aos nossos alunos.
+                Nesta área disponibilizamos apostilas,
+                exercícios, fichas, documentos e outros
+                materiais de apoio.
             </p>
 
-            <div class="cards">
 
+            <div id="listaMateriaisPublicos" class="lista-materiais">
 
-                <article class="card">
-
-                    <div class="icone">📘</div>
-
-                    <h3>Apostila de Informática Básica</h3>
-
-                    <p>
-                        Material introdutório para quem está
-                        a começar a aprender informática.
-                    </p>
-
-                    <a href="#" class="botao">
-                        Em breve
-                    </a>
-
-                </article>
-
-
-                <article class="card">
-
-                    <div class="icone">📝</div>
-
-                    <h3>Exercícios de Word</h3>
-
-                    <p>
-                        Exercícios práticos para desenvolver
-                        conhecimentos no Microsoft Word.
-                    </p>
-
-                    <a href="#" class="botao">
-                        Em breve
-                    </a>
-
-                </article>
-
-
-                <article class="card">
-
-                    <div class="icone">📊</div>
-
-                    <h3>Exercícios de Excel</h3>
-
-                    <p>
-                        Exercícios de fórmulas, funções,
-                        tabelas e cálculos.
-                    </p>
-
-                    <a href="#" class="botao">
-                        Em breve
-                    </a>
-
-                </article>
-
-
-                <article class="card">
-
-                    <div class="icone">📑</div>
-
-                    <h3>Fichas de Estudo</h3>
-
-                    <p>
-                        Fichas resumidas para facilitar
-                        a revisão dos conteúdos.
-                    </p>
-
-                    <a href="#" class="botao">
-                        Em breve
-                    </a>
-
-                </article>
-
+                <div class="mensagem-materiais">
+                    ⏳ A carregar materiais...
+                </div>
 
             </div>
 
@@ -152,11 +157,11 @@
 
         <div class="container">
 
-            <h2>Materiais gratuitos</h2>
+            <h2>Quer aprender ainda mais?</h2>
 
             <p>
-                Em breve teremos materiais gratuitos para
-                download e utilização durante os estudos.
+                Conheça os nossos cursos e continue
+                a desenvolver os seus conhecimentos.
             </p>
 
             <a href="cursos.html" class="botao">
@@ -180,7 +185,130 @@
 </footer>
 
 
+<!-- FIREBASE -->
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+
+<script>
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDoekE76yr3qT0r3MJxJ12Rk5moryQFGbk",
+    authDomain: "sge-informatica-pratica-4ad2d.firebaseapp.com",
+    projectId: "sge-informatica-pratica-4ad2d",
+    storageBucket: "sge-informatica-pratica-4ad2d.firebasestorage.app",
+    messagingSenderId: "957035603926",
+    appId: "1:957035603926:web:603b9d295a4abdab7ee677"
+};
+
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+
+const db = firebase.firestore();
+
+
+async function carregarMateriaisPublicos() {
+
+    const lista =
+        document.getElementById("listaMateriaisPublicos");
+
+    try {
+
+        const snapshot = await db
+            .collection("materiais")
+            .where("ativo", "==", true)
+            .get();
+
+
+        lista.innerHTML = "";
+
+
+        if (snapshot.empty) {
+
+            lista.innerHTML = `
+                <div class="mensagem-materiais">
+                    📚 Ainda não existem materiais publicados.
+                </div>
+            `;
+
+            return;
+        }
+
+
+        snapshot.forEach(function(doc) {
+
+            const material = doc.data();
+
+
+            const card = document.createElement("article");
+
+            card.className = "material-card";
+
+
+            card.innerHTML = `
+
+                <div class="material-icone">
+                    📚
+                </div>
+
+                <span class="material-categoria">
+                    ${material.categoria || "Material"}
+                </span>
+
+                <h3>
+                    ${material.titulo || ""}
+                </h3>
+
+                <p>
+                    ${material.descricao || ""}
+                </p>
+
+                <a
+                    href="${material.link || "#"}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="material-botao"
+                >
+                    📖 Abrir material
+                </a>
+
+            `;
+
+
+            lista.appendChild(card);
+
+        });
+
+    } catch (erro) {
+
+        lista.innerHTML = `
+            <div class="mensagem-materiais">
+                ❌ Não foi possível carregar os materiais.
+            </div>
+        `;
+
+        alert(
+            "Erro ao carregar materiais: " +
+            erro.message
+        );
+
+    }
+
+}
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    carregarMateriaisPublicos
+);
+
+</script>
+
+
 <script src="../js/script.js"></script>
 
 </body>
-  </html>
+                </html>
