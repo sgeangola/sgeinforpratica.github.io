@@ -45,11 +45,23 @@
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            box-sizing: border-box;
         }
 
         .btn-atualizar {
             background: #0875c9;
             color: white;
+        }
+
+        .btn-admin {
+            background: #063b73;
+            color: white;
+        }
+
+        .btn-admin:hover {
+            background: #0875c9;
         }
 
         .btn-sair {
@@ -180,6 +192,27 @@
             padding: 30px;
         }
 
+        .filtros {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .filtros input,
+        .filtros select {
+            padding: 12px;
+            border: 1px solid #d8e1eb;
+            border-radius: 8px;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+
+        .filtros input {
+            flex: 1;
+            min-width: 220px;
+        }
+
         @media (max-width: 600px) {
 
             .painel-container {
@@ -192,6 +225,11 @@
 
             .tabela-container {
                 padding: 10px;
+            }
+
+            .btn {
+                padding: 10px 12px;
+                font-size: 13px;
             }
 
         }
@@ -235,6 +273,7 @@
             SGE Informática Prática.
         </p>
 
+
         <div class="acoes-painel">
 
             <button
@@ -243,6 +282,31 @@
             >
                 🔄 Atualizar
             </button>
+
+
+            <a
+                href="cursos.html"
+                class="btn btn-admin"
+            >
+                🎓 Cursos
+            </a>
+
+
+            <a
+                href="conteudos.html"
+                class="btn btn-admin"
+            >
+                📝 Conteúdos
+            </a>
+
+
+            <a
+                href="materiais.html"
+                class="btn btn-admin"
+            >
+                📚 Materiais
+            </a>
+
 
             <button
                 class="btn btn-sair"
@@ -255,6 +319,8 @@
 
     </div>
 
+
+    <!-- RESUMO -->
 
     <div class="resumo">
 
@@ -340,61 +406,69 @@
     </div>
 
 
+    <!-- TABELA -->
+
     <div class="tabela-container">
 
         <h2>
             📋 Candidaturas recebidas
         </h2>
 
-<div style="display:flex; gap:10px; flex-wrap:wrap; margin:20px 0;">
 
-    <input
-        type="text"
-        id="pesquisa"
-        placeholder="🔎 Nome, telefone ou e-mail"
-        oninput="filtrarInscricoes()"
-        style="
-            flex:1;
-            min-width:220px;
-            padding:12px;
-            border:1px solid #d8e1eb;
-            border-radius:8px;
-            font-size:15px;
-        "
-    >
+        <!-- FILTROS -->
 
-    <select
-        id="filtroEstado"
-        onchange="filtrarInscricoes()"
-        style="
-            padding:12px;
-            border:1px solid #d8e1eb;
-            border-radius:8px;
-            font-size:15px;
-        "
-    >
-        <option value="">Todos os estados</option>
-        <option value="Pendente">Pendente</option>
-        <option value="Confirmada">Confirmada</option>
-        <option value="Em formação">Em formação</option>
-        <option value="Concluída">Concluída</option>
-    </select>
+        <div class="filtros">
 
-    <select
-        id="filtroCurso"
-        onchange="filtrarInscricoes()"
-        style="
-            padding:12px;
-            border:1px solid #d8e1eb;
-            border-radius:8px;
-            font-size:15px;
-        "
-    >
-        <option value="">Todos os cursos</option>
-    </select>
+            <input
+                type="text"
+                id="pesquisa"
+                placeholder="🔎 Nome, telefone ou e-mail"
+                oninput="filtrarInscricoes()"
+            >
 
-</div>
-        
+
+            <select
+                id="filtroEstado"
+                onchange="filtrarInscricoes()"
+            >
+
+                <option value="">
+                    Todos os estados
+                </option>
+
+                <option value="Pendente">
+                    Pendente
+                </option>
+
+                <option value="Confirmada">
+                    Confirmada
+                </option>
+
+                <option value="Em formação">
+                    Em formação
+                </option>
+
+                <option value="Concluída">
+                    Concluída
+                </option>
+
+            </select>
+
+
+            <select
+                id="filtroCurso"
+                onchange="filtrarInscricoes()"
+            >
+
+                <option value="">
+                    Todos os cursos
+                </option>
+
+            </select>
+
+        </div>
+
+
         <div
             id="carregando"
             class="carregando"
@@ -403,27 +477,46 @@
         </div>
 
 
-        <table id="tabela" style="display:none;">
+        <table
+            id="tabela"
+            style="display:none;"
+        >
 
             <thead>
 
                 <tr>
 
-                    <th>Nome</th>
+                    <th>
+                        Nome
+                    </th>
 
-                    <th>Telefone</th>
+                    <th>
+                        Telefone
+                    </th>
 
-                    <th>Curso</th>
+                    <th>
+                        Curso
+                    </th>
 
-                    <th>Nível</th>
+                    <th>
+                        Nível
+                    </th>
 
-                    <th>Modalidade</th>
+                    <th>
+                        Modalidade
+                    </th>
 
-                    <th>Município</th>
+                    <th>
+                        Município
+                    </th>
 
-                    <th>Estado</th>
+                    <th>
+                        Estado
+                    </th>
 
-                    <th>Ações</th>
+                    <th>
+                        Ações
+                    </th>
 
                 </tr>
 
@@ -453,15 +546,20 @@
 </main>
 
 
+<!-- FIREBASE -->
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
+
+<!-- JAVASCRIPT DO PAINEL -->
+
 <script src="../js/admin-painel.js"></script>
 
 
 </body>
 
-  </html>
+    </html>
