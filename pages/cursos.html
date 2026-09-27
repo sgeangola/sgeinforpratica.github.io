@@ -162,10 +162,9 @@ async function carregarCursosPublicos() {
     try {
 
         const snapshot = await db
-            .collection("cursos")
-            .where("ativo", "==", true)
-            .orderBy("nome")
-            .get();
+    .collection("cursos")
+    .where("ativo", "==", true)
+    .get();
 
         lista.innerHTML = "";
 
