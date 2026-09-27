@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Cursos | Administração</title>
+
+    <link rel="stylesheet"
+          href="../css/style.css">
+
+    <style>
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 5%;
+        }
+
+        .cabecalho-admin {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .acoes-topo {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .btn {
+            border: none;
+            padding: 11px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-voltar {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-novo {
+            background: #0875c9;
+            color: white;
+        }
+
+        .formulario {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            display: none;
+        }
+
+        .campo {
+            margin-bottom: 18px;
+        }
+
+        .campo label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .campo input,
+        .campo textarea,
+        .campo select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d8e1eb;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 15px;
+        }
+
+        .campo textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .botoes-formulario {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-guardar {
+            background: #198754;
+            color: white;
+        }
+
+        .btn-cancelar {
+            background: #6c757d;
+            color: white;
+        }
+
+        .lista {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 750px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+        }
+
+        th {
+            background: #f1f6fb;
+        }
+
+        .estado {
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .ativo {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .inativo {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .acoes {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .btn-pequeno {
+            border: none;
+            padding: 7px 9px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .btn-editar {
+            background: #0875c9;
+            color: white;
+        }
+
+        .btn-estado {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-eliminar {
+            background: #dc3545;
+            color: white;
+        }
+
+        .sem-dados {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="cabecalho">
+
+    <div class="logo">
+
+        <span>SGE</span>
+
+        <strong>
+            Informática Prática
+        </strong>
+
+    </div>
+
+</header>
+
+
+<main>
+
+<div class="container">
+
+
+    <div class="cabecalho-admin">
+
+        <h1>
+            📚 Gestão de Cursos
+        </h1>
+
+        <p>
+            Adicione e gerencie os cursos
+            disponibilizados pelo SGE Informática Prática.
+        </p>
+
+
+        <div class="acoes-topo">
+
+            <button
+                class="btn btn-novo"
+                onclick="novoCurso()"
+            >
+                ➕ Novo curso
+            </button>
+
+
+            <button
+                class="btn btn-voltar"
+                onclick="window.location.href='painel.html'"
+            >
+                ← Painel
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="formulario"
+        id="formularioCurso"
+    >
+
+        <h2 id="tituloFormulario">
+            ➕ Novo curso
+        </h2>
+
+
+        <form id="formCurso">
+
+
+            <div class="campo">
+
+                <label for="nomeCurso">
+                    Nome do curso *
+                </label>
+
+                <input
+                    type="text"
+                    id="nomeCurso"
+                    required
+                    placeholder="Ex.: Informática Básica"
+                >
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="descricaoCurso">
+                    Descrição
+                </label>
+
+                <textarea
+                    id="descricaoCurso"
+                    placeholder="Descrição do curso..."
+                ></textarea>
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="duracaoCurso">
+                    Duração
+                </label>
+
+                <input
+                    type="text"
+                    id="duracaoCurso"
+                    placeholder="Ex.: 2 meses"
+                >
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="modalidadeCurso">
+                    Modalidade
+                </label>
+
+                <select id="modalidadeCurso">
+
+                    <option value="Online">
+                        Online
+                    </option>
+
+                    <option value="Presencial">
+                        Presencial
+                    </option>
+
+                    <option value="Online e Presencial">
+                        Online e Presencial
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="botoes-formulario">
+
+                <button
+                    type="submit"
+                    class="btn btn-guardar"
+                >
+                    💾 Guardar curso
+                </button>
+
+
+                <button
+                    type="button"
+                    class="btn btn-cancelar"
+                    onclick="cancelarCurso()"
+                >
+                    Cancelar
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <div class="lista">
+
+        <h2>
+            📋 Cursos cadastrados
+        </h2>
+
+
+        <div id="carregando">
+            ⏳ A carregar cursos...
+        </div>
+
+
+        <table
+            id="tabelaCursos"
+            style="display:none;"
+        >
+
+            <thead>
+
+                <tr>
+
+                    <th>Curso</th>
+
+                    <th>Descrição</th>
+
+                    <th>Duração</th>
+
+                    <th>Modalidade</th>
+
+                    <th>Estado</th>
+
+                    <th>Ações</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="listaCursos">
+
+            </tbody>
+
+        </table>
+
+
+        <div
+            id="semDados"
+            class="sem-dados"
+            style="display:none;"
+        >
+            Nenhum curso cadastrado.
+        </div>
+
+    </div>
+
+
+</div>
+
+</main>
+
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script src="../js/admin-cursos.js"></script>
+
+
+</body>
+
+</html>
