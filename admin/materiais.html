@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Materiais | Administração - SGE Informática Prática</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        .admin-container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .admin-topo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .admin-topo h1 {
+            color: #063b73;
+        }
+
+        .btn {
+            display: inline-block;
+            border: none;
+            padding: 11px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .btn-principal {
+            background: #0875c9;
+            color: white;
+        }
+
+        .btn-secundario {
+            background: #e8eef5;
+            color: #063b73;
+        }
+
+        .btn-perigo {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-editar {
+            background: #ffc107;
+            color: #222;
+        }
+
+        .formulario {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+
+        .formulario h2 {
+            color: #063b73;
+            margin-top: 0;
+        }
+
+        .campo {
+            margin-bottom: 15px;
+        }
+
+        .campo label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        .campo input,
+        .campo select,
+        .campo textarea {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            box-sizing: border-box;
+        }
+
+        .campo textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .acoes-form {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tabela-container {
+            overflow-x: auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 750px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #063b73;
+            color: white;
+        }
+
+        .estado-ativo {
+            color: green;
+            font-weight: bold;
+        }
+
+        .estado-inativo {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .acoes {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .acoes button {
+            border: none;
+            padding: 7px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #formMaterial {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="admin-container">
+
+        <div class="admin-topo">
+            <h1>📚 Gestão de Materiais</h1>
+
+            <div>
+                <button class="btn btn-principal" onclick="novoMaterial()">
+                    ➕ Novo material
+                </button>
+
+                <a href="painel.html" class="btn btn-secundario">
+                    ← Painel
+                </a>
+            </div>
+        </div>
+
+        <!-- FORMULÁRIO -->
+        <section id="formMaterial" class="formulario">
+
+            <h2 id="tituloFormulario">Novo material</h2>
+
+            <form id="materialForm">
+
+                <div class="campo">
+                    <label for="tituloMaterial">Título</label>
+                    <input
+                        type="text"
+                        id="tituloMaterial"
+                        required
+                        placeholder="Ex.: Apostila de Informática Básica"
+                    >
+                </div>
+
+                <div class="campo">
+                    <label for="categoriaMaterial">Categoria</label>
+
+                    <select id="categoriaMaterial" required>
+                        <option value="">Selecionar categoria</option>
+                        <option value="Informática Básica">Informática Básica</option>
+                        <option value="Word">Word</option>
+                        <option value="Excel">Excel</option>
+                        <option value="PowerPoint">PowerPoint</option>
+                        <option value="Windows">Windows</option>
+                        <option value="Android">Android</option>
+                        <option value="Internet">Internet</option>
+                        <option value="Segurança">Segurança Digital</option>
+                        <option value="Outros">Outros</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="descricaoMaterial">Descrição</label>
+
+                    <textarea
+                        id="descricaoMaterial"
+                        required
+                        placeholder="Descreva brevemente este material..."
+                    ></textarea>
+                </div>
+
+                <div class="campo">
+                    <label for="linkMaterial">Link do material</label>
+
+                    <input
+                        type="url"
+                        id="linkMaterial"
+                        required
+                        placeholder="https://..."
+                    >
+                </div>
+
+                <div class="acoes-form">
+
+                    <button type="submit" class="btn btn-principal">
+                        💾 Guardar material
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn btn-secundario"
+                        onclick="cancelarMaterial()"
+                    >
+                        Cancelar
+                    </button>
+
+                </div>
+
+            </form>
+        </section>
+
+        <!-- LISTA -->
+        <section>
+
+            <h2>Materiais cadastrados</h2>
+
+            <div class="tabela-container">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Categoria</th>
+                            <th>Descrição</th>
+                            <th>Estado</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="listaMateriais">
+
+                        <tr>
+                            <td colspan="5">
+                                ⏳ A carregar materiais...
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </div>
+
+    <!-- FIREBASE -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+    <script src="../js/admin-materiais.js"></script>
+
+</body>
+  </html>
