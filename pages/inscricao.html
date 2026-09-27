@@ -1,439 +1,481 @@
-<!DOCTYPE html>
-<html lang="pt">
+<!DOCTYPE html><html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Inscrição | SGE Informática Prática</title>
 
-    <title>Inscrição | SGE Informática Prática</title>
+<meta name="description"
+      content="Faça a sua inscrição nos cursos do SGE Informática Prática.">
 
-    <meta name="description"
-          content="Faça a sua inscrição nos cursos do SGE Informática Prática.">
+<link rel="stylesheet" href="../css/style.css">
 
-    <link rel="stylesheet" href="../css/style.css">
+<style>
+    .formulario-container {
+        max-width: 850px;
+        margin: 50px auto;
+        padding: 0 5%;
+    }
 
-    <style>
-        .formulario-container {
-            max-width: 850px;
-            margin: 50px auto;
-            padding: 0 5%;
-        }
+    .formulario {
+        background: white;
+        padding: 30px;
+        border-radius: 16px;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+    }
 
-        .formulario {
-            background: white;
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
-        }
+    .campo {
+        margin-bottom: 20px;
+    }
 
-        .campo {
-            margin-bottom: 20px;
-        }
+    .campo label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 7px;
+    }
 
-        .campo label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 7px;
-        }
+    .campo input,
+    .campo select,
+    .campo textarea {
+        width: 100%;
+        padding: 13px;
+        border: 1px solid #d8e1eb;
+        border-radius: 8px;
+        font-size: 15px;
+        font-family: Arial, Helvetica, sans-serif;
+        outline: none;
+    }
 
-        .campo input,
-        .campo select,
-        .campo textarea {
-            width: 100%;
-            padding: 13px;
-            border: 1px solid #d8e1eb;
-            border-radius: 8px;
-            font-size: 15px;
-            font-family: Arial, Helvetica, sans-serif;
-            outline: none;
-        }
+    .campo input:focus,
+    .campo select:focus,
+    .campo textarea:focus {
+        border-color: #0875c9;
+    }
 
-        .campo input:focus,
-        .campo select:focus,
-        .campo textarea:focus {
-            border-color: #0875c9;
-        }
+    .campo textarea {
+        min-height: 110px;
+        resize: vertical;
+    }
 
-        .campo textarea {
-            min-height: 110px;
-            resize: vertical;
-        }
+    .obrigatorio {
+        color: #d62828;
+    }
 
-        .obrigatorio {
-            color: #d62828;
-        }
+    .aviso-formulario {
+        background: #eaf6ff;
+        border-left: 4px solid #0875c9;
+        padding: 15px;
+        margin-bottom: 25px;
+        border-radius: 6px;
+        color: #234;
+    }
 
-        .aviso-formulario {
-            background: #eaf6ff;
-            border-left: 4px solid #0875c9;
-            padding: 15px;
-            margin-bottom: 25px;
-            border-radius: 6px;
-            color: #234;
-        }
+    .btn-enviar {
+        width: 100%;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+    }
 
-        .btn-enviar {
-            width: 100%;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
+    .voltar {
+        display: inline-block;
+        margin-top: 20px;
+        color: #0875c9;
+        font-weight: bold;
+    }
+</style>
 
-        .voltar {
-            display: inline-block;
-            margin-top: 20px;
-            color: #0875c9;
-            font-weight: bold;
-        }
-    </style>
-</head>
+</head><body><header class="cabecalho"><div class="logo">
+    <span>SGE</span>
+    <strong>Informática Prática</strong>
+</div>
 
-<body>
+<button class="menu-btn" onclick="abrirMenu()">
+    ☰
+</button>
 
-<header class="cabecalho">
+<nav id="menu">
 
-    <div class="logo">
-        <span>SGE</span>
-        <strong>Informática Prática</strong>
+    <a href="../index.html">Início</a>
+
+    <a href="cursos.html">Cursos</a>
+
+    <a href="conteudos.html">Conteúdos</a>
+
+    <a href="tutoriais.html">Tutoriais</a>
+
+    <a href="materiais.html">Materiais</a>
+
+    <a href="comunidade.html">Comunidade</a>
+
+    <a href="sobre.html">Sobre</a>
+
+    <a href="contactos.html">Contactos</a>
+
+</nav>
+
+</header><main><section class="hero">
+
+    <div class="hero-conteudo">
+
+        <p class="etiqueta">
+            🎓 INSCRIÇÃO
+        </p>
+
+        <h1>
+            Faça a sua <span>inscrição</span>
+        </h1>
+
+        <p>
+            Preencha os seus dados para manifestar
+            interesse em participar de um dos nossos cursos.
+        </p>
+
     </div>
 
-    <button class="menu-btn" onclick="abrirMenu()">
-        ☰
-    </button>
-
-    <nav id="menu">
-
-        <a href="../index.html">Início</a>
-
-        <a href="cursos.html">Cursos</a>
-
-        <a href="conteudos.html">Conteúdos</a>
-
-        <a href="tutoriais.html">Tutoriais</a>
-
-        <a href="materiais.html">Materiais</a>
-
-        <a href="comunidade.html">Comunidade</a>
-
-        <a href="sobre.html">Sobre</a>
-
-        <a href="contactos.html">Contactos</a>
-
-    </nav>
-
-</header>
+</section>
 
 
-<main>
+<section class="formulario-container">
 
-    <section class="hero">
+    <div class="formulario">
 
-        <div class="hero-conteudo">
+        <div class="aviso-formulario">
 
-            <p class="etiqueta">
-                🎓 INSCRIÇÃO
-            </p>
+            ℹ️ <strong>Informação:</strong>
 
-            <h1>
-                Faça a sua <span>inscrição</span>
-            </h1>
-
-            <p>
-                Preencha os seus dados para manifestar
-                interesse em participar de um dos nossos cursos.
-            </p>
+            Preencha corretamente os seus dados.
+            As inscrições são enviadas diretamente
+            para o sistema SGE Informática Prática.
+            Após o envio, a inscrição ficará com o estado
+            "Pendente" até ser analisada pela administração.
 
         </div>
 
-    </section>
+
+        <form id="formInscricao">
 
 
-    <section class="formulario-container">
+            <!-- NOME -->
 
-        <div class="formulario">
+            <div class="campo">
 
-            <div class="aviso-formulario">
+                <label for="nome">
+                    Nome completo
+                    <span class="obrigatorio">*</span>
+                </label>
 
-                ℹ️ <strong>Informação:</strong>
-
-                Preencha corretamente os seus dados.
-                As inscrições são enviadas diretamente
-para o sistema SGE Informática Prática.
-Após o envio, a inscrição ficará com o estado
-"Pendente" até ser analisada pela administração.
+                <input
+                    type="text"
+                    id="nome"
+                    name="nome"
+                    placeholder="Digite o seu nome completo"
+                    required
+                >
 
             </div>
 
 
-            <form id="formInscricao">
-
-
-                <!-- NOME -->
-
-                <div class="campo">
-
-                    <label for="nome">
-                        Nome completo
-                        <span class="obrigatorio">*</span>
-                    </label>
-
-                    <input
-                        type="text"
-                        id="nome"
-                        name="nome"
-                        placeholder="Digite o seu nome completo"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- TELEFONE -->
-
-                <div class="campo">
-
-                    <label for="telefone">
-                        Número de telefone
-                        <span class="obrigatorio">*</span>
-                    </label>
-
-                    <input
-                        type="tel"
-                        id="telefone"
-                        name="telefone"
-                        placeholder="Ex.: 923 000 000"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- EMAIL -->
-
-                <div class="campo">
-
-                    <label for="email">
-                        E-mail
-                    </label>
-
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="exemplo@email.com"
-                    >
-
-                </div>
-
-
-                <!-- CURSO -->
-
-                <div class="campo">
-
-                    <label for="curso">
-                        Curso pretendido
-                        <span class="obrigatorio">*</span>
-                    </label>
-
-                    <select
-                        id="curso"
-                        name="curso"
-                        required
-                    >
-
-                        <option value="">
-                            Selecione um curso
-                        </option>
-
-                        <option value="Informática Básica">
-                            Informática Básica
-                        </option>
-
-                        <option value="Microsoft Word">
-                            Microsoft Word
-                        </option>
-
-                        <option value="Microsoft Excel">
-                            Microsoft Excel
-                        </option>
-
-                        <option value="Microsoft PowerPoint">
-                            Microsoft PowerPoint
-                        </option>
-
-                        <option value="Internet e Segurança">
-                            Internet e Segurança
-                        </option>
-
-                        <option value="Android na Prática">
-                            Android na Prática
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <!-- NÍVEL -->
-
-                <div class="campo">
-
-                    <label for="nivel">
-                        Nível
-                    </label>
-
-                    <select
-                        id="nivel"
-                        name="nivel"
-                    >
-
-                        <option value="Iniciante">
-                            Iniciante
-                        </option>
-
-                        <option value="Intermédio">
-                            Intermédio
-                        </option>
-
-                        <option value="Avançado">
-                            Avançado
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <!-- MODALIDADE -->
-
-                <div class="campo">
-
-                    <label for="modalidade">
-                        Modalidade
-                    </label>
-
-                    <select
-                        id="modalidade"
-                        name="modalidade"
-                    >
-
-                        <option value="Online">
-                            Online
-                        </option>
-
-                        <option value="Presencial">
-                            Presencial
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <!-- MUNICÍPIO -->
-
-                <div class="campo">
-
-                    <label for="municipio">
-                        Município
-                    </label>
-
-                    <input
-                        type="text"
-                        id="municipio"
-                        name="municipio"
-                        placeholder="Digite o seu município"
-                    >
-
-                </div>
-
-
-                <!-- OBSERVAÇÃO -->
-
-                <div class="campo">
-
-                    <label for="observacao">
-                        Observação
-                    </label>
-
-                    <textarea
-                        id="observacao"
-                        name="observacao"
-                        placeholder="Alguma informação adicional?"
-                    ></textarea>
-
-                </div>
-
-
-                <!-- BOTÃO -->
-
-                <button
-                    type="submit"
-                    class="btn principal btn-enviar"
+            <!-- TELEFONE -->
+
+            <div class="campo">
+
+                <label for="telefone">
+                    Número de telefone
+                    <span class="obrigatorio">*</span>
+                </label>
+
+                <input
+                    type="tel"
+                    id="telefone"
+                    name="telefone"
+                    placeholder="Ex.: 923 000 000"
+                    required
                 >
-                    📝 Enviar inscrição
-                </button>
+
+            </div>
 
 
-            </form>
+            <!-- EMAIL -->
+
+            <div class="campo">
+
+                <label for="email">
+                    E-mail
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="exemplo@email.com"
+                >
+
+            </div>
 
 
-            <a
-                href="cursos.html"
-                class="voltar"
+            <!-- CURSO -->
+
+            <div class="campo">
+
+                <label for="curso">
+                    Curso pretendido
+                    <span class="obrigatorio">*</span>
+                </label>
+
+                <select
+                    id="curso"
+                    name="curso"
+                    required
+                >
+
+                    <option value="">
+                        ⏳ A carregar cursos...
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- NÍVEL -->
+
+            <div class="campo">
+
+                <label for="nivel">
+                    Nível
+                </label>
+
+                <select
+                    id="nivel"
+                    name="nivel"
+                >
+
+                    <option value="Iniciante">
+                        Iniciante
+                    </option>
+
+                    <option value="Intermédio">
+                        Intermédio
+                    </option>
+
+                    <option value="Avançado">
+                        Avançado
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- MODALIDADE -->
+
+            <div class="campo">
+
+                <label for="modalidade">
+                    Modalidade
+                </label>
+
+                <select
+                    id="modalidade"
+                    name="modalidade"
+                >
+
+                    <option value="Online">
+                        Online
+                    </option>
+
+                    <option value="Presencial">
+                        Presencial
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- MUNICÍPIO -->
+
+            <div class="campo">
+
+                <label for="municipio">
+                    Município
+                </label>
+
+                <input
+                    type="text"
+                    id="municipio"
+                    name="municipio"
+                    placeholder="Digite o seu município"
+                >
+
+            </div>
+
+
+            <!-- OBSERVAÇÃO -->
+
+            <div class="campo">
+
+                <label for="observacao">
+                    Observação
+                </label>
+
+                <textarea
+                    id="observacao"
+                    name="observacao"
+                    placeholder="Alguma informação adicional?"
+                ></textarea>
+
+            </div>
+
+
+            <!-- BOTÃO -->
+
+            <button
+                type="submit"
+                class="btn principal btn-enviar"
             >
-                ← Voltar para os cursos
-            </a>
-
-        </div>
-
-    </section>
-
-</main>
+                📝 Enviar inscrição
+            </button>
 
 
-<footer>
+        </form>
 
-    <div class="logo">
 
-        <span>SGE</span>
-
-        <strong>
-            Informática Prática
-        </strong>
-
-    </div>
-
-    <p>
-        Aprender informática na prática,
-        de forma simples.
-    </p>
-
-    <div class="redes">
-
-        <a href="#">
-            📘 Facebook
-        </a>
-
-        <a href="#">
-            💬 WhatsApp
+        <a
+            href="cursos.html"
+            class="voltar"
+        >
+            ← Voltar para os cursos
         </a>
 
     </div>
 
-    <hr>
+</section>
 
-    <p class="copyright">
-        © 2026 SGE Informática Prática.
-        Todos os direitos reservados.
-    </p>
+</main><footer><div class="logo">
 
-</footer>
+    <span>SGE</span>
+
+    <strong>
+        Informática Prática
+    </strong>
+
+</div>
+
+<p>
+    Aprender informática na prática,
+    de forma simples.
+</p>
+
+<div class="redes">
+
+    <a href="#">
+        📘 Facebook
+    </a>
+
+    <a href="#">
+        💬 WhatsApp
+    </a>
+
+</div>
+
+<hr>
+
+<p class="copyright">
+    © 2026 SGE Informática Prática.
+    Todos os direitos reservados.
+</p>
+
+</footer><!-- FIREBASE --><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script><script>
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDoekE76yr3qT0r3MJxJ12Rk5moryQFGbk",
+    authDomain: "sge-informatica-pratica-4ad2d.firebaseapp.com",
+    projectId: "sge-informatica-pratica-4ad2d",
+    storageBucket: "sge-informatica-pratica-4ad2d.firebasestorage.app",
+    messagingSenderId: "957035603926",
+    appId: "1:957035603926:web:603b9d295a4abdab7ee677"
+};
+
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+
+const db = firebase.firestore();
 
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+// CARREGAR CURSOS ATIVOS
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+async function carregarCursosInscricao() {
 
-<script src="../js/script.js">
-    
-</script>
+    const selectCurso = document.getElementById("curso");
+
+    try {
+
+        const snapshot = await db
+            .collection("cursos")
+            .where("ativo", "==", true)
+            .get();
+
+        selectCurso.innerHTML = "";
+
+        const opcaoInicial = document.createElement("option");
+
+        opcaoInicial.value = "";
+        opcaoInicial.textContent = "Selecione um curso";
+
+        selectCurso.appendChild(opcaoInicial);
+
+
+        if (snapshot.empty) {
+
+            const opcao = document.createElement("option");
+
+            opcao.value = "";
+            opcao.textContent = "Nenhum curso disponível";
+
+            selectCurso.appendChild(opcao);
+
+            return;
+        }
+
+
+        snapshot.forEach(function(doc) {
+
+            const curso = doc.data();
+
+            const opcao = document.createElement("option");
+
+            opcao.value = curso.nome || "";
+
+            opcao.textContent = curso.nome || "Curso sem nome";
+
+            selectCurso.appendChild(opcao);
+
+        });
+
+    } catch (erro) {
+
+        console.error("Erro ao carregar cursos:", erro);
+
+        selectCurso.innerHTML = "";
+
+        const opcao = document.createElement("option");
+
+        opcao.value = "";
+        opcao.textContent = "Erro ao carregar cursos";
+
+        selectCurso.appendChild(opcao);
+    }
+}
+
+
+// CARREGAR QUANDO A PÁGINA ABRIR
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    carregarCursosInscricao();
+
+});
+
+</script><script src="../js/script.js"></script></body>
+    </html>
