@@ -1,275 +1,511 @@
-<!DOCTYPE html>
-<html lang="pt">
+<!DOCTYPE html><html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Conteúdos | SGE Informática Prática</title>
 
-    <title>Conteúdos | SGE Informática Prática</title>
+<link rel="stylesheet" href="../css/style.css">
 
-    <link rel="stylesheet" href="../css/style.css">
-</head>
+<style>
 
-<body>
+    .conteudos-publicados {
+        margin-top: 40px;
+    }
 
-<header class="cabecalho">
+    .conteudo-data {
+        font-size: 13px;
+        color: #666;
+        margin-top: 12px;
+    }
 
-    <div class="logo">
-        <span>SGE</span>
-        <strong>Informática Prática</strong>
+    .conteudo-categoria {
+        display: inline-block;
+        background: #eaf6ff;
+        color: #0875c9;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .conteudo-card {
+        background: white;
+        border-radius: 16px;
+        padding: 22px;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+    }
+
+    .conteudo-card h3 {
+        margin-top: 5px;
+    }
+
+    .conteudo-texto {
+        white-space: pre-line;
+        line-height: 1.7;
+    }
+
+    .mensagem-conteudos {
+        text-align: center;
+        padding: 25px;
+    }
+
+</style>
+
+</head><body><header class="cabecalho"><div class="logo">
+    <span>SGE</span>
+    <strong>Informática Prática</strong>
+</div>
+
+<button class="botao-menu" onclick="abrirMenu()">☰</button>
+
+<nav id="menu">
+
+    <a href="../index.html">Início</a>
+    <a href="cursos.html">Cursos</a>
+    <a href="conteudos.html">Conteúdos</a>
+    <a href="tutoriais.html">Tutoriais</a>
+    <a href="materiais.html">Materiais</a>
+    <a href="comunidade.html">Comunidade</a>
+    <a href="sobre.html">Sobre</a>
+    <a href="contactos.html">Contactos</a>
+
+</nav>
+
+</header><main><!-- HERO -->
+
+<section class="hero">
+
+    <div class="hero-conteudo">
+
+        <h1>Conteúdos de Informática</h1>
+
+        <p>
+            Conhecimentos simples e práticos para aprender
+            informática no seu dia a dia.
+        </p>
+
     </div>
 
-    <button class="botao-menu" onclick="abrirMenu()">☰</button>
-
-    <nav id="menu">
-
-        <a href="../index.html">Início</a>
-        <a href="cursos.html">Cursos</a>
-        <a href="conteudos.html">Conteúdos</a>
-        <a href="tutoriais.html">Tutoriais</a>
-        <a href="materiais.html">Materiais</a>
-        <a href="comunidade.html">Comunidade</a>
-        <a href="sobre.html">Sobre</a>
-        <a href="contactos.html">Contactos</a>
-
-    </nav>
-
-</header>
+</section>
 
 
-<main>
+<!-- INTRODUÇÃO -->
 
-    <!-- HERO -->
+<section class="secao">
 
-    <section class="hero">
+    <div class="container">
 
-        <div class="hero-conteudo">
+        <h2>Aprenda informática de forma simples</h2>
 
-            <h1>Conteúdos de Informática</h1>
+        <p>
+            Aqui vamos publicar conteúdos educativos,
+            dicas, explicações e conhecimentos práticos
+            relacionados com informática e tecnologia.
+        </p>
 
-            <p>
-                Conhecimentos simples e práticos para aprender
-                informática no seu dia a dia.
-            </p>
+    </div>
+
+</section>
+
+
+<!-- CATEGORIAS -->
+
+<section class="secao">
+
+    <div class="container">
+
+        <h2>Principais conteúdos</h2>
+
+        <div class="cards">
+
+            <article class="card">
+
+                <div class="icone">💻</div>
+
+                <h3>Informática Básica</h3>
+
+                <p>
+                    Conceitos fundamentais de informática,
+                    computador, hardware, software e sistemas.
+                </p>
+
+                <a href="#conteudosPublicados" class="botao">
+                    Ver conteúdos →
+                </a>
+
+            </article>
+
+
+            <article class="card">
+
+                <div class="icone">📝</div>
+
+                <h3>Microsoft Word</h3>
+
+                <p>
+                    Formatação de textos, documentos,
+                    tabelas, imagens e ferramentas do Word.
+                </p>
+
+                <a href="#conteudosPublicados" class="botao">
+                    Ver conteúdos →
+                </a>
+
+            </article>
+
+
+            <article class="card">
+
+                <div class="icone">📊</div>
+
+                <h3>Microsoft Excel</h3>
+
+                <p>
+                    Fórmulas, funções, tabelas, cálculos,
+                    gráficos e organização de dados.
+                </p>
+
+                <a href="#conteudosPublicados" class="botao">
+                    Ver conteúdos →
+                </a>
+
+            </article>
+
+
+            <article class="card">
+
+                <div class="icone">📽️</div>
+
+                <h3>PowerPoint</h3>
+
+                <p>
+                    Criação de apresentações, utilização
+                    de slides, imagens, textos e animações.
+                </p>
+
+                <a href="#conteudosPublicados" class="botao">
+                    Ver conteúdos →
+                </a>
+
+            </article>
+
+
+            <article class="card">
+
+                <div class="icone">📱</div>
+
+                <h3>Android</h3>
+
+                <p>
+                    Dicas para utilizar smartphones,
+                    aplicações, configurações e segurança.
+                </p>
+
+                <a href="#conteudosPublicados" class="botao">
+                    Ver conteúdos →
+                </a>
+
+            </article>
+
+
+            <article class="card">
+
+                <div class="icone">🌐</div>
+
+                <h3>Internet</h3>
+
+                <p>
+                    Navegação, pesquisas, e-mail,
+                    redes sociais e segurança na Internet.
+                </p>
+
+                <a href="#conteudosPublicados" class="botao">
+                    Ver conteúdos →
+                </a>
+
+            </article>
+
+
+            <article class="card">
+
+                <div class="icone">🔧</div>
+
+                <h3>Manutenção</h3>
+
+                <p>
+                    Noções de manutenção de computadores,
+                    diagnóstico e cuidados com equipamentos.
+                </p>
+
+                <a href="#conteudosPublicados" class="botao">
+                    Ver conteúdos →
+                </a>
+
+            </article>
+
+
+            <article class="card">
+
+                <div class="icone">🔐</div>
+
+                <h3>Segurança Digital</h3>
+
+                <p>
+                    Proteção de contas, senhas, dados pessoais
+                    e utilização segura da Internet.
+                </p>
+
+                <a href="#conteudosPublicados" class="botao">
+                    Ver conteúdos →
+                </a>
+
+            </article>
 
         </div>
 
-    </section>
+    </div>
+
+</section>
 
 
-    <!-- INTRODUÇÃO -->
+<!-- CONTEÚDOS PUBLICADOS -->
 
-    <section class="secao">
+<section class="secao conteudos-publicados" id="conteudosPublicados">
 
-        <div class="container">
+    <div class="container">
 
-            <h2>Aprenda informática de forma simples</h2>
+        <div class="titulo-secao">
 
-            <p>
-                Aqui vamos publicar conteúdos educativos,
-                dicas, explicações e conhecimentos práticos
-                relacionados com informática e tecnologia.
-            </p>
+            <p>APRENDA NA PRÁTICA</p>
+
+            <h2>
+                Conteúdos publicados
+            </h2>
 
         </div>
 
-    </section>
 
+        <div
+            class="cards"
+            id="listaConteudosPublicos">
 
-    <!-- CATEGORIAS -->
+            <div class="mensagem-conteudos">
 
-    <section class="secao">
-
-        <div class="container">
-
-            <h2>Principais conteúdos</h2>
-
-            <div class="cards">
-
-                <article class="card">
-
-                    <div class="icone">💻</div>
-
-                    <h3>Informática Básica</h3>
-
-                    <p>
-                        Conceitos fundamentais de informática,
-                        computador, hardware, software e sistemas.
-                    </p>
-
-                    <a href="#" class="botao">
-                        Ver conteúdos →
-                    </a>
-
-                </article>
-
-
-                <article class="card">
-
-                    <div class="icone">📝</div>
-
-                    <h3>Microsoft Word</h3>
-
-                    <p>
-                        Formatação de textos, documentos,
-                        tabelas, imagens e ferramentas do Word.
-                    </p>
-
-                    <a href="#" class="botao">
-                        Ver conteúdos →
-                    </a>
-
-                </article>
-
-
-                <article class="card">
-
-                    <div class="icone">📊</div>
-
-                    <h3>Microsoft Excel</h3>
-
-                    <p>
-                        Fórmulas, funções, tabelas, cálculos,
-                        gráficos e organização de dados.
-                    </p>
-
-                    <a href="#" class="botao">
-                        Ver conteúdos →
-                    </a>
-
-                </article>
-
-
-                <article class="card">
-
-                    <div class="icone">📽️</div>
-
-                    <h3>PowerPoint</h3>
-
-                    <p>
-                        Criação de apresentações, utilização
-                        de slides, imagens, textos e animações.
-                    </p>
-
-                    <a href="#" class="botao">
-                        Ver conteúdos →
-                    </a>
-
-                </article>
-
-
-                <article class="card">
-
-                    <div class="icone">📱</div>
-
-                    <h3>Android</h3>
-
-                    <p>
-                        Dicas para utilizar smartphones,
-                        aplicações, configurações e segurança.
-                    </p>
-
-                    <a href="#" class="botao">
-                        Ver conteúdos →
-                    </a>
-
-                </article>
-
-
-                <article class="card">
-
-                    <div class="icone">🌐</div>
-
-                    <h3>Internet</h3>
-
-                    <p>
-                        Navegação, pesquisas, e-mail,
-                        redes sociais e segurança na Internet.
-                    </p>
-
-                    <a href="#" class="botao">
-                        Ver conteúdos →
-                    </a>
-
-                </article>
-
-
-                <article class="card">
-
-                    <div class="icone">🔧</div>
-
-                    <h3>Manutenção</h3>
-
-                    <p>
-                        Noções de manutenção de computadores,
-                        diagnóstico e cuidados com equipamentos.
-                    </p>
-
-                    <a href="#" class="botao">
-                        Ver conteúdos →
-                    </a>
-
-                </article>
-
-
-                <article class="card">
-
-                    <div class="icone">🔐</div>
-
-                    <h3>Segurança Digital</h3>
-
-                    <p>
-                        Proteção de contas, senhas, dados pessoais
-                        e utilização segura da Internet.
-                    </p>
-
-                    <a href="#" class="botao">
-                        Ver conteúdos →
-                    </a>
-
-                </article>
+                ⏳ A carregar conteúdos...
 
             </div>
 
         </div>
 
-    </section>
+    </div>
+
+</section>
 
 
-    <!-- DESTAQUE -->
+<!-- DESTAQUE -->
 
-    <section class="registro">
+<section class="registro">
 
-        <div class="container">
+    <div class="container">
 
-            <h2>Quer aprender ainda mais?</h2>
+        <h2>Quer aprender ainda mais?</h2>
 
-            <p>
-                Acompanhe os nossos conteúdos e conheça
-                os cursos disponíveis.
-            </p>
+        <p>
+            Acompanhe os nossos conteúdos e conheça
+            os cursos disponíveis.
+        </p>
 
-            <a href="cursos.html" class="botao">
-                Ver cursos
-            </a>
+        <a href="cursos.html" class="botao">
+            Ver cursos
+        </a>
 
-        </div>
+    </div>
 
-    </section>
+</section>
 
-</main>
+</main><footer class="rodape"><p>
+    © 2026 SGE Informática Prática.
+    Todos os direitos reservados.
+</p>
+
+</footer><!-- FIREBASE --><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script><script>
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyDoekE76yr3qT0r3MJxJ12Rk5moryQFGbk",
+
+    authDomain:
+        "sge-informatica-pratica-4ad2d.firebaseapp.com",
+
+    projectId:
+        "sge-informatica-pratica-4ad2d",
+
+    storageBucket:
+        "sge-informatica-pratica-4ad2d.firebasestorage.app",
+
+    messagingSenderId:
+        "957035603926",
+
+    appId:
+        "1:957035603926:web:603b9d295a4abdab7ee677"
+
+};
 
 
-<footer class="rodape">
+if (!firebase.apps.length) {
 
-    <p>
-        © 2026 SGE Informática Prática.
-        Todos os direitos reservados.
-    </p>
+    firebase.initializeApp(firebaseConfig);
 
-</footer>
+}
 
 
-<script src="../js/script.js"></script>
+const db = firebase.firestore();
 
-</body>
-  </html>
+
+// ========================================
+// CARREGAR CONTEÚDOS PUBLICADOS
+// ========================================
+
+async function carregarConteudosPublicos() {
+
+    const lista =
+        document.getElementById("listaConteudosPublicos");
+
+
+    try {
+
+        const snapshot = await db
+            .collection("conteudos")
+            .where("ativo", "==", true)
+            .get();
+
+
+        lista.innerHTML = "";
+
+
+        if (snapshot.empty) {
+
+            lista.innerHTML = `
+
+                <div class="mensagem-conteudos">
+
+                    📚 Ainda não existem conteúdos
+                    publicados.
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        snapshot.forEach(function(doc) {
+
+            const dados = doc.data();
+
+
+            const card =
+                document.createElement("article");
+
+
+            card.className = "conteudo-card";
+
+
+            card.innerHTML = `
+
+                <span class="conteudo-categoria">
+
+                    ${dados.categoria || "Informática"}
+
+                </span>
+
+
+                <h3>
+
+                    ${dados.titulo || "Conteúdo"}
+
+                </h3>
+
+
+                <p>
+
+                    ${dados.resumo || ""}
+
+                </p>
+
+
+                <details>
+
+                    <summary>
+                        📖 Ler conteúdo
+                    </summary>
+
+                    <br>
+
+                    <div class="conteudo-texto">
+
+                        ${dados.conteudo || ""}
+
+                    </div>
+
+                </details>
+
+
+                <p class="conteudo-data">
+
+                    💻 SGE Informática Prática
+
+                </p>
+
+            `;
+
+
+            lista.appendChild(card);
+
+        });
+
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao carregar conteúdos:",
+            erro
+        );
+
+
+        lista.innerHTML = `
+
+            <div class="mensagem-conteudos">
+
+                ⚠️ Não foi possível carregar
+                os conteúdos.
+
+                <br><br>
+
+                Tente novamente.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+// ========================================
+// INICIAR
+// ========================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        carregarConteudosPublicos();
+
+    }
+);
+
+</script><script src="../js/script.js"></script></body></html>
