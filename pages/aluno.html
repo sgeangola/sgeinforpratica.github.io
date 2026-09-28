@@ -63,21 +63,16 @@
 
         </div>
 
+<!-- MEUS CURSOS -->
+<div class="card">
 
-        <!-- CURSOS -->
-        <div class="card">
+    <h2>🎓 Meus Cursos</h2>
 
-            <h2>🎓 Meus Cursos</h2>
+    <div id="meusCursos">
+        <p>⏳ A carregar os seus cursos...</p>
+    </div>
 
-            <p>
-                Aqui aparecerão os cursos em que estiver inscrito.
-            </p>
-
-            <button onclick="irParaCursos()">
-                Ver Cursos
-            </button>
-
-        </div>
+</div>
 
 
         <!-- CONTEÚDOS -->
@@ -220,7 +215,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const dadosPerfil = document.getElementById("dadosPerfil");
 
-
+const meusCursos = document.getElementById("meusCursos");
+    
     /*
     ==========================================
     VERIFICAR LOGIN
@@ -269,7 +265,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const aluno = alunoRef.data();
 
-
+carregarMeusCursos(aluno);
+            
             /*
             ==========================================
             VERIFICAR ESTADO
@@ -360,7 +357,83 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
+async function carregarMeusCursos(aluno) {
 
+    try {
+
+        const listaCursos = aluno.cursos || [];
+
+        if (listaCursos.length === 0) {
+
+            document.getElementById("meusCursos").innerHTML = `
+                <p>📚 Ainda não existem cursos associados à sua conta.</p>
+            `;
+
+            return;
+        }
+
+        let html = "";
+
+        for (const cursoId of listaCursos) {
+
+            const cursoRef = await firebase
+                .firestore()
+                .collection("cursos")
+                .doc(cursoId)
+                .get();
+
+            if (cursoRef.exists) {
+
+                const curso = cursoRef.data();
+
+                html += `
+                    <div style="margin-bottom:15px;">
+                        <h3>🎓 ${escaparHTML(curso.nome || "Curso")}</h3>
+
+                        <p>
+                            ${escaparHTML(
+                                curso.descricao || "Sem descrição."
+                            )}
+                        </p>
+
+                        <p>
+                            <strong>⏱ Duração:</strong>
+                            ${escaparHTML(curso.duracao || "Não informada")}
+                        </p>
+
+                        <p>
+                            <strong>📍 Modalidade:</strong>
+                            ${escaparHTML(curso.modalidade || "Não informada")}
+                        </p>
+                    </div>
+                `;
+
+            }
+
+        }
+
+        if (html === "") {
+
+            html = `
+                <p>⚠️ Não foi possível encontrar os cursos associados.</p>
+            `;
+
+        }
+
+        document.getElementById("meusCursos").innerHTML = html;
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        document.getElementById("meusCursos").innerHTML = `
+            <p>❌ Erro ao carregar os seus cursos.</p>
+        `;
+
+    }
+
+                                               }
+    
 /*
 ==========================================
 ABRIR MENU
