@@ -99,20 +99,16 @@
 </div>
 
 
-        <!-- MATERIAIS -->
-        <div class="card">
+ <!-- MATERIAIS -->
+<div class="card">
 
-            <h2>📁 Materiais</h2>
+    <h2>📁 Materiais</h2>
 
-            <p>
-                Consulte os materiais de aprendizagem.
-            </p>
+    <div id="materiaisAluno">
+        <p>⏳ A carregar materiais...</p>
+    </div>
 
-            <button onclick="window.location.href='materiais.html'">
-                Ver Materiais
-            </button>
-
-        </div>
+</div>
 
 
         <!-- COMUNIDADE -->
@@ -262,6 +258,8 @@ carregarMeusCursos(aluno);
             carregarConteudosAluno();
 
     carregarTutoriaisAluno();
+
+            carregarMateriaisAluno();
             
             /*
             ==========================================
@@ -569,6 +567,86 @@ async function carregarTutoriaisAluno() {
     window.location.href = "tutoriais.html?id=" + encodeURIComponent(id);
 
     }
+
+    async function carregarMateriaisAluno() {
+
+    const area = document.getElementById("materiaisAluno");
+
+    try {
+
+        const snapshot = await firebase
+            .firestore()
+            .collection("materiais")
+            .where("ativo", "==", true)
+            .get();
+
+        if (snapshot.empty) {
+
+            area.innerHTML = `
+                <p>📁 Ainda não existem materiais disponíveis.</p>
+            `;
+
+            return;
+        }
+
+        let html = "";
+
+        snapshot.forEach(function(doc) {
+
+            const material = doc.data();
+
+            const link = material.link || "#";
+
+            html += `
+                <div style="margin-bottom:20px;">
+
+                    <h3>
+                        📁 ${escaparHTML(
+                            material.titulo || "Material"
+                        )}
+                    </h3>
+
+                    <p>
+                        ${escaparHTML(
+                            material.descricao || "Sem descrição disponível."
+                        )}
+                    </p>
+
+                    <button onclick="abrirMaterial('${encodeURIComponent(link)}')">
+                        Abrir material
+                    </button>
+
+                </div>
+            `;
+
+        });
+
+        area.innerHTML = html;
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        area.innerHTML = `
+            <p>❌ Não foi possível carregar os materiais.</p>
+        `;
+
+    }
+
+    function abrirMaterial(link) {
+
+    const url = decodeURIComponent(link);
+
+    if (url === "#") {
+
+        alert("Este material ainda não possui um link.");
+
+        return;
+    }
+
+    window.open(url, "_blank");
+
+    }                                                                 }
     
 /*
 ==========================================
