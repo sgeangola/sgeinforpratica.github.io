@@ -1120,95 +1120,84 @@ function abrirMaterial(link) {
     }
 }
 
-// ===============================
-// MENU MOBILE
-// ===============================
 
-function abrirMenu() {
-    const menu = document.getElementById("menu");
-
-    if (menu) {
-        menu.classList.toggle("ativo");
-    }
-}
-
-function fecharMenu() {
-    const menu = document.getElementById("menu");
-
-    if (menu) {
-        menu.classList.remove("ativo");
-    }
-}
-
-// ===============================
-// SAIR DA ÁREA DO ALUNO
-// ===============================
-
-async function sair() {
-    try {
-        await auth.signOut();
-
-        sessionStorage.removeItem("alunoUid");
-        sessionStorage.removeItem("alunoEmail");
-
-        window.location.href = "login-aluno.html";
-
-    } catch (erro) {
-        console.error(erro);
-        alert("Não foi possível sair da conta.");
-    }
-}
-
-// ===============================
-// PROTEÇÃO DA ÁREA DO ALUNO
-// ===============================
-
-auth.onAuthStateChanged(async (user) => {
-
-    if (!user) {
-        window.location.href = "login-aluno.html";
-        return;
-    }
-
-    try {
-
-        const alunoRef = db.collection("alunos").doc(user.uid);
-        const alunoDoc = await alunoRef.get();
-
-        if (!alunoDoc.exists) {
-
-            alert("Cadastro de aluno não encontrado.");
-
-            await auth.signOut();
-
-            window.location.href = "login-aluno.html";
-
-            return;
-        }
-
-        const aluno = alunoDoc.data();
-
-        if (aluno.ativo !== true) {
-
-            alert("A sua conta de aluno está inativa.");
-
-            await auth.signOut();
-
-            window.location.href = "login-aluno.html";
-
-            return;
-        }
-
-    } catch (erro) {
-
-        console.error(erro);
-
-        alert("Não foi possível verificar o cadastro do aluno.");
-    }
-
-});
-
-</script>
-
-</body>
-</html>
+/*  
+==========================================  
+ABRIR MENU  
+==========================================  
+*/  
+  
+function abrirMenu() {  
+  
+    const menu = document.getElementById("menuPrincipal");  
+  
+    menu.classList.toggle("ativo");  
+  
+}  
+  
+  
+/*  
+==========================================  
+IR PARA CURSOS  
+==========================================  
+*/  
+  
+function irParaCursos() {  
+  
+    window.location.href = "cursos.html";  
+  
+}  
+  
+  
+/*  
+==========================================  
+SAIR  
+==========================================  
+*/  
+  
+async function sairAluno() {  
+  
+    try {  
+  
+        await firebase.auth().signOut();  
+  
+        sessionStorage.removeItem("alunoUid");  
+  
+        sessionStorage.removeItem("alunoEmail");  
+  
+        window.location.href = "login-aluno.html";  
+  
+    } catch (erro) {  
+  
+        alert("Não foi possível terminar a sessão.");  
+  
+    }  
+  
+}  
+  
+  
+/*  
+==========================================  
+PROTEGER TEXTO  
+==========================================  
+*/  
+  
+function escaparHTML(texto) {  
+  
+    return String(texto)  
+  
+        .replace(/&/g, "&amp;")  
+  
+        .replace(/</g, "&lt;")  
+  
+        .replace(/>/g, "&gt;")  
+  
+        .replace(/"/g, "&quot;")  
+  
+        .replace(/'/g, "&#039;");  
+  
+}  
+  
+</script>  </body>  
+    </html>  
+Analisa, e por conforme o estilo do site, aí só falta o separador tipo cartão igual do site 
