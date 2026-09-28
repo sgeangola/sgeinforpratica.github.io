@@ -159,158 +159,206 @@
 
 <script>
 
-const firebaseConfig = {
-    apiKey: "AIzaSyDoekE76yr3qT0r3MJxJ12Rk5moryQFGbk",
-    authDomain: "sge-informatica-pratica-4ad2d.firebaseapp.com",
-    projectId: "sge-informatica-pratica-4ad2d",
-    storageBucket: "sge-informatica-pratica-4ad2d.firebasestorage.app",
-    messagingSenderId: "957035603926",
-    appId: "1:957035603926:web:603b9d295a4abdab7ee677"
-};
+document.addEventListener("DOMContentLoaded", function () {
 
-firebase.initializeApp(firebaseConfig);
+    const firebaseConfig = {
+        apiKey: "AIzaSyDoekE76yr3qT0r3MJxJ12Rk5moryQFGbk",
+        authDomain: "sge-informatica-pratica-4ad2d.firebaseapp.com",
+        projectId: "sge-informatica-pratica-4ad2d",
+        storageBucket: "sge-informatica-pratica-4ad2d.firebasestorage.app",
+        messagingSenderId: "957035603926",
+        appId: "1:957035603926:web:603b9d295a4abdab7ee677"
+    };
 
-const auth = firebase.auth();
+    firebase.initializeApp(firebaseConfig);
 
-const db = firebase.firestore();
+    const auth = firebase.auth();
 
+    const db = firebase.firestore();
 
-document
-.getElementById("formLoginAluno")
-.addEventListener("submit", async function(event) {
-
-    event.preventDefault();
-
-    const email =
-        document.getElementById("email").value.trim();
-
-    const senha =
-        document.getElementById("senha").value;
+    const formulario =
+        document.getElementById("formLoginAluno");
 
     const mensagem =
         document.getElementById("mensagemLogin");
 
-    mensagem.innerHTML = "⏳ A verificar os seus dados...";
+
+    if (!formulario) {
+
+        alert("Erro: formulário de login não encontrado.");
+
+        return;
+    }
 
 
-    try {
+    formulario.addEventListener("submit", async function(event) {
 
-        /* LOGIN NO FIREBASE AUTH */
+        event.preventDefault();
 
-        const userCredential =
-            await auth.signInWithEmailAndPassword(
-                email,
-                senha
-            );
+        const email =
+            document.getElementById("email").value.trim();
 
-        const user =
-            userCredential.user;
+        const senha =
+            document.getElementById("senha").value;
 
 
-        /* VERIFICAR SE É ALUNO */
-
-        const alunoRef =
-            await db
-                .collection("alunos")
-                .doc(user.uid)
-                .get();
-
-
-        if (!alunoRef.exists) {
-
-            await auth.signOut();
+        if (!email || !senha) {
 
             mensagem.innerHTML =
-                "❌ Esta conta não está registada como aluno.";
+                "❌ Preencha o e-mail e a palavra-passe.";
 
             return;
-        }
-
-
-        const dadosAluno =
-            alunoRef.data();
-
-
-        /* VERIFICAR SE A CONTA ESTÁ ATIVA */
-
-        if (dadosAluno.ativo !== true) {
-
-            await auth.signOut();
-
-            mensagem.innerHTML =
-                "❌ A sua conta de aluno está desativada.";
-
-            return;
-        }
-
-
-        /* GUARDAR SESSÃO */
-
-        sessionStorage.setItem(
-            "alunoUid",
-            user.uid
-        );
-
-        sessionStorage.setItem(
-            "alunoEmail",
-            user.email
-        );
-
-
-        /* ENTRAR NA ÁREA DO ALUNO */
-
-        window.location.href =
-            "aluno.html";
-
-
-    } catch (error) {
-
-        console.error(error);
-
-        let texto =
-            "Não foi possível entrar.";
-
-        if (
-            error.code ===
-            "auth/invalid-credential"
-        ) {
-
-            texto =
-                "E-mail ou palavra-passe incorretos.";
-        }
-
-        else if (
-            error.code ===
-            "auth/user-not-found"
-        ) {
-
-            texto =
-                "Esta conta não existe.";
-        }
-
-        else if (
-            error.code ===
-            "auth/wrong-password"
-        ) {
-
-            texto =
-                "Palavra-passe incorreta.";
-        }
-
-        else if (
-            error.code ===
-            "permission-denied"
-        ) {
-
-            texto =
-                "Não foi possível verificar o cadastro do aluno.";
         }
 
 
         mensagem.innerHTML =
-            "❌ " + texto;
+            "⏳ A verificar os seus dados...";
 
-    }
+
+        try {
+
+            /* LOGIN */
+
+            const userCredential =
+                await auth.signInWithEmailAndPassword(
+                    email,
+                    senha
+                );
+
+
+            const user =
+                userCredential.user;
+
+
+            /* VERIFICAR ALUNO */
+
+            const alunoRef =
+                await db
+                    .collection("alunos")
+                    .doc(user.uid)
+                    .get();
+
+
+            if (!alunoRef.exists) {
+
+                await auth.signOut();
+
+                mensagem.innerHTML =
+                    "❌ Esta conta não está registada como aluno.";
+
+                return;
+            }
+
+
+            const dadosAluno =
+                alunoRef.data();
+
+
+            /* VERIFICAR ESTADO */
+
+            if (dadosAluno.ativo !== true) {
+
+                await auth.signOut();
+
+                mensagem.innerHTML =
+                    "❌ A sua conta de aluno está desativada.";
+
+                return;
+            }
+
+
+            /* GUARDAR SESSÃO */
+
+            sessionStorage.setItem(
+                "alunoUid",
+                user.uid
+            );
+
+            sessionStorage.setItem(
+                "alunoEmail",
+                user.email
+            );
+
+
+            mensagem.innerHTML =
+                "✅ Login realizado. A entrar...";
+
+
+            /* IR PARA ÁREA DO ALUNO */
+
+            setTimeout(function() {
+
+                window.location.href =
+                    "aluno.html";
+
+            }, 500);
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            let texto =
+                "Não foi possível entrar.";
+
+
+            if (
+                error.code ===
+                "auth/invalid-credential"
+            ) {
+
+                texto =
+                    "E-mail ou palavra-passe incorretos.";
+
+            }
+
+            else if (
+                error.code ===
+                "auth/user-not-found"
+            ) {
+
+                texto =
+                    "Esta conta não existe.";
+
+            }
+
+            else if (
+                error.code ===
+                "auth/wrong-password"
+            ) {
+
+                texto =
+                    "Palavra-passe incorreta.";
+
+            }
+
+            else if (
+                error.code ===
+                "permission-denied"
+            ) {
+
+                texto =
+                    "Não foi possível verificar o cadastro do aluno.";
+
+            }
+
+            else if (
+                error.code ===
+                "auth/too-many-requests"
+            ) {
+
+                texto =
+                    "Muitas tentativas. Aguarde alguns minutos e tente novamente.";
+
+            }
+
+
+            mensagem.innerHTML =
+                "❌ " + texto;
+
+        }
+
+    });
 
 });
 
