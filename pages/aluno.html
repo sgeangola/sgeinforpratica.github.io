@@ -7,9 +7,82 @@
     <title>Área do Aluno | SGE Informática Prática</title>
 
     <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+
+        /* ================================
+           ÁREA DO ALUNO
+        ================================= */
+
+        .aluno-lista {
+            display: grid;
+            gap: 16px;
+            margin-top: 15px;
+        }
+
+        .aluno-item {
+            background: #f5f8fc;
+            border: 1px solid #dbe7f3;
+            border-left: 5px solid #0875c9;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+        }
+
+        .aluno-item h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #063b73;
+        }
+
+        .aluno-item p {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .aluno-item .categoria {
+            display: inline-block;
+            background: #dff1ff;
+            color: #063b73;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .aluno-item button {
+            margin-top: 8px;
+        }
+
+        .perfil-dados {
+            display: grid;
+            gap: 10px;
+        }
+
+        .perfil-linha {
+            background: #f5f8fc;
+            border-radius: 10px;
+            padding: 12px;
+            border-left: 4px solid #0875c9;
+        }
+
+        .perfil-linha strong {
+            color: #063b73;
+        }
+
+        .mensagem-vazia {
+            background: #f5f8fc;
+            border-radius: 10px;
+            padding: 15px;
+            color: #555;
+        }
+
+    </style>
+
 </head>
 
 <body>
+
 
 <header class="topo">
 
@@ -20,6 +93,7 @@
     <button class="menu-btn" onclick="abrirMenu()">☰</button>
 
     <nav id="menuPrincipal">
+
         <a href="../index.html">Início</a>
         <a href="cursos.html">Cursos</a>
         <a href="conteudos.html">Conteúdos</a>
@@ -28,6 +102,7 @@
         <a href="comunidade.html">Comunidade</a>
         <a href="sobre.html">Sobre</a>
         <a href="contactos.html">Contactos</a>
+
     </nav>
 
 </header>
@@ -35,7 +110,13 @@
 
 <main>
 
+
+    <!-- =====================================
+         CABEÇALHO
+    ====================================== -->
+
     <section class="hero">
+
         <div class="container">
 
             <h2>Área do Aluno 🎓</h2>
@@ -45,12 +126,18 @@
             </p>
 
         </div>
+
     </section>
+
 
 
     <section class="container">
 
-        <!-- PERFIL -->
+
+        <!-- =====================================
+             PERFIL
+        ====================================== -->
+
         <div class="card" id="perfilAluno">
 
             <h2>👤 Meu Perfil</h2>
@@ -63,55 +150,84 @@
 
         </div>
 
-<!-- MEUS CURSOS -->
-<div class="card">
-
-    <h2>🎓 Meus Cursos</h2>
-
-    <div id="meusCursos">
-        <p>⏳ A carregar os seus cursos...</p>
-    </div>
-
-</div>
 
 
-  <!-- CONTEÚDOS -->
-<div class="card">
+        <!-- =====================================
+             MEUS CURSOS
+        ====================================== -->
 
-    <h2>📚 Conteúdos</h2>
+        <div class="card">
 
-    <div id="conteudosAluno">
-        <p>⏳ A carregar conteúdos...</p>
-    </div>
+            <h2>🎓 Meus Cursos</h2>
 
-</div>
+            <div id="meusCursos">
 
+                <p>⏳ A carregar os seus cursos...</p>
 
-        <!-- TUTORIAIS -->
-<div class="card">
+            </div>
 
-    <h2>▶️ Tutoriais</h2>
-
-    <div id="tutoriaisAluno">
-        <p>⏳ A carregar tutoriais...</p>
-    </div>
-
-</div>
+        </div>
 
 
- <!-- MATERIAIS -->
-<div class="card">
 
-    <h2>📁 Materiais</h2>
+        <!-- =====================================
+             CONTEÚDOS
+        ====================================== -->
 
-    <div id="materiaisAluno">
-        <p>⏳ A carregar materiais...</p>
-    </div>
+        <div class="card">
 
-</div>
+            <h2>📚 Conteúdos</h2>
+
+            <div id="conteudosAluno">
+
+                <p>⏳ A carregar conteúdos...</p>
+
+            </div>
+
+        </div>
 
 
-        <!-- COMUNIDADE -->
+
+        <!-- =====================================
+             TUTORIAIS
+        ====================================== -->
+
+        <div class="card">
+
+            <h2>▶️ Tutoriais</h2>
+
+            <div id="tutoriaisAluno">
+
+                <p>⏳ A carregar tutoriais...</p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================
+             MATERIAIS
+        ====================================== -->
+
+        <div class="card">
+
+            <h2>📁 Materiais</h2>
+
+            <div id="materiaisAluno">
+
+                <p>⏳ A carregar materiais...</p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================
+             COMUNIDADE
+        ====================================== -->
+
         <div class="card">
 
             <h2>💬 Comunidade</h2>
@@ -121,13 +237,19 @@
             </p>
 
             <button onclick="window.location.href='comunidade.html'">
+
                 Entrar na Comunidade
+
             </button>
 
         </div>
 
 
-        <!-- SAIR -->
+
+        <!-- =====================================
+             CONTA
+        ====================================== -->
+
         <div class="card">
 
             <h2>🔐 Conta</h2>
@@ -137,14 +259,18 @@
             </p>
 
             <button onclick="sairAluno()">
+
                 🚪 Sair
+
             </button>
 
         </div>
 
+
     </section>
 
 </main>
+
 
 
 <footer>
@@ -160,7 +286,10 @@
 </footer>
 
 
-<!-- FIREBASE -->
+
+<!-- =====================================
+     FIREBASE
+====================================== -->
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 
@@ -169,10 +298,15 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 
+
 <script>
 
 document.addEventListener("DOMContentLoaded", function () {
 
+
+    /* =====================================
+       FIREBASE
+    ====================================== */
 
     const firebaseConfig = {
 
@@ -199,24 +333,25 @@ document.addEventListener("DOMContentLoaded", function () {
     const db = firebase.firestore();
 
 
-    const boasVindas = document.getElementById("boasVindas");
+    const boasVindas =
+        document.getElementById("boasVindas");
 
-    const dadosPerfil = document.getElementById("dadosPerfil");
+    const dadosPerfil =
+        document.getElementById("dadosPerfil");
 
-const meusCursos = document.getElementById("meusCursos");
 
-    /*
-    ==========================================
-    VERIFICAR LOGIN
-    ==========================================
-    */
+
+    /* =====================================
+       VERIFICAR LOGIN
+    ====================================== */
 
     auth.onAuthStateChanged(async function (user) {
 
 
         if (!user) {
 
-            window.location.href = "login-aluno.html";
+            window.location.href =
+                "login-aluno.html";
 
             return;
 
@@ -226,12 +361,6 @@ const meusCursos = document.getElementById("meusCursos");
         try {
 
 
-            /*
-            ==========================================
-            BUSCAR ALUNO NO FIRESTORE
-            ==========================================
-            */
-
             const alunoRef = await db
                 .collection("alunos")
                 .doc(user.uid)
@@ -240,11 +369,14 @@ const meusCursos = document.getElementById("meusCursos");
 
             if (!alunoRef.exists) {
 
-                alert("O cadastro deste aluno não foi encontrado.");
+                alert(
+                    "O cadastro deste aluno não foi encontrado."
+                );
 
                 await auth.signOut();
 
-                window.location.href = "login-aluno.html";
+                window.location.href =
+                    "login-aluno.html";
 
                 return;
 
@@ -253,40 +385,47 @@ const meusCursos = document.getElementById("meusCursos");
 
             const aluno = alunoRef.data();
 
-carregarMeusCursos(aluno);
 
-            carregarConteudosAluno();
-
-    carregarTutoriaisAluno();
-
-            carregarMateriaisAluno();
-            
-            /*
-            ==========================================
-            VERIFICAR ESTADO
-            ==========================================
-            */
+            /* =====================================
+               VERIFICAR ESTADO
+            ====================================== */
 
             if (aluno.ativo !== true) {
 
-                alert("A sua conta de aluno está inativa.");
+                alert(
+                    "A sua conta de aluno está inativa."
+                );
 
                 await auth.signOut();
 
-                window.location.href = "login-aluno.html";
+                window.location.href =
+                    "login-aluno.html";
 
                 return;
 
             }
 
 
-            /*
-            ==========================================
-            BOAS-VINDAS
-            ==========================================
-            */
+            /* =====================================
+               CARREGAR ÁREAS
+            ====================================== */
 
-            const nome = aluno.nome || "Aluno";
+            carregarMeusCursos(aluno);
+
+            carregarConteudosAluno();
+
+            carregarTutoriaisAluno();
+
+            carregarMateriaisAluno();
+
+
+
+            /* =====================================
+               BOAS-VINDAS
+            ====================================== */
+
+            const nome =
+                aluno.nome || "Aluno";
 
 
             boasVindas.innerHTML =
@@ -295,33 +434,66 @@ carregarMeusCursos(aluno);
                 "</strong>! 👋 Seja bem-vindo à sua área de aluno.";
 
 
-            /*
-            ==========================================
-            MOSTRAR PERFIL
-            ==========================================
-            */
+
+            /* =====================================
+               PERFIL
+            ====================================== */
 
             dadosPerfil.innerHTML = `
 
-                <p>
-                    <strong>👤 Nome:</strong><br>
-                    ${escaparHTML(aluno.nome || "Não informado")}
-                </p>
+                <div class="perfil-dados">
 
-                <p>
-                    <strong>📧 E-mail:</strong><br>
-                    ${escaparHTML(aluno.email || user.email || "Não informado")}
-                </p>
+                    <div class="perfil-linha">
 
-                <p>
-                    <strong>🆔 ID do aluno:</strong><br>
-                    ${escaparHTML(user.uid)}
-                </p>
+                        <strong>👤 Nome</strong>
 
-                <p>
-                    <strong>🟢 Estado:</strong><br>
-                    Conta ativa
-                </p>
+                        <br>
+
+                        ${escaparHTML(
+                            aluno.nome ||
+                            "Não informado"
+                        )}
+
+                    </div>
+
+
+                    <div class="perfil-linha">
+
+                        <strong>📧 E-mail</strong>
+
+                        <br>
+
+                        ${escaparHTML(
+                            aluno.email ||
+                            user.email ||
+                            "Não informado"
+                        )}
+
+                    </div>
+
+
+                    <div class="perfil-linha">
+
+                        <strong>🆔 ID do aluno</strong>
+
+                        <br>
+
+                        ${escaparHTML(user.uid)}
+
+                    </div>
+
+
+                    <div class="perfil-linha">
+
+                        <strong>🟢 Estado</strong>
+
+                        <br>
+
+                        Conta ativa
+
+                    </div>
+
+                </div>
 
             `;
 
@@ -351,385 +523,692 @@ carregarMeusCursos(aluno);
 
 });
 
+
+
+/* =====================================
+   MEUS CURSOS
+====================================== */
+
 async function carregarMeusCursos(aluno) {
+
+
+    const area =
+        document.getElementById("meusCursos");
+
 
     try {
 
-        const listaCursos = aluno.cursos || [];
+
+        const listaCursos =
+            aluno.cursos || [];
+
 
         if (listaCursos.length === 0) {
 
-            document.getElementById("meusCursos").innerHTML = `
-                <p>📚 Ainda não existem cursos associados à sua conta.</p>
+            area.innerHTML = `
+
+                <div class="mensagem-vazia">
+
+                    📚 Ainda não existem cursos
+                    associados à sua conta.
+
+                </div>
+
             `;
 
             return;
+
         }
 
-        let html = "";
+
+        let html = `
+
+            <div class="aluno-lista">
+
+        `;
+
 
         for (const cursoId of listaCursos) {
 
-            const cursoRef = await firebase
-                .firestore()
-                .collection("cursos")
-                .doc(cursoId)
-                .get();
+
+            const cursoRef =
+                await firebase
+                    .firestore()
+                    .collection("cursos")
+                    .doc(cursoId)
+                    .get();
+
 
             if (cursoRef.exists) {
 
-                const curso = cursoRef.data();
+
+                const curso =
+                    cursoRef.data();
+
 
                 html += `
-                    <div style="margin-bottom:15px;">
-                        <h3>🎓 ${escaparHTML(curso.nome || "Curso")}</h3>
 
-                        <p>
+                    <div class="aluno-item">
+
+                        <span class="categoria">
+
+                            🎓 Curso
+
+                        </span>
+
+
+                        <h3>
+
                             ${escaparHTML(
-                                curso.descricao || "Sem descrição."
+                                curso.nome ||
+                                "Curso"
                             )}
-                        </p>
+
+                        </h3>
+
 
                         <p>
-                            <strong>⏱ Duração:</strong>
-                            ${escaparHTML(curso.duracao || "Não informada")}
+
+                            ${escaparHTML(
+                                curso.descricao ||
+                                "Sem descrição."
+                            )}
+
                         </p>
 
+
                         <p>
-                            <strong>📍 Modalidade:</strong>
-                            ${escaparHTML(curso.modalidade || "Não informada")}
+
+                            <strong>
+                                ⏱ Duração:
+                            </strong>
+
+                            ${escaparHTML(
+                                curso.duracao ||
+                                "Não informada"
+                            )}
+
                         </p>
+
+
+                        <p>
+
+                            <strong>
+                                📍 Modalidade:
+                            </strong>
+
+                            ${escaparHTML(
+                                curso.modalidade ||
+                                "Não informada"
+                            )}
+
+                        </p>
+
                     </div>
+
                 `;
 
             }
 
         }
 
-        if (html === "") {
 
-            html = `
-                <p>⚠️ Não foi possível encontrar os cursos associados.</p>
-            `;
+        html += `
 
-        }
+            </div>
 
-        document.getElementById("meusCursos").innerHTML = html;
+        `;
+
+
+        area.innerHTML = html;
+
 
     } catch (erro) {
 
+
         console.error(erro);
 
-        document.getElementById("meusCursos").innerHTML = `
-            <p>❌ Erro ao carregar os seus cursos.</p>
+
+        area.innerHTML = `
+
+            <div class="mensagem-vazia">
+
+                ❌ Erro ao carregar os seus cursos.
+
+            </div>
+
         `;
 
     }
 
-                                               }
+}
+
+
+
+/* =====================================
+   CONTEÚDOS
+====================================== */
 
 async function carregarConteudosAluno() {
 
-    const area = document.getElementById("conteudosAluno");
+
+    const area =
+        document.getElementById("conteudosAluno");
+
 
     try {
 
-        const snapshot = await firebase
-            .firestore()
-            .collection("conteudos")
-            .where("ativo", "==", true)
-            .get();
+
+        const snapshot =
+            await firebase
+                .firestore()
+                .collection("conteudos")
+                .where("ativo", "==", true)
+                .get();
+
 
         if (snapshot.empty) {
 
             area.innerHTML = `
-                <p>📚 Ainda não existem conteúdos disponíveis.</p>
+
+                <div class="mensagem-vazia">
+
+                    📚 Ainda não existem conteúdos
+                    disponíveis.
+
+                </div>
+
             `;
 
             return;
+
         }
 
-        let html = "";
 
-        snapshot.forEach(function(doc) {
+        let html = `
 
-            const conteudo = doc.data();
+            <div class="aluno-lista">
+
+        `;
+
+
+        snapshot.forEach(function (doc) {
+
+
+            const conteudo =
+                doc.data();
+
 
             html += `
-                <div style="margin-bottom:20px;">
+
+                <div class="aluno-item">
+
+                    <span class="categoria">
+
+                        📚 ${escaparHTML(
+                            conteudo.categoria ||
+                            "Conteúdo"
+                        )}
+
+                    </span>
+
 
                     <h3>
-                        📖 ${escaparHTML(conteudo.titulo || "Conteúdo")}
+
+                        📖 ${escaparHTML(
+                            conteudo.titulo ||
+                            "Conteúdo"
+                        )}
+
                     </h3>
 
+
                     <p>
+
                         ${escaparHTML(
-                            conteudo.resumo || "Sem resumo disponível."
+                            conteudo.resumo ||
+                            "Sem resumo disponível."
                         )}
+
                     </p>
 
-                    <button onclick="abrirConteudo('${doc.id}')">
+
+                    <button
+                        onclick="abrirConteudo('${doc.id}')">
+
                         Ler conteúdo
+
                     </button>
 
                 </div>
+
             `;
 
         });
 
+
+        html += `
+
+            </div>
+
+        `;
+
+
         area.innerHTML = html;
+
 
     } catch (erro) {
 
+
         console.error(erro);
 
+
         area.innerHTML = `
-            <p>❌ Não foi possível carregar os conteúdos.</p>
+
+            <div class="mensagem-vazia">
+
+                ❌ Não foi possível carregar
+                os conteúdos.
+
+            </div>
+
         `;
 
     }
 
-    }
+}
 
-    function abrirConteudo(id) {
 
-    window.location.href = "conteudos.html?id=" + encodeURIComponent(id);
 
-    }
+function abrirConteudo(id) {
+
+    window.location.href =
+        "conteudos.html?id=" +
+        encodeURIComponent(id);
+
+}
+
+
+
+/* =====================================
+   TUTORIAIS
+====================================== */
 
 async function carregarTutoriaisAluno() {
 
-    const area = document.getElementById("tutoriaisAluno");
+
+    const area =
+        document.getElementById("tutoriaisAluno");
+
 
     try {
 
-        const snapshot = await firebase
-            .firestore()
-            .collection("tutoriais")
-            .where("ativo", "==", true)
-            .get();
+
+        const snapshot =
+            await firebase
+                .firestore()
+                .collection("tutoriais")
+                .where("ativo", "==", true)
+                .get();
+
 
         if (snapshot.empty) {
 
             area.innerHTML = `
-                <p>▶️ Ainda não existem tutoriais disponíveis.</p>
+
+                <div class="mensagem-vazia">
+
+                    ▶️ Ainda não existem tutoriais
+                    disponíveis.
+
+                </div>
+
             `;
 
             return;
+
         }
 
-        let html = "";
 
-        snapshot.forEach(function(doc) {
+        let html = `
 
-            const tutorial = doc.data();
+            <div class="aluno-lista">
+
+        `;
+
+
+        snapshot.forEach(function (doc) {
+
+
+            const tutorial =
+                doc.data();
+
 
             html += `
-                <div style="margin-bottom:20px;">
 
-                    <h3>
+                <div class="aluno-item">
+
+                    <span class="categoria">
+
                         ▶️ ${escaparHTML(
-                            tutorial.titulo || "Tutorial"
+                            tutorial.categoria ||
+                            "Tutorial"
                         )}
+
+                    </span>
+
+
+                    <h3>
+
+                        ${escaparHTML(
+                            tutorial.titulo ||
+                            "Tutorial"
+                        )}
+
                     </h3>
 
+
                     <p>
+
                         ${escaparHTML(
-                            tutorial.resumo || "Sem descrição disponível."
+                            tutorial.resumo ||
+                            "Sem descrição disponível."
                         )}
+
                     </p>
 
-                    <button onclick="abrirTutorial('${doc.id}')">
-                        Assistir tutorial
+
+                    <button
+                        onclick="abrirTutorial('${doc.id}')">
+
+                        ▶️ Assistir tutorial
+
                     </button>
 
                 </div>
+
             `;
 
         });
 
+
+        html += `
+
+            </div>
+
+        `;
+
+
         area.innerHTML = html;
+
 
     } catch (erro) {
 
+
         console.error(erro);
 
+
         area.innerHTML = `
-            <p>❌ Não foi possível carregar os tutoriais.</p>
+
+            <div class="mensagem-vazia">
+
+                ❌ Não foi possível carregar
+                os tutoriais.
+
+            </div>
+
         `;
 
     }
 
-            }
+}
 
-    function abrirTutorial(id) {
 
-    window.location.href = "tutoriais.html?id=" + encodeURIComponent(id);
 
-    }
+function abrirTutorial(id) {
 
-    async function carregarMateriaisAluno() {
+    window.location.href =
+        "tutoriais.html?id=" +
+        encodeURIComponent(id);
 
-    const area = document.getElementById("materiaisAluno");
+}
+
+
+
+/* =====================================
+   MATERIAIS
+====================================== */
+
+async function carregarMateriaisAluno() {
+
+
+    const area =
+        document.getElementById("materiaisAluno");
+
 
     try {
 
-        const snapshot = await firebase
-            .firestore()
-            .collection("materiais")
-            .where("ativo", "==", true)
-            .get();
+
+        const snapshot =
+            await firebase
+                .firestore()
+                .collection("materiais")
+                .where("ativo", "==", true)
+                .get();
+
 
         if (snapshot.empty) {
 
             area.innerHTML = `
-                <p>📁 Ainda não existem materiais disponíveis.</p>
+
+                <div class="mensagem-vazia">
+
+                    📁 Ainda não existem materiais
+                    disponíveis.
+
+                </div>
+
             `;
 
             return;
+
         }
 
-        let html = "";
 
-        snapshot.forEach(function(doc) {
+        let html = `
 
-            const material = doc.data();
+            <div class="aluno-lista">
 
-            const link = material.link || "#";
+        `;
+
+
+        snapshot.forEach(function (doc) {
+
+
+            const material =
+                doc.data();
+
+
+            const link =
+                material.link || "#";
+
 
             html += `
-                <div style="margin-bottom:20px;">
+
+                <div class="aluno-item">
+
+                    <span class="categoria">
+
+                        📁 ${escaparHTML(
+                            material.categoria ||
+                            "Material"
+                        )}
+
+                    </span>
+
 
                     <h3>
-                        📁 ${escaparHTML(
-                            material.titulo || "Material"
+
+                        ${escaparHTML(
+                            material.titulo ||
+                            "Material"
                         )}
+
                     </h3>
 
+
                     <p>
+
                         ${escaparHTML(
-                            material.descricao || "Sem descrição disponível."
+                            material.descricao ||
+                            "Sem descrição disponível."
                         )}
+
                     </p>
 
-                    <button onclick="abrirMaterial('${encodeURIComponent(link)}')">
-                        Abrir material
+
+                    <button
+                        onclick="abrirMaterial('${encodeURIComponent(link)}')">
+
+                        📁 Abrir material
+
                     </button>
 
                 </div>
+
             `;
 
         });
 
+
+        html += `
+
+            </div>
+
+        `;
+
+
         area.innerHTML = html;
+
 
     } catch (erro) {
 
+
         console.error(erro);
 
+
         area.innerHTML = `
-            <p>❌ Não foi possível carregar os materiais.</p>
+
+            <div class="mensagem-vazia">
+
+                ❌ Não foi possível carregar
+                os materiais.
+
+            </div>
+
         `;
 
     }
 
+}
+
+
+
+function abrirMaterial(link) {
+    if (link) {
+        window.open(link, "_blank");
     }
-    
+}
 
-    function abrirMaterial(link) {
-
-    const url = decodeURIComponent(link);
-
-    if (url === "#") {
-
-        alert("Este material ainda não possui um link.");
-
-        return;
-    }
-
-    window.open(url, "_blank");
-
-    }                                                                 }
-    
-/*
-==========================================
-ABRIR MENU
-==========================================
-*/
+// ===============================
+// MENU MOBILE
+// ===============================
 
 function abrirMenu() {
+    const menu = document.getElementById("menu");
 
-    const menu = document.getElementById("menuPrincipal");
-
-    menu.classList.toggle("ativo");
-
+    if (menu) {
+        menu.classList.toggle("ativo");
+    }
 }
 
+function fecharMenu() {
+    const menu = document.getElementById("menu");
 
-/*
-==========================================
-IR PARA CURSOS
-==========================================
-*/
-
-function irParaCursos() {
-
-    window.location.href = "cursos.html";
-
+    if (menu) {
+        menu.classList.remove("ativo");
+    }
 }
 
+// ===============================
+// SAIR DA ÁREA DO ALUNO
+// ===============================
 
-/*
-==========================================
-SAIR
-==========================================
-*/
-
-async function sairAluno() {
-
+async function sair() {
     try {
-
-        await firebase.auth().signOut();
+        await auth.signOut();
 
         sessionStorage.removeItem("alunoUid");
-
         sessionStorage.removeItem("alunoEmail");
 
         window.location.href = "login-aluno.html";
 
     } catch (erro) {
+        console.error(erro);
+        alert("Não foi possível sair da conta.");
+    }
+}
 
-        alert("Não foi possível terminar a sessão.");
+// ===============================
+// PROTEÇÃO DA ÁREA DO ALUNO
+// ===============================
 
+auth.onAuthStateChanged(async (user) => {
+
+    if (!user) {
+        window.location.href = "login-aluno.html";
+        return;
     }
 
-}
+    try {
 
+        const alunoRef = db.collection("alunos").doc(user.uid);
+        const alunoDoc = await alunoRef.get();
 
-/*
-==========================================
-PROTEGER TEXTO
-==========================================
-*/
+        if (!alunoDoc.exists) {
 
-function escaparHTML(texto) {
+            alert("Cadastro de aluno não encontrado.");
 
-    return String(texto)
+            await auth.signOut();
 
-        .replace(/&/g, "&amp;")
+            window.location.href = "login-aluno.html";
 
-        .replace(/</g, "&lt;")
+            return;
+        }
 
-        .replace(/>/g, "&gt;")
+        const aluno = alunoDoc.data();
 
-        .replace(/"/g, "&quot;")
+        if (aluno.ativo !== true) {
 
-        .replace(/'/g, "&#039;");
+            alert("A sua conta de aluno está inativa.");
 
-}
+            await auth.signOut();
+
+            window.location.href = "login-aluno.html";
+
+            return;
+        }
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        alert("Não foi possível verificar o cadastro do aluno.");
+    }
+
+});
 
 </script>
 
-
 </body>
-    </html>
+</html>
