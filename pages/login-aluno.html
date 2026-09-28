@@ -38,8 +38,6 @@
 
 <main>
 
-    <!-- HERO -->
-
     <section class="hero">
 
         <div class="hero-conteudo">
@@ -56,8 +54,6 @@
     </section>
 
 
-    <!-- LOGIN -->
-
     <section class="secao">
 
         <div class="container">
@@ -67,8 +63,8 @@
                 <h2>Entrar na Área do Aluno</h2>
 
                 <p>
-                    Introduza o seu e-mail e a sua palavra-passe
-                    para entrar.
+                    Introduza o seu e-mail e a sua
+                    palavra-passe para entrar.
                 </p>
 
                 <form id="formLoginAluno">
@@ -84,7 +80,6 @@
                         required
                     >
 
-
                     <label for="senha">
                         Palavra-passe
                     </label>
@@ -96,7 +91,6 @@
                         required
                     >
 
-
                     <button
                         type="submit"
                         class="botao">
@@ -104,7 +98,6 @@
                     </button>
 
                 </form>
-
 
                 <div id="mensagemLogin"></div>
 
@@ -114,8 +107,6 @@
 
     </section>
 
-
-    <!-- INFORMAÇÃO -->
 
     <section class="secao">
 
@@ -127,8 +118,6 @@
 
                 <p>
                     Faça a sua inscrição num dos nossos cursos.
-                    Depois, a sua conta de aluno poderá ser criada
-                    para acesso à plataforma.
                 </p>
 
                 <a
@@ -158,11 +147,14 @@
 
 <script src="../js/script.js"></script>
 
-<!-- Firebase -->
+
+<!-- FIREBASE -->
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 
 <script>
@@ -176,18 +168,18 @@ const firebaseConfig = {
     appId: "1:957035603926:web:603b9d295a4abdab7ee677"
 };
 
-
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 
+const db = firebase.firestore();
+
 
 document
 .getElementById("formLoginAluno")
-.addEventListener("submit", function(event) {
+.addEventListener("submit", async function(event) {
 
     event.preventDefault();
-
 
     const email =
         document.getElementById("email").value.trim();
@@ -195,79 +187,134 @@ document
     const senha =
         document.getElementById("senha").value;
 
-
     const mensagem =
         document.getElementById("mensagemLogin");
 
-
-    mensagem.innerHTML =
-        "⏳ A entrar...";
+    mensagem.innerHTML = "⏳ A verificar os seus dados...";
 
 
-    auth.signInWithEmailAndPassword(email, senha)
+    try {
 
-        .then(function(userCredential) {
+        /* LOGIN NO FIREBASE AUTH */
 
-            sessionStorage.setItem(
-                "alunoUid",
-                userCredential.user.uid
+        const userCredential =
+            await auth.signInWithEmailAndPassword(
+                email,
+                senha
             );
 
-            sessionStorage.setItem(
-                "alunoEmail",
-                userCredential.user.email
-            );
+        const user =
+            userCredential.user;
 
 
-            window.location.href =
-                "aluno.html";
+        /* VERIFICAR SE É ALUNO */
 
-        })
+        const alunoRef =
+            await db
+                .collection("alunos")
+                .doc(user.uid)
+                .get();
 
-        .catch(function(error) {
 
-            let texto =
-                "Não foi possível entrar.";
+        if (!alunoRef.exists) {
 
-            if (
-                error.code ===
-                "auth/invalid-credential"
-            ) {
-
-                texto =
-                    "E-mail ou palavra-passe incorretos.";
-
-            }
-
-            if (
-                error.code ===
-                "auth/user-not-found"
-            ) {
-
-                texto =
-                    "Esta conta não existe.";
-
-            }
-
-            if (
-                error.code ===
-                "auth/wrong-password"
-            ) {
-
-                texto =
-                    "Palavra-passe incorreta.";
-
-            }
-
+            await auth.signOut();
 
             mensagem.innerHTML =
-                "❌ " + texto;
+                "❌ Esta conta não está registada como aluno.";
 
-        });
+            return;
+        }
+
+
+        const dadosAluno =
+            alunoRef.data();
+
+
+        /* VERIFICAR SE A CONTA ESTÁ ATIVA */
+
+        if (dadosAluno.ativo !== true) {
+
+            await auth.signOut();
+
+            mensagem.innerHTML =
+                "❌ A sua conta de aluno está desativada.";
+
+            return;
+        }
+
+
+        /* GUARDAR SESSÃO */
+
+        sessionStorage.setItem(
+            "alunoUid",
+            user.uid
+        );
+
+        sessionStorage.setItem(
+            "alunoEmail",
+            user.email
+        );
+
+
+        /* ENTRAR NA ÁREA DO ALUNO */
+
+        window.location.href =
+            "aluno.html";
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        let texto =
+            "Não foi possível entrar.";
+
+        if (
+            error.code ===
+            "auth/invalid-credential"
+        ) {
+
+            texto =
+                "E-mail ou palavra-passe incorretos.";
+        }
+
+        else if (
+            error.code ===
+            "auth/user-not-found"
+        ) {
+
+            texto =
+                "Esta conta não existe.";
+        }
+
+        else if (
+            error.code ===
+            "auth/wrong-password"
+        ) {
+
+            texto =
+                "Palavra-passe incorreta.";
+        }
+
+        else if (
+            error.code ===
+            "permission-denied"
+        ) {
+
+            texto =
+                "Não foi possível verificar o cadastro do aluno.";
+        }
+
+
+        mensagem.innerHTML =
+            "❌ " + texto;
+
+    }
 
 });
 
 </script>
 
 </body>
-  </html>
+    </html>
