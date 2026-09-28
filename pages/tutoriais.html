@@ -76,123 +76,24 @@
     </section>
 
 
-    <!-- TUTORIAIS -->
+    <!-- TUTORIAIS PUBLICADOS -->
 
     <section class="secao">
 
         <div class="container">
 
-            <div class="cards">
+            <h2>Tutoriais disponíveis</h2>
 
+            <p>
+                Escolha um tutorial e aprenda de forma simples
+                e prática.
+            </p>
 
-                <article class="card">
+            <div id="listaTutoriaisPublicos" class="cards">
 
-                    <div class="icone">💻</div>
-
-                    <h3>Informática Básica</h3>
-
-                    <p>
-                        Aprenda os principais conceitos de informática,
-                        componentes do computador e utilização básica.
-                    </p>
-
-                    <a href="#" class="botao">
-                        Ver tutoriais →
-                    </a>
-
-                </article>
-
-
-                <article class="card">
-
-                    <div class="icone">📝</div>
-
-                    <h3>Microsoft Word</h3>
-
-                    <p>
-                        Aprenda a criar, editar e formatar documentos
-                        profissionais no Microsoft Word.
-                    </p>
-
-                    <a href="#" class="botao">
-                        Ver tutoriais →
-                    </a>
-
-                </article>
-
-
-                <article class="card">
-
-                    <div class="icone">📊</div>
-
-                    <h3>Microsoft Excel</h3>
-
-                    <p>
-                        Aprenda fórmulas, funções, tabelas,
-                        gráficos e muito mais.
-                    </p>
-
-                    <a href="#" class="botao">
-                        Ver tutoriais →
-                    </a>
-
-                </article>
-
-
-                <article class="card">
-
-                    <div class="icone">📽️</div>
-
-                    <h3>PowerPoint</h3>
-
-                    <p>
-                        Aprenda a criar apresentações profissionais
-                        de forma simples.
-                    </p>
-
-                    <a href="#" class="botao">
-                        Ver tutoriais →
-                    </a>
-
-                </article>
-
-
-                <article class="card">
-
-                    <div class="icone">📱</div>
-
-                    <h3>Android na Prática</h3>
-
-                    <p>
-                        Dicas para utilizar melhor o seu smartphone,
-                        aplicações e configurações.
-                    </p>
-
-                    <a href="#" class="botao">
-                        Ver tutoriais →
-                    </a>
-
-                </article>
-
-
-                <article class="card">
-
-                    <div class="icone">🌐</div>
-
-                    <h3>Internet</h3>
-
-                    <p>
-                        Aprenda a navegar na Internet,
-                        utilizar serviços online e proteger
-                        os seus dados.
-                    </p>
-
-                    <a href="#" class="botao">
-                        Ver tutoriais →
-                    </a>
-
-                </article>
-
+                <p>
+                    ⏳ A carregar tutoriais...
+                </p>
 
             </div>
 
@@ -234,7 +135,162 @@
 </footer>
 
 
+<!-- Firebase -->
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+
+<script>
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDoekE76yr3qT0r3MJxJ12Rk5moryQFGbk",
+    authDomain: "sge-informatica-pratica-4ad2d.firebaseapp.com",
+    projectId: "sge-informatica-pratica-4ad2d",
+    storageBucket: "sge-informatica-pratica-4ad2d.firebasestorage.app",
+    messagingSenderId: "957035603926",
+    appId: "1:957035603926:web:603b9d295a4abdab7ee677"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.firestore();
+
+
+async function carregarTutoriaisPublicos() {
+
+    const lista = document.getElementById("listaTutoriaisPublicos");
+
+    try {
+
+        const snapshot = await db
+            .collection("tutoriais")
+            .where("ativo", "==", true)
+            .get();
+
+        lista.innerHTML = "";
+
+        if (snapshot.empty) {
+
+            lista.innerHTML = `
+                <div class="card">
+
+                    <div class="icone">🎬</div>
+
+                    <h3>Nenhum tutorial disponível</h3>
+
+                    <p>
+                        Em breve serão publicados novos
+                        tutoriais de informática.
+                    </p>
+
+                </div>
+            `;
+
+            return;
+        }
+
+
+        snapshot.forEach((doc) => {
+
+            const tutorial = doc.data();
+
+            const card = document.createElement("article");
+
+            card.className = "card";
+
+
+            card.innerHTML = `
+
+                <div class="icone">🎬</div>
+
+                <h3>${escaparHTML(tutorial.titulo || "Tutorial")}</h3>
+
+                <p>
+                    <strong>
+                        ${escaparHTML(tutorial.categoria || "Informática")}
+                    </strong>
+                </p>
+
+                <p>
+                    ${escaparHTML(
+                        tutorial.resumo ||
+                        "Tutorial prático de informática."
+                    )}
+                </p>
+
+                <a
+                    href="${escaparAtributo(tutorial.link || "#")}"
+                    class="botao"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    ▶️ Assistir tutorial
+                </a>
+
+            `;
+
+            lista.appendChild(card);
+
+        });
+
+    } catch (erro) {
+
+        console.error("Erro ao carregar tutoriais:", erro);
+
+        lista.innerHTML = `
+
+            <div class="card">
+
+                <div class="icone">⚠️</div>
+
+                <h3>Não foi possível carregar os tutoriais</h3>
+
+                <p>
+                    Verifique a ligação à Internet e tente novamente.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* Proteção simples para texto vindo do Firestore */
+
+function escaparHTML(texto) {
+
+    return String(texto)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+function escaparAtributo(texto) {
+
+    return String(texto)
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+
+}
+
+
+carregarTutoriaisPublicos();
+
+</script>
+
+
 <script src="../js/script.js"></script>
 
 </body>
-              </html>
+        </html>
