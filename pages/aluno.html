@@ -75,20 +75,16 @@
 </div>
 
 
-        <!-- CONTEÚDOS -->
-        <div class="card">
+  <!-- CONTEÚDOS -->
+<div class="card">
 
-            <h2>📚 Conteúdos</h2>
+    <h2>📚 Conteúdos</h2>
 
-            <p>
-                Aceda aos conteúdos de informática disponíveis.
-            </p>
+    <div id="conteudosAluno">
+        <p>⏳ A carregar conteúdos...</p>
+    </div>
 
-            <button onclick="window.location.href='conteudos.html'">
-                Ver Conteúdos
-            </button>
-
-        </div>
+</div>
 
 
         <!-- TUTORIAIS -->
@@ -216,7 +212,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const dadosPerfil = document.getElementById("dadosPerfil");
 
 const meusCursos = document.getElementById("meusCursos");
-    
+
     /*
     ==========================================
     VERIFICAR LOGIN
@@ -266,6 +262,8 @@ const meusCursos = document.getElementById("meusCursos");
             const aluno = alunoRef.data();
 
 carregarMeusCursos(aluno);
+
+            carregarConteudosAluno();
             
             /*
             ==========================================
@@ -433,6 +431,75 @@ async function carregarMeusCursos(aluno) {
     }
 
                                                }
+
+async function carregarConteudosAluno() {
+
+    const area = document.getElementById("conteudosAluno");
+
+    try {
+
+        const snapshot = await firebase
+            .firestore()
+            .collection("conteudos")
+            .where("ativo", "==", true)
+            .get();
+
+        if (snapshot.empty) {
+
+            area.innerHTML = `
+                <p>📚 Ainda não existem conteúdos disponíveis.</p>
+            `;
+
+            return;
+        }
+
+        let html = "";
+
+        snapshot.forEach(function(doc) {
+
+            const conteudo = doc.data();
+
+            html += `
+                <div style="margin-bottom:20px;">
+
+                    <h3>
+                        📖 ${escaparHTML(conteudo.titulo || "Conteúdo")}
+                    </h3>
+
+                    <p>
+                        ${escaparHTML(
+                            conteudo.resumo || "Sem resumo disponível."
+                        )}
+                    </p>
+
+                    <button onclick="abrirConteudo('${doc.id}')">
+                        Ler conteúdo
+                    </button>
+
+                </div>
+            `;
+
+        });
+
+        area.innerHTML = html;
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        area.innerHTML = `
+            <p>❌ Não foi possível carregar os conteúdos.</p>
+        `;
+
+    }
+
+    }
+
+    function abrirConteudo(id) {
+
+    window.location.href = "conteudos.html?id=" + encodeURIComponent(id);
+
+    }
     
 /*
 ==========================================
