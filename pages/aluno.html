@@ -571,9 +571,10 @@ async function carregarMateriaisAluno() {
                         )}
                     </p>
 
-                    <button onclick="abrirMaterial('${escaparHTML(material.link || "")}')">
-                        📁 Abrir material
-                    </button>
+                    <button onclick="abrirMaterial(this.dataset.link)"
+        data-link="${escaparHTML(material.link || "")}">
+    📁 Abrir material
+</button>
 
                 </div>
             `;
