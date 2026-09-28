@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Área do Aluno | SGE Informática Prática</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+<header class="cabecalho">
+
+    <div class="logo">
+        <span>SGE</span>
+        <strong>Informática Prática</strong>
+    </div>
+
+    <button class="botao-menu" onclick="abrirMenu()">☰</button>
+
+    <nav id="menu">
+
+        <a href="../index.html">Início</a>
+        <a href="cursos.html">Cursos</a>
+        <a href="conteudos.html">Conteúdos</a>
+        <a href="tutoriais.html">Tutoriais</a>
+        <a href="materiais.html">Materiais</a>
+        <a href="comunidade.html">Comunidade</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="contactos.html">Contactos</a>
+
+    </nav>
+
+</header>
+
+
+<main>
+
+    <!-- CABEÇALHO DA ÁREA DO ALUNO -->
+
+    <section class="hero">
+
+        <div class="hero-conteudo">
+
+            <h1>Área do Aluno 🎓</h1>
+
+            <p id="boasVindas">
+                Bem-vindo à sua área de aprendizagem.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- PAINEL -->
+
+    <section class="secao">
+
+        <div class="container">
+
+            <h2>Meu painel</h2>
+
+            <div class="cards">
+
+
+                <!-- PERFIL -->
+
+                <article class="card">
+
+                    <div class="icone">👤</div>
+
+                    <h3>Meu Perfil</h3>
+
+                    <p>
+                        Consulte as informações da sua
+                        conta de aluno.
+                    </p>
+
+                    <button
+                        class="botao"
+                        onclick="mostrarPerfil()">
+                        Ver perfil
+                    </button>
+
+                </article>
+
+
+                <!-- CURSOS -->
+
+                <article class="card">
+
+                    <div class="icone">🎓</div>
+
+                    <h3>Meus Cursos</h3>
+
+                    <p>
+                        Consulte os cursos em que está
+                        inscrito.
+                    </p>
+
+                    <a
+                        href="cursos.html"
+                        class="botao">
+                        Ver cursos
+                    </a>
+
+                </article>
+
+
+                <!-- CONTEÚDOS -->
+
+                <article class="card">
+
+                    <div class="icone">📚</div>
+
+                    <h3>Conteúdos</h3>
+
+                    <p>
+                        Acesse conteúdos para continuar
+                        os seus estudos.
+                    </p>
+
+                    <a
+                        href="conteudos.html"
+                        class="botao">
+                        Estudar
+                    </a>
+
+                </article>
+
+
+                <!-- TUTORIAIS -->
+
+                <article class="card">
+
+                    <div class="icone">▶️</div>
+
+                    <h3>Tutoriais</h3>
+
+                    <p>
+                        Aprenda através de tutoriais
+                        práticos.
+                    </p>
+
+                    <a
+                        href="tutoriais.html"
+                        class="botao">
+                        Ver tutoriais
+                    </a>
+
+                </article>
+
+
+                <!-- MATERIAIS -->
+
+                <article class="card">
+
+                    <div class="icone">📂</div>
+
+                    <h3>Materiais</h3>
+
+                    <p>
+                        Consulte materiais de apoio
+                        disponibilizados pela plataforma.
+                    </p>
+
+                    <a
+                        href="materiais.html"
+                        class="botao">
+                        Ver materiais
+                    </a>
+
+                </article>
+
+
+                <!-- COMUNIDADE -->
+
+                <article class="card">
+
+                    <div class="icone">🤝</div>
+
+                    <h3>Comunidade</h3>
+
+                    <p>
+                        Participe da comunidade SGE
+                        Informática Prática.
+                    </p>
+
+                    <a
+                        href="comunidade.html"
+                        class="botao">
+                        Participar
+                    </a>
+
+                </article>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- PERFIL DO ALUNO -->
+
+    <section
+        class="secao"
+        id="areaPerfil"
+        style="display:none;">
+
+        <div class="container">
+
+            <div class="card">
+
+                <h2>Meu Perfil</h2>
+
+                <p>
+                    <strong>E-mail:</strong>
+                    <span id="emailAluno"></span>
+                </p>
+
+                <p>
+                    <strong>ID da conta:</strong>
+                    <span id="uidAluno"></span>
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SAIR -->
+
+    <section class="secao">
+
+        <div class="container">
+
+            <div class="card">
+
+                <h2>Sair da conta</h2>
+
+                <p>
+                    Quando terminar os seus estudos,
+                    pode sair da sua conta com segurança.
+                </p>
+
+                <button
+                    class="botao"
+                    onclick="sairAluno()">
+                    🚪 Sair
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer class="rodape">
+
+    <p>
+        © 2026 SGE Informática Prática.
+        Todos os direitos reservados.
+    </p>
+
+</footer>
+
+
+<script src="../js/script.js"></script>
+
+
+<!-- FIREBASE -->
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+
+<script>
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDoekE76yr3qT0r3MJxJ12Rk5moryQFGbk",
+    authDomain: "sge-informatica-pratica-4ad2d.firebaseapp.com",
+    projectId: "sge-informatica-pratica-4ad2d",
+    storageBucket: "sge-informatica-pratica-4ad2d.firebasestorage.app",
+    messagingSenderId: "957035603926",
+    appId: "1:957035603926:web:603b9d295a4abdab7ee677"
+};
+
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+
+
+/* VERIFICAR LOGIN */
+
+auth.onAuthStateChanged(function(user) {
+
+    if (!user) {
+
+        window.location.href =
+            "login-aluno.html";
+
+        return;
+
+    }
+
+
+    document.getElementById("boasVindas").textContent =
+        "Bem-vindo! A sua conta está autenticada.";
+
+
+    document.getElementById("emailAluno").textContent =
+        user.email;
+
+
+    document.getElementById("uidAluno").textContent =
+        user.uid;
+
+});
+
+
+/* MOSTRAR PERFIL */
+
+function mostrarPerfil() {
+
+    const area =
+        document.getElementById("areaPerfil");
+
+    area.style.display = "block";
+
+    area.scrollIntoView({
+        behavior: "smooth"
+    });
+
+}
+
+
+/* SAIR */
+
+function sairAluno() {
+
+    auth.signOut()
+
+        .then(function() {
+
+            sessionStorage.removeItem("alunoUid");
+
+            sessionStorage.removeItem("alunoEmail");
+
+            window.location.href =
+                "login-aluno.html";
+
+        })
+
+        .catch(function(error) {
+
+            alert(
+                "Não foi possível sair da conta."
+            );
+
+        });
+
+}
+
+</script>
+
+</body>
+  </html>
