@@ -88,19 +88,15 @@
 
 
         <!-- TUTORIAIS -->
-        <div class="card">
+<div class="card">
 
-            <h2>▶️ Tutoriais</h2>
+    <h2>▶️ Tutoriais</h2>
 
-            <p>
-                Aprenda através de tutoriais práticos.
-            </p>
+    <div id="tutoriaisAluno">
+        <p>⏳ A carregar tutoriais...</p>
+    </div>
 
-            <button onclick="window.location.href='tutoriais.html'">
-                Ver Tutoriais
-            </button>
-
-        </div>
+</div>
 
 
         <!-- MATERIAIS -->
@@ -264,6 +260,8 @@ const meusCursos = document.getElementById("meusCursos");
 carregarMeusCursos(aluno);
 
             carregarConteudosAluno();
+
+    carregarTutoriaisAluno();
             
             /*
             ==========================================
@@ -498,6 +496,77 @@ async function carregarConteudosAluno() {
     function abrirConteudo(id) {
 
     window.location.href = "conteudos.html?id=" + encodeURIComponent(id);
+
+    }
+
+async function carregarTutoriaisAluno() {
+
+    const area = document.getElementById("tutoriaisAluno");
+
+    try {
+
+        const snapshot = await firebase
+            .firestore()
+            .collection("tutoriais")
+            .where("ativo", "==", true)
+            .get();
+
+        if (snapshot.empty) {
+
+            area.innerHTML = `
+                <p>▶️ Ainda não existem tutoriais disponíveis.</p>
+            `;
+
+            return;
+        }
+
+        let html = "";
+
+        snapshot.forEach(function(doc) {
+
+            const tutorial = doc.data();
+
+            html += `
+                <div style="margin-bottom:20px;">
+
+                    <h3>
+                        ▶️ ${escaparHTML(
+                            tutorial.titulo || "Tutorial"
+                        )}
+                    </h3>
+
+                    <p>
+                        ${escaparHTML(
+                            tutorial.resumo || "Sem descrição disponível."
+                        )}
+                    </p>
+
+                    <button onclick="abrirTutorial('${doc.id}')">
+                        Assistir tutorial
+                    </button>
+
+                </div>
+            `;
+
+        });
+
+        area.innerHTML = html;
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        area.innerHTML = `
+            <p>❌ Não foi possível carregar os tutoriais.</p>
+        `;
+
+    }
+
+            }
+
+    function abrirTutorial(id) {
+
+    window.location.href = "tutoriais.html?id=" + encodeURIComponent(id);
 
     }
     
