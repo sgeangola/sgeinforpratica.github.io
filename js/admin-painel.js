@@ -421,7 +421,6 @@ function classeEstado(estado) {
 
 }
 
-
 // ========================================
 // ALTERAR ESTADO
 // ========================================
@@ -430,12 +429,211 @@ async function alterarEstado(id, novoEstado) {
 
     try {
 
+        // ========================================
+        // SE FOR CONFIRMAR O ALUNO
+        // ========================================
+
+        if (novoEstado === "Confirmada") {
+
+            const documento =
+                await db
+                    .collection("inscricoes")
+                    .doc(id)
+                    .get();
+
+
+            if (!documento.exists) {
+
+                alert(
+                    "❌ Esta inscrição não foi encontrada."
+                );
+
+                return;
+
+            }
+
+
+            const dados =
+                documento.data();
+
+
+            const alunoUid =
+                dados.alunoUid;
+
+
+            const cursoId =
+                dados.cursoId;
+
+
+            // ========================================
+            // VERIFICAR CONTA DO ALUNO
+            // ========================================
+
+            if (!alunoUid) {
+
+                alert(
+                    "❌ Esta inscrição não possui uma conta de aluno associada."
+                );
+
+                return;
+
+            }
+
+
+            if (!cursoId) {
+
+                alert(
+                    "❌ Esta inscrição não possui um curso associado."
+                );
+
+                return;
+
+            }
+
+
+            // ========================================
+            // VERIFICAR SE O ALUNO JÁ EXISTE
+            // ========================================
+
+            const alunoRef =
+                db
+                    .collection("alunos")
+                    .doc(alunoUid);
+
+
+            const alunoDocumento =
+                await alunoRef.get();
+
+
+            if (alunoDocumento.exists) {
+
+                // ========================================
+                // ALUNO JÁ EXISTE
+                // ADICIONAR CURSO SE NECESSÁRIO
+                // ========================================
+
+                const aluno =
+                    alunoDocumento.data();
+
+
+                let cursos =
+                    aluno.cursos || [];
+
+
+                if (!cursos.includes(cursoId)) {
+
+                    cursos.push(cursoId);
+
+                }
+
+
+                await alunoRef.update({
+
+                    nome:
+                        dados.nome || aluno.nome || "",
+
+                    email:
+                        dados.email || aluno.email || "",
+
+                    ativo:
+                        true,
+
+                    cursos:
+                        cursos
+
+                });
+
+            } else {
+
+                // ========================================
+                // CRIAR DOCUMENTO DO ALUNO
+                // ========================================
+
+                await alunoRef.set({
+
+                    nome:
+                        dados.nome || "",
+
+                    email:
+                        dados.email || "",
+
+                    ativo:
+                        true,
+
+                    cursos:
+                        [cursoId],
+
+                    dataCriacao:
+                        firebase.firestore
+                            .FieldValue
+                            .serverTimestamp()
+
+                });
+
+            }
+
+
+            // ========================================
+            // CONFIRMAR INSCRIÇÃO
+            // ========================================
+
+            await db
+                .collection("inscricoes")
+                .doc(id)
+                .update({
+
+                    estado:
+                        "Confirmada",
+
+                    dataConfirmacao:
+                        firebase.firestore
+                            .FieldValue
+                            .serverTimestamp()
+
+                });
+
+
+            alert(
+
+                "✅ ALUNO CONFIRMADO COM SUCESSO!\n\n" +
+
+                "👤 Nome: " +
+                (dados.nome || "Aluno") +
+
+                "\n\n" +
+
+                "📧 E-mail: " +
+                (dados.email || "Não informado") +
+
+                "\n\n" +
+
+                "📚 O curso foi associado à conta do aluno.\n\n" +
+
+                "O aluno já poderá entrar na Área do Aluno " +
+                "com o e-mail e a senha que criou na inscrição."
+
+            );
+
+
+            carregarInscricoes();
+
+
+            return;
+
+        }
+
+
+        // ========================================
+        // OUTROS ESTADOS
+        // ========================================
+
         await db
             .collection("inscricoes")
             .doc(id)
             .update({
 
-                estado: novoEstado
+                estado:
+                    novoEstado
 
             });
 
@@ -456,14 +654,22 @@ async function alterarEstado(id, novoEstado) {
             erro
         );
 
+
         alert(
-            "❌ Não foi possível alterar o estado."
+
+            "❌ Não foi possível alterar o estado.\n\n" +
+
+            "Erro: " +
+            (
+                erro.message ||
+                "Erro desconhecido."
+            )
+
         );
 
     }
 
-}
-
+    }
 
 // ========================================
 // ELIMINAR INSCRIÇÃO
