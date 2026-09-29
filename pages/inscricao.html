@@ -445,9 +445,10 @@ async function carregarCursosInscricao() {
 
             const opcao = document.createElement("option");
 
-            opcao.value = curso.nome || "";
+            opcao.value = doc.id;
 
-            opcao.textContent = curso.nome || "Curso sem nome";
+opcao.textContent = curso.nome || "Curso sem nome";
+
 
             selectCurso.appendChild(opcao);
 
