@@ -73,6 +73,8 @@ if (!firebase.apps.length) {
 
 const db = firebase.firestore();
 
+const auth = firebase.auth();
+
 
 // ========================================
 // FORMULÁRIO DE INSCRIÇÃO
@@ -80,120 +82,347 @@ const db = firebase.firestore();
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    const formulario = document.getElementById("formInscricao");
+    const formulario =
+        document.getElementById("formInscricao");
+
 
     if (!formulario) {
         return;
     }
 
 
-    formulario.addEventListener("submit", async function (event) {
+    formulario.addEventListener(
+        "submit",
+        async function (event) {
 
-        event.preventDefault();
-
-
-        // Capturar dados
-
-        const nome = document.getElementById("nome").value.trim();
-
-        const telefone = document.getElementById("telefone").value.trim();
-
-        const email = document.getElementById("email").value.trim();
-
-        const curso = document.getElementById("curso").value;
-
-        const nivel = document.getElementById("nivel").value;
-
-        const modalidade = document.getElementById("modalidade").value;
-
-        const municipio = document.getElementById("municipio").value.trim();
-
-        const observacao = document.getElementById("observacao").value.trim();
+            event.preventDefault();
 
 
-        // Verificação
+            // ========================================
+            // CAPTURAR DADOS
+            // ========================================
 
-        if (!nome || !telefone || !curso) {
-
-            alert("Por favor, preencha todos os campos obrigatórios.");
-
-            return;
-
-        }
-
-
-        // Desativar botão enquanto envia
-
-        const botao = formulario.querySelector("button[type='submit']");
-
-        const textoOriginal = botao.innerHTML;
-
-        botao.disabled = true;
-
-        botao.innerHTML = "⏳ Enviando...";
+            const nome =
+                document
+                    .getElementById("nome")
+                    .value
+                    .trim();
 
 
-        try {
+            const telefone =
+                document
+                    .getElementById("telefone")
+                    .value
+                    .trim();
 
 
-            // Guardar inscrição no Firestore
-
-            await db.collection("inscricoes").add({
-
-                nome: nome,
-
-                telefone: telefone,
-
-                email: email,
-
-                cursoId: curso,
-
-                nivel: nivel,
-
-                modalidade: modalidade,
-
-                municipio: municipio,
-
-                observacao: observacao,
-
-                estado: "Pendente",
-
-                dataInscricao: firebase.firestore.FieldValue.serverTimestamp()
-
-            });
+            const email =
+                document
+                    .getElementById("email")
+                    .value
+                    .trim();
 
 
-            // Sucesso
-
-            alert(
-                "✅ Inscrição enviada com sucesso!\n\n" +
-                "A sua inscrição foi recebida pelo SGE Informática Prática."
-            );
+            const senha =
+                document
+                    .getElementById("senha")
+                    .value;
 
 
-            // Limpar formulário
-
-            formulario.reset();
-
-
-        } catch (erro) {
-
-            console.error("Erro ao enviar inscrição:", erro);
-
-            alert(
-                "❌ Não foi possível enviar a inscrição.\n\n" +
-                "Verifique a sua ligação à Internet e tente novamente."
-            );
-
-        }
+            const confirmarSenha =
+                document
+                    .getElementById("confirmarSenha")
+                    .value;
 
 
-        // Restaurar botão
+            const curso =
+                document
+                    .getElementById("curso")
+                    .value;
 
-        botao.disabled = false;
 
-        botao.innerHTML = textoOriginal;
+            const nivel =
+                document
+                    .getElementById("nivel")
+                    .value;
 
-    });
+
+            const modalidade =
+                document
+                    .getElementById("modalidade")
+                    .value;
+
+
+            const municipio =
+                document
+                    .getElementById("municipio")
+                    .value
+                    .trim();
+
+
+            const observacao =
+                document
+                    .getElementById("observacao")
+                    .value
+                    .trim();
+
+
+            // ========================================
+            // VERIFICAR DADOS
+            // ========================================
+
+            if (
+                !nome ||
+                !telefone ||
+                !email ||
+                !senha ||
+                !confirmarSenha ||
+                !curso
+            ) {
+
+                alert(
+                    "⚠️ Preencha todos os campos obrigatórios."
+                );
+
+                return;
+
+            }
+
+
+            // ========================================
+            // VERIFICAR SENHA
+            // ========================================
+
+            if (senha.length < 6) {
+
+                alert(
+                    "❌ A senha deve ter pelo menos 6 caracteres."
+                );
+
+                return;
+
+            }
+
+
+            if (senha !== confirmarSenha) {
+
+                alert(
+                    "❌ As senhas não coincidem."
+                );
+
+                return;
+
+            }
+
+
+            // ========================================
+            // DESATIVAR BOTÃO
+            // ========================================
+
+            const botao =
+                formulario.querySelector(
+                    "button[type='submit']"
+                );
+
+
+            const textoOriginal =
+                botao.innerHTML;
+
+
+            botao.disabled = true;
+
+
+            botao.innerHTML =
+                "⏳ Criando conta...";
+
+
+            try {
+
+                // ========================================
+                // CRIAR CONTA
+                // ========================================
+
+                const resultado =
+                    await auth
+                        .createUserWithEmailAndPassword(
+                            email,
+                            senha
+                        );
+
+
+                const usuario =
+                    resultado.user;
+
+
+                // ========================================
+                // CRIAR INSCRIÇÃO
+                // ========================================
+
+                await db
+                    .collection("inscricoes")
+                    .add({
+
+                        alunoUid:
+                            usuario.uid,
+
+                        nome:
+                            nome,
+
+                        telefone:
+                            telefone,
+
+                        email:
+                            email,
+
+                        cursoId:
+                            curso,
+
+                        nivel:
+                            nivel,
+
+                        modalidade:
+                            modalidade,
+
+                        municipio:
+                            municipio,
+
+                        observacao:
+                            observacao,
+
+                        estado:
+                            "Pendente",
+
+                        dataInscricao:
+                            firebase.firestore
+                                .FieldValue
+                                .serverTimestamp()
+
+                    });
+
+
+                // ========================================
+                // SAIR DA CONTA
+                // ========================================
+
+                await auth.signOut();
+
+
+                // ========================================
+                // MENSAGEM DE SUCESSO
+                // ========================================
+
+                alert(
+                    "✅ CONTA CRIADA COM SUCESSO!\n\n" +
+
+                    "A sua inscrição foi enviada " +
+                    "para análise.\n\n" +
+
+                    "📌 Estado: Pendente\n\n" +
+
+                    "Depois da confirmação, poderá " +
+                    "entrar na Área do Aluno usando " +
+                    "o e-mail e a senha que criou."
+                );
+
+
+                // Limpar formulário
+
+                formulario.reset();
+
+
+            } catch (erro) {
+
+                console.error(
+                    "Erro ao criar conta:",
+                    erro
+                );
+
+
+                // ========================================
+                // E-MAIL JÁ EXISTENTE
+                // ========================================
+
+                if (
+                    erro.code ===
+                    "auth/email-already-in-use"
+                ) {
+
+                    alert(
+                        "❌ Este e-mail já possui uma conta.\n\n" +
+
+                        "Utilize outro e-mail ou entre " +
+                        "na sua conta."
+                    );
+
+                }
+
+
+                // ========================================
+                // E-MAIL INVÁLIDO
+                // ========================================
+
+                else if (
+                    erro.code ===
+                    "auth/invalid-email"
+                ) {
+
+                    alert(
+                        "❌ O e-mail informado não é válido."
+                    );
+
+                }
+
+
+                // ========================================
+                // SENHA FRACA
+                // ========================================
+
+                else if (
+                    erro.code ===
+                    "auth/weak-password"
+                ) {
+
+                    alert(
+                        "❌ A senha é muito fraca.\n\n" +
+
+                        "Utilize pelo menos 6 caracteres."
+                    );
+
+                }
+
+
+                // ========================================
+                // OUTRO ERRO
+                // ========================================
+
+                else {
+
+                    alert(
+                        "❌ Não foi possível criar a conta.\n\n" +
+
+                        "Erro: " +
+                        (
+                            erro.message ||
+                            "Erro desconhecido."
+                        )
+                    );
+
+                }
+
+
+            } finally {
+
+                // ========================================
+                // RESTAURAR BOTÃO
+                // ========================================
+
+                botao.disabled = false;
+
+                botao.innerHTML =
+                    textoOriginal;
+
+            }
+
+        });
 
 });
