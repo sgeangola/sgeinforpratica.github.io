@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 email: email,
 
-                curso: curso,
+                cursoId: curso,
 
                 nivel: nivel,
 
