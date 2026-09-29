@@ -34,6 +34,9 @@ const db = firebase.firestore();
 
 let todasInscricoes = [];
 
+let cursosDisponiveis = {};
+
+
 // ========================================
 // VERIFICAR ADMINISTRADOR
 // ========================================
@@ -42,8 +45,7 @@ auth.onAuthStateChanged(async function (usuario) {
 
     if (!usuario) {
 
-        window.location.href =
-            "login.html";
+        window.location.href = "login.html";
 
         return;
 
@@ -70,13 +72,14 @@ auth.onAuthStateChanged(async function (usuario) {
                 "Você não possui permissão de administrador."
             );
 
-            window.location.href =
-                "login.html";
+            window.location.href = "login.html";
 
             return;
 
         }
 
+
+        await carregarCursos();
 
         carregarInscricoes();
 
@@ -94,12 +97,78 @@ auth.onAuthStateChanged(async function (usuario) {
 
         await auth.signOut();
 
-        window.location.href =
-            "login.html";
+        window.location.href = "login.html";
 
     }
 
 });
+
+
+// ========================================
+// CARREGAR CURSOS
+// ========================================
+
+async function carregarCursos() {
+
+    try {
+
+        const resultado =
+            await db
+                .collection("cursos")
+                .get();
+
+
+        cursosDisponiveis = {};
+
+
+        resultado.forEach(function (doc) {
+
+            const dados = doc.data();
+
+            cursosDisponiveis[doc.id] =
+                dados.nome || "Curso sem nome";
+
+        });
+
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao carregar cursos:",
+            erro
+        );
+
+        cursosDisponiveis = {};
+
+    }
+
+}
+
+
+// ========================================
+// OBTER NOME DO CURSO
+// ========================================
+
+function obterNomeCurso(dados) {
+
+    // Novas inscrições
+    if (dados.cursoId) {
+
+        return cursosDisponiveis[dados.cursoId]
+            || "Curso não encontrado";
+
+    }
+
+    // Inscrições antigas
+    if (dados.curso) {
+
+        return dados.curso;
+
+    }
+
+    return "Não informado";
+
+}
 
 
 // ========================================
@@ -127,7 +196,6 @@ async function carregarInscricoes() {
 
     semDados.style.display = "none";
 
-
     lista.innerHTML = "";
 
 
@@ -149,17 +217,24 @@ async function carregarInscricoes() {
         let formacao = 0;
         let concluidas = 0;
 
-todasInscricoes = [];
-        
+
+        todasInscricoes = [];
+
+
         resultado.forEach(function (doc) {
 
             const dados = doc.data();
 
+
             todasInscricoes.push({
-    id: doc.id,
-    dados: dados
-});
-            
+
+                id: doc.id,
+
+                dados: dados
+
+            });
+
+
             total++;
 
 
@@ -184,6 +259,10 @@ todasInscricoes = [];
             }
 
 
+            const cursoNome =
+                obterNomeCurso(dados);
+
+
             const linha =
                 document.createElement("tr");
 
@@ -199,7 +278,7 @@ todasInscricoes = [];
                 </td>
 
                 <td>
-                    ${dados.curso || ""}
+                    ${cursoNome}
                 </td>
 
                 <td>
@@ -224,13 +303,13 @@ todasInscricoes = [];
 
                     <div class="acoes">
 
-<button
-    class="btn-pequeno"
-    style="background:#6c757d;color:white;"
-    onclick="verInscricao('${doc.id}')"
->
-    👁️ Ver
-</button>
+                        <button
+                            class="btn-pequeno"
+                            style="background:#6c757d;color:white;"
+                            onclick="verInscricao('${doc.id}')"
+                        >
+                            👁️ Ver
+                        </button>
 
                         <button
                             class="btn-pequeno btn-confirmar"
@@ -300,6 +379,9 @@ todasInscricoes = [];
             tabela.style.display = "table";
 
         }
+
+
+        atualizarCursos();
 
 
     } catch (erro) {
@@ -454,6 +536,7 @@ async function sair() {
 
 }
 
+
 // ========================================
 // PESQUISA E FILTROS
 // ========================================
@@ -512,9 +595,13 @@ function filtrarInscricoes() {
             dados.estado === estado;
 
 
+        const nomeCurso =
+            obterNomeCurso(dados);
+
+
         const correspondeCurso =
             !curso ||
-            dados.curso === curso;
+            nomeCurso === curso;
 
 
         if (
@@ -536,17 +623,29 @@ function filtrarInscricoes() {
 
             linha.innerHTML = `
 
-                <td>${dados.nome || ""}</td>
+                <td>
+                    ${dados.nome || ""}
+                </td>
 
-                <td>${dados.telefone || ""}</td>
+                <td>
+                    ${dados.telefone || ""}
+                </td>
 
-                <td>${dados.curso || ""}</td>
+                <td>
+                    ${nomeCurso}
+                </td>
 
-                <td>${dados.nivel || ""}</td>
+                <td>
+                    ${dados.nivel || ""}
+                </td>
 
-                <td>${dados.modalidade || ""}</td>
+                <td>
+                    ${dados.modalidade || ""}
+                </td>
 
-                <td>${dados.municipio || ""}</td>
+                <td>
+                    ${dados.municipio || ""}
+                </td>
 
                 <td>
                     <span class="estado ${classeEstado(estadoAtual)}">
@@ -558,13 +657,13 @@ function filtrarInscricoes() {
 
                     <div class="acoes">
 
-<button
-    class="btn-pequeno"
-    style="background:#6c757d;color:white;"
-    onclick="verInscricao('${item.id}')"
->
-    👁️ Ver
-</button>
+                        <button
+                            class="btn-pequeno"
+                            style="background:#6c757d;color:white;"
+                            onclick="verInscricao('${item.id}')"
+                        >
+                            👁️ Ver
+                        </button>
 
                         <button
                             class="btn-pequeno btn-confirmar"
@@ -628,6 +727,7 @@ function filtrarInscricoes() {
 
 
     atualizarCursos();
+
 }
 
 
@@ -656,7 +756,7 @@ function atualizarCursos() {
     todasInscricoes.forEach(function (item) {
 
         const curso =
-            item.dados.curso;
+            obterNomeCurso(item.dados);
 
 
         if (
@@ -680,9 +780,11 @@ function atualizarCursos() {
         const option =
             document.createElement("option");
 
+
         option.value = curso;
 
         option.textContent = curso;
+
 
         select.appendChild(option);
 
@@ -690,10 +792,13 @@ function atualizarCursos() {
 
 
     if (cursos.includes(cursoAtual)) {
+
         select.value = cursoAtual;
+
     }
 
-                }
+}
+
 
 // ========================================
 // VER DETALHES DA INSCRIÇÃO
@@ -717,6 +822,7 @@ async function verInscricao(id) {
             );
 
             return;
+
         }
 
 
@@ -733,47 +839,62 @@ async function verInscricao(id) {
                 : "Não disponível";
 
 
+        const cursoNome =
+            obterNomeCurso(dados);
+
+
         alert(
+
             "📋 DETALHES DA CANDIDATURA\n\n" +
 
             "👤 Nome: " +
             (dados.nome || "Não informado") +
+
             "\n\n" +
 
             "📞 Telefone: " +
             (dados.telefone || "Não informado") +
+
             "\n\n" +
 
             "📧 E-mail: " +
             (dados.email || "Não informado") +
+
             "\n\n" +
 
             "📚 Curso: " +
-            (dados.curso || "Não informado") +
+            cursoNome +
+
             "\n\n" +
 
             "📊 Nível: " +
             (dados.nivel || "Não informado") +
+
             "\n\n" +
 
             "💻 Modalidade: " +
             (dados.modalidade || "Não informado") +
+
             "\n\n" +
 
             "📍 Município: " +
             (dados.municipio || "Não informado") +
+
             "\n\n" +
 
             "📝 Observação: " +
             (dados.observacao || "Nenhuma") +
+
             "\n\n" +
 
             "📌 Estado: " +
             (dados.estado || "Pendente") +
+
             "\n\n" +
 
             "📅 Data: " +
             data
+
         );
 
 
@@ -791,4 +912,4 @@ async function verInscricao(id) {
 
     }
 
-}
+    }
