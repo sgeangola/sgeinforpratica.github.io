@@ -385,25 +385,19 @@
     Todos os direitos reservados.
 </p>
 
-</footer><!-- FIREBASE --><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script><script>
+</footer>
+    
+    <!-- FIREBASE -->
 
-const firebaseConfig = {
-    apiKey: "AIzaSyDoekE76yr3qT0r3MJxJ12Rk5moryQFGbk",
-    authDomain: "sge-informatica-pratica-4ad2d.firebaseapp.com",
-    projectId: "sge-informatica-pratica-4ad2d",
-    storageBucket: "sge-informatica-pratica-4ad2d.firebasestorage.app",
-    messagingSenderId: "957035603926",
-    appId: "1:957035603926:web:603b9d295a4abdab7ee677"
-};
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
-const db = firebase.firestore();
+<script>
 
-
+// ========================================
 // CARREGAR CURSOS ATIVOS
+// ========================================
 
 async function carregarCursosInscricao() {
 
@@ -445,10 +439,11 @@ async function carregarCursosInscricao() {
 
             const opcao = document.createElement("option");
 
+            // Guarda o ID do curso
             opcao.value = doc.id;
 
-opcao.textContent = curso.nome || "Curso sem nome";
-
+            // Mostra o nome do curso
+            opcao.textContent = curso.nome || "Curso sem nome";
 
             selectCurso.appendChild(opcao);
 
@@ -470,7 +465,9 @@ opcao.textContent = curso.nome || "Curso sem nome";
 }
 
 
+// ========================================
 // CARREGAR QUANDO A PÁGINA ABRIR
+// ========================================
 
 document.addEventListener("DOMContentLoaded", function() {
 
@@ -478,5 +475,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 
-</script><script src="../js/script.js"></script></body>
-    </html>
+</script>
+
+<script src="../js/script.js"></script>
+
+</body>
+</html>
