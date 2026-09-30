@@ -29,9 +29,7 @@ let tutorialEditando = null;
 auth.onAuthStateChanged(async function(user) {
 
     if (!user) {
-
         window.location.href = "login.html";
-
         return;
     }
 
@@ -56,6 +54,7 @@ auth.onAuthStateChanged(async function(user) {
             return;
         }
 
+        await carregarCursosTutoriais();
         carregarTutoriais();
 
     } catch (erro) {
@@ -71,6 +70,115 @@ auth.onAuthStateChanged(async function(user) {
 
 
 // ========================================
+// CARREGAR CURSOS
+// ========================================
+
+async function carregarCursosTutoriais() {
+
+    const select =
+        document.getElementById("cursoTutorial");
+
+    if (!select) {
+        return;
+    }
+
+    select.innerHTML = `
+        <option value="">
+            ⏳ A carregar cursos...
+        </option>
+    `;
+
+    try {
+
+        const snapshot = await db
+            .collection("cursos")
+            .where("ativo", "==", true)
+            .get();
+
+        select.innerHTML = `
+            <option value="">
+                Selecione o curso
+            </option>
+        `;
+
+        if (snapshot.empty) {
+
+            select.innerHTML = `
+                <option value="">
+                    Nenhum curso disponível
+                </option>
+            `;
+
+            return;
+        }
+
+        snapshot.forEach(function(doc) {
+
+            const curso = doc.data();
+
+            const option =
+                document.createElement("option");
+
+            option.value = doc.id;
+
+            option.textContent =
+                curso.nome || "Curso sem nome";
+
+            select.appendChild(option);
+
+        });
+
+    } catch (erro) {
+
+        select.innerHTML = `
+            <option value="">
+                ❌ Erro ao carregar cursos
+            </option>
+        `;
+
+        alert(
+            "Erro ao carregar cursos: " +
+            erro.message
+        );
+
+    }
+
+}
+
+
+// ========================================
+// OBTER NOME DO CURSO
+// ========================================
+
+async function obterNomeCursoTutorial(cursoId) {
+
+    if (!cursoId) {
+        return "Sem curso";
+    }
+
+    try {
+
+        const doc = await db
+            .collection("cursos")
+            .doc(cursoId)
+            .get();
+
+        if (!doc.exists) {
+            return "Curso não encontrado";
+        }
+
+        return doc.data().nome || "Curso sem nome";
+
+    } catch (erro) {
+
+        return "Erro no curso";
+
+    }
+
+}
+
+
+// ========================================
 // CARREGAR TUTORIAIS
 // ========================================
 
@@ -81,7 +189,7 @@ async function carregarTutoriais() {
 
     lista.innerHTML = `
         <tr>
-            <td colspan="5">
+            <td colspan="6">
                 ⏳ A carregar tutoriais...
             </td>
         </tr>
@@ -95,12 +203,11 @@ async function carregarTutoriais() {
 
         lista.innerHTML = "";
 
-
         if (snapshot.empty) {
 
             lista.innerHTML = `
                 <tr>
-                    <td colspan="5">
+                    <td colspan="6">
                         Nenhum tutorial cadastrado.
                     </td>
                 </tr>
@@ -109,18 +216,20 @@ async function carregarTutoriais() {
             return;
         }
 
-
-        snapshot.forEach(function(doc) {
+        for (const doc of snapshot.docs) {
 
             const tutorial = doc.data();
 
             const ativo =
                 tutorial.ativo === true;
 
+            const nomeCurso =
+                await obterNomeCursoTutorial(
+                    tutorial.cursoId
+                );
 
             const tr =
                 document.createElement("tr");
-
 
             tr.innerHTML = `
 
@@ -130,6 +239,10 @@ async function carregarTutoriais() {
 
                 <td>
                     ${tutorial.categoria || ""}
+                </td>
+
+                <td>
+                    ${nomeCurso}
                 </td>
 
                 <td>
@@ -167,7 +280,6 @@ async function carregarTutoriais() {
                             ✏️ Editar
                         </button>
 
-
                         <button
                             class="btn-ativar"
                             onclick="alterarEstadoTutorial(
@@ -182,7 +294,6 @@ async function carregarTutoriais() {
                             }
                         </button>
 
-
                         <button
                             class="btn-perigo"
                             onclick="eliminarTutorial('${doc.id}')"
@@ -196,17 +307,15 @@ async function carregarTutoriais() {
 
             `;
 
-
             lista.appendChild(tr);
 
-        });
-
+        }
 
     } catch (erro) {
 
         lista.innerHTML = `
             <tr>
-                <td colspan="5">
+                <td colspan="6">
                     ❌ Erro ao carregar tutoriais.
                 </td>
             </tr>
@@ -234,16 +343,17 @@ function novoTutorial() {
         "tituloFormulario"
     ).textContent = "Novo tutorial";
 
-
     document.getElementById(
         "tutorialForm"
     ).reset();
 
+    document.getElementById(
+        "cursoTutorial"
+    ).value = "";
 
     document.getElementById(
         "formTutorial"
     ).style.display = "block";
-
 
     window.scrollTo({
         top: 0,
@@ -265,6 +375,9 @@ function cancelarTutorial() {
         "tutorialForm"
     ).reset();
 
+    document.getElementById(
+        "cursoTutorial"
+    ).value = "";
 
     document.getElementById(
         "formTutorial"
@@ -285,24 +398,25 @@ document.getElementById(
 
         event.preventDefault();
 
-
         const titulo =
             document.getElementById(
                 "tituloTutorial"
             ).value.trim();
-
 
         const categoria =
             document.getElementById(
                 "categoriaTutorial"
             ).value;
 
+        const cursoId =
+            document.getElementById(
+                "cursoTutorial"
+            ).value;
 
         const resumo =
             document.getElementById(
                 "resumoTutorial"
             ).value.trim();
-
 
         const link =
             document.getElementById(
@@ -313,12 +427,13 @@ document.getElementById(
         if (
             !titulo ||
             !categoria ||
+            !cursoId ||
             !resumo ||
             !link
         ) {
 
             alert(
-                "Preencha todos os campos."
+                "Preencha todos os campos, incluindo o curso."
             );
 
             return;
@@ -326,7 +441,6 @@ document.getElementById(
 
 
         try {
-
 
             if (tutorialEditando) {
 
@@ -338,6 +452,8 @@ document.getElementById(
                         titulo: titulo,
 
                         categoria: categoria,
+
+                        cursoId: cursoId,
 
                         resumo: resumo,
 
@@ -355,9 +471,7 @@ document.getElementById(
                     "Tutorial atualizado com sucesso!"
                 );
 
-
             } else {
-
 
                 await db
                     .collection("tutoriais")
@@ -366,6 +480,8 @@ document.getElementById(
                         titulo: titulo,
 
                         categoria: categoria,
+
+                        cursoId: cursoId,
 
                         resumo: resumo,
 
@@ -387,11 +503,9 @@ document.getElementById(
 
             }
 
-
             cancelarTutorial();
 
             carregarTutoriais();
-
 
         } catch (erro) {
 
@@ -419,7 +533,6 @@ async function editarTutorial(id) {
             .doc(id)
             .get();
 
-
         if (!doc.exists) {
 
             alert(
@@ -429,55 +542,50 @@ async function editarTutorial(id) {
             return;
         }
 
-
         const tutorial =
             doc.data();
 
-
         tutorialEditando = id;
-
 
         document.getElementById(
             "tituloFormulario"
         ).textContent =
             "Editar tutorial";
 
-
         document.getElementById(
             "tituloTutorial"
         ).value =
             tutorial.titulo || "";
-
 
         document.getElementById(
             "categoriaTutorial"
         ).value =
             tutorial.categoria || "";
 
+        document.getElementById(
+            "cursoTutorial"
+        ).value =
+            tutorial.cursoId || "";
 
         document.getElementById(
             "resumoTutorial"
         ).value =
             tutorial.resumo || "";
 
-
         document.getElementById(
             "linkTutorial"
         ).value =
             tutorial.link || "";
-
 
         document.getElementById(
             "formTutorial"
         ).style.display =
             "block";
 
-
         window.scrollTo({
             top: 0,
             behavior: "smooth"
         });
-
 
     } catch (erro) {
 
@@ -503,7 +611,6 @@ async function alterarEstadoTutorial(
     const novoEstado =
         !atualmenteAtivo;
 
-
     try {
 
         await db
@@ -515,16 +622,13 @@ async function alterarEstadoTutorial(
 
             });
 
-
         alert(
             novoEstado
             ? "Tutorial ativado."
             : "Tutorial desativado."
         );
 
-
         carregarTutoriais();
-
 
     } catch (erro) {
 
@@ -549,12 +653,9 @@ async function eliminarTutorial(id) {
             "Tem certeza que deseja eliminar este tutorial?"
         );
 
-
     if (!confirmar) {
-
         return;
     }
-
 
     try {
 
@@ -563,14 +664,11 @@ async function eliminarTutorial(id) {
             .doc(id)
             .delete();
 
-
         alert(
             "Tutorial eliminado com sucesso!"
         );
 
-
         carregarTutoriais();
-
 
     } catch (erro) {
 
@@ -581,4 +679,4 @@ async function eliminarTutorial(id) {
 
     }
 
-  }
+}
