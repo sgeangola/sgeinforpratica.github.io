@@ -409,6 +409,16 @@ async function carregarConteudosAluno() {
 
     try {
 
+        const cursosDoAluno = alunoAtual.cursos || [];
+
+        if (!cursosDoAluno.length) {
+
+            lista.innerHTML =
+                '<div class="mensagem-vazia">📚 Ainda não existem cursos associados à sua conta.</div>';
+
+            return;
+        }
+
         const snapshot = await db
             .collection("conteudos")
             .where("ativo", "==", true)
@@ -416,44 +426,64 @@ async function carregarConteudosAluno() {
 
         lista.innerHTML = "";
 
-        if (snapshot.empty) {
-
-            lista.innerHTML =
-                '<div class="mensagem-vazia">📚 Nenhum conteúdo disponível.</div>';
-
-            return;
-        }
+        let encontrados = 0;
 
         snapshot.forEach(function(doc) {
 
             const conteudo = doc.data();
 
-            lista.innerHTML += `
-                <div class="aluno-item">
+            /*
+            Verifica se o conteúdo pertence
+            a algum dos cursos do aluno.
+            */
 
-                    <span class="categoria">
-                        ${escaparHTML(conteudo.categoria || "Informática")}
-                    </span>
+            if (
+                conteudo.cursoId &&
+                cursosDoAluno.includes(conteudo.cursoId)
+            ) {
 
-                    <h3>
-                        ${escaparHTML(conteudo.titulo || "Conteúdo")}
-                    </h3>
+                encontrados++;
 
-                    <p>
-                        ${escaparHTML(
-                            conteudo.resumo ||
-                            conteudo.descricao ||
-                            "Sem descrição."
-                        )}
-                    </p>
+                lista.innerHTML += `
+                    <div class="aluno-item">
 
-                    <button onclick="abrirConteudo('${doc.id}')">
-                        📖 Ver conteúdo
-                    </button>
+                        <span class="categoria">
+                            ${escaparHTML(
+                                conteudo.categoria || "Informática"
+                            )}
+                        </span>
 
-                </div>
-            `;
+                        <h3>
+                            ${escaparHTML(
+                                conteudo.titulo || "Conteúdo"
+                            )}
+                        </h3>
+
+                        <p>
+                            ${escaparHTML(
+                                conteudo.resumo ||
+                                conteudo.descricao ||
+                                "Sem descrição."
+                            )}
+                        </p>
+
+                        <button
+                            onclick="abrirConteudo('${doc.id}')">
+                            📖 Ver conteúdo
+                        </button>
+
+                    </div>
+                `;
+            }
+
         });
+
+        if (encontrados === 0) {
+
+            lista.innerHTML =
+                '<div class="mensagem-vazia">📚 Ainda não existem conteúdos disponíveis para os seus cursos.</div>';
+
+        }
 
     } catch (erro) {
 
@@ -461,9 +491,10 @@ async function carregarConteudosAluno() {
 
         lista.innerHTML =
             '<div class="mensagem-vazia">❌ Não foi possível carregar os conteúdos.</div>';
-    }
-}
 
+    }
+
+}
 
 async function carregarTutoriaisAluno() {
 
