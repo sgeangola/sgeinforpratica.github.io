@@ -153,32 +153,171 @@ const firebaseConfig = {
     appId: "1:957035603926:web:603b9d295a4abdab7ee677"
 };
 
-firebase.initializeApp(firebaseConfig);
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
 
 const db = firebase.firestore();
 
 
+// ========================================
+// CARREGAR TUTORIAIS
+// ========================================
+
 async function carregarTutoriaisPublicos() {
 
-    const lista = document.getElementById("listaTutoriaisPublicos");
+    const lista =
+        document.getElementById(
+            "listaTutoriaisPublicos"
+        );
 
     try {
 
-        const snapshot = await db
-            .collection("tutoriais")
-            .where("ativo", "==", true)
-            .get();
+        const parametros =
+            new URLSearchParams(
+                window.location.search
+            );
+
+        const tutorialId =
+            parametros.get("id");
+
+
+        // ========================================
+        // ABRIR TUTORIAL ESPECÍFICO
+        // ========================================
+
+        if (tutorialId) {
+
+            const documento =
+                await db
+                    .collection("tutoriais")
+                    .doc(tutorialId)
+                    .get();
+
+
+            if (
+                !documento.exists ||
+                documento.data().ativo !== true
+            ) {
+
+                lista.innerHTML = `
+
+                    <div class="card">
+
+                        <div class="icone">⚠️</div>
+
+                        <h3>Tutorial não encontrado</h3>
+
+                        <p>
+                            Este tutorial não está disponível.
+                        </p>
+
+                        <a
+                            href="tutoriais.html"
+                            class="botao"
+                        >
+                            ← Voltar aos tutoriais
+                        </a>
+
+                    </div>
+
+                `;
+
+                return;
+            }
+
+
+            const tutorial =
+                documento.data();
+
+
+            lista.innerHTML = `
+
+                <article class="card">
+
+                    <div class="icone">🎬</div>
+
+                    <h2>
+                        ${escaparHTML(
+                            tutorial.titulo || "Tutorial"
+                        )}
+                    </h2>
+
+                    <p>
+                        <strong>
+                            ${escaparHTML(
+                                tutorial.categoria ||
+                                "Informática"
+                            )}
+                        </strong>
+                    </p>
+
+                    <p>
+                        ${escaparHTML(
+                            tutorial.resumo ||
+                            "Tutorial prático de informática."
+                        )}
+                    </p>
+
+                    <div style="margin-top:20px;">
+
+                        <a
+                            href="${escaparAtributo(
+                                tutorial.link || "#"
+                            )}"
+                            class="botao"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            ▶️ Assistir tutorial
+                        </a>
+
+                    </div>
+
+                    <div style="margin-top:15px;">
+
+                        <a
+                            href="tutoriais.html"
+                            class="botao"
+                        >
+                            ← Voltar aos tutoriais
+                        </a>
+
+                    </div>
+
+                </article>
+
+            `;
+
+            return;
+        }
+
+
+        // ========================================
+        // LISTAR TODOS OS TUTORIAIS
+        // ========================================
+
+        const snapshot =
+            await db
+                .collection("tutoriais")
+                .where("ativo", "==", true)
+                .get();
+
 
         lista.innerHTML = "";
+
 
         if (snapshot.empty) {
 
             lista.innerHTML = `
+
                 <div class="card">
 
                     <div class="icone">🎬</div>
 
-                    <h3>Nenhum tutorial disponível</h3>
+                    <h3>
+                        Nenhum tutorial disponível
+                    </h3>
 
                     <p>
                         Em breve serão publicados novos
@@ -186,17 +325,22 @@ async function carregarTutoriaisPublicos() {
                     </p>
 
                 </div>
+
             `;
 
             return;
         }
 
 
-        snapshot.forEach((doc) => {
+        snapshot.forEach(function(doc) {
 
-            const tutorial = doc.data();
+            const tutorial =
+                doc.data();
 
-            const card = document.createElement("article");
+
+            const card =
+                document.createElement("article");
+
 
             card.className = "card";
 
@@ -205,39 +349,57 @@ async function carregarTutoriaisPublicos() {
 
                 <div class="icone">🎬</div>
 
-                <h3>${escaparHTML(tutorial.titulo || "Tutorial")}</h3>
+                <h3>
+                    ${escaparHTML(
+                        tutorial.titulo ||
+                        "Tutorial"
+                    )}
+                </h3>
 
                 <p>
+
                     <strong>
-                        ${escaparHTML(tutorial.categoria || "Informática")}
+                        ${escaparHTML(
+                            tutorial.categoria ||
+                            "Informática"
+                        )}
                     </strong>
+
                 </p>
 
                 <p>
+
                     ${escaparHTML(
                         tutorial.resumo ||
                         "Tutorial prático de informática."
                     )}
+
                 </p>
 
                 <a
-                    href="${escaparAtributo(tutorial.link || "#")}"
+                    href="tutoriais.html?id=${encodeURIComponent(
+                        doc.id
+                    )}"
                     class="botao"
-                    target="_blank"
-                    rel="noopener noreferrer"
                 >
-                    ▶️ Assistir tutorial
+                    📖 Ver tutorial
                 </a>
 
             `;
+
 
             lista.appendChild(card);
 
         });
 
+
     } catch (erro) {
 
-        console.error("Erro ao carregar tutoriais:", erro);
+        console.error(
+            "Erro ao carregar tutoriais:",
+            erro
+        );
+
 
         lista.innerHTML = `
 
@@ -245,10 +407,13 @@ async function carregarTutoriaisPublicos() {
 
                 <div class="icone">⚠️</div>
 
-                <h3>Não foi possível carregar os tutoriais</h3>
+                <h3>
+                    Não foi possível carregar os tutoriais
+                </h3>
 
                 <p>
-                    Verifique a ligação à Internet e tente novamente.
+                    Verifique a ligação à Internet
+                    e tente novamente.
                 </p>
 
             </div>
@@ -260,7 +425,9 @@ async function carregarTutoriaisPublicos() {
 }
 
 
-/* Proteção simples para texto vindo do Firestore */
+// ========================================
+// PROTEÇÃO DE TEXTO
+// ========================================
 
 function escaparHTML(texto) {
 
@@ -284,6 +451,10 @@ function escaparAtributo(texto) {
 
 }
 
+
+// ========================================
+// INICIAR
+// ========================================
 
 carregarTutoriaisPublicos();
 
