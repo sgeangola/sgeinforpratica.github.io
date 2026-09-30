@@ -371,13 +371,127 @@ async function carregarConteudosPublicos() {
     const lista =
         document.getElementById("listaConteudosPublicos");
 
-
     try {
 
-        const snapshot = await db
-            .collection("conteudos")
-            .where("ativo", "==", true)
-            .get();
+        // Verifica se foi enviado um ID pela URL
+        const parametros =
+            new URLSearchParams(window.location.search);
+
+        const idConteudo =
+            parametros.get("id");
+
+
+        // ========================================
+        // ABRIR UM CONTEÚDO ESPECÍFICO
+        // ========================================
+
+        if (idConteudo) {
+
+            const documento =
+                await db
+                    .collection("conteudos")
+                    .doc(idConteudo)
+                    .get();
+
+
+            if (!documento.exists) {
+
+                lista.innerHTML = `
+                    <div class="mensagem-conteudos">
+
+                        ❌ Conteúdo não encontrado.
+
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            const dados =
+                documento.data();
+
+
+            if (dados.ativo !== true) {
+
+                lista.innerHTML = `
+                    <div class="mensagem-conteudos">
+
+                        ⚠️ Este conteúdo não está disponível.
+
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            lista.innerHTML = `
+
+                <article class="conteudo-card">
+
+                    <span class="conteudo-categoria">
+
+                        ${escaparHTML(
+                            dados.categoria || "Informática"
+                        )}
+
+                    </span>
+
+
+                    <h2>
+
+                        ${escaparHTML(
+                            dados.titulo || "Conteúdo"
+                        )}
+
+                    </h2>
+
+
+                    <p>
+
+                        ${escaparHTML(
+                            dados.resumo || ""
+                        )}
+
+                    </p>
+
+
+                    <hr>
+
+
+                    <div class="conteudo-texto">
+
+                        ${escaparHTML(
+                            dados.conteudo || ""
+                        )}
+
+                    </div>
+
+
+                    <p class="conteudo-data">
+
+                        💻 SGE Informática Prática
+
+                    </p>
+
+                </article>
+
+            `;
+
+            return;
+        }
+
+
+        // ========================================
+        // CARREGAR TODOS OS CONTEÚDOS
+        // ========================================
+
+        const snapshot =
+            await db
+                .collection("conteudos")
+                .where("ativo", "==", true)
+                .get();
 
 
         lista.innerHTML = "";
@@ -397,7 +511,6 @@ async function carregarConteudosPublicos() {
             `;
 
             return;
-
         }
 
 
@@ -410,28 +523,35 @@ async function carregarConteudosPublicos() {
                 document.createElement("article");
 
 
-            card.className = "conteudo-card";
+            card.className =
+                "conteudo-card";
 
 
             card.innerHTML = `
 
                 <span class="conteudo-categoria">
 
-                    ${dados.categoria || "Informática"}
+                    ${escaparHTML(
+                        dados.categoria || "Informática"
+                    )}
 
                 </span>
 
 
                 <h3>
 
-                    ${dados.titulo || "Conteúdo"}
+                    ${escaparHTML(
+                        dados.titulo || "Conteúdo"
+                    )}
 
                 </h3>
 
 
                 <p>
 
-                    ${dados.resumo || ""}
+                    ${escaparHTML(
+                        dados.resumo || ""
+                    )}
 
                 </p>
 
@@ -446,7 +566,9 @@ async function carregarConteudosPublicos() {
 
                     <div class="conteudo-texto">
 
-                        ${dados.conteudo || ""}
+                        ${escaparHTML(
+                            dados.conteudo || ""
+                        )}
 
                     </div>
 
@@ -480,7 +602,7 @@ async function carregarConteudosPublicos() {
             <div class="mensagem-conteudos">
 
                 ⚠️ Não foi possível carregar
-                os conteúdos.
+                o conteúdo.
 
                 <br><br>
 
@@ -491,6 +613,27 @@ async function carregarConteudosPublicos() {
         `;
 
     }
+
+}
+
+
+// ========================================
+// PROTEGER TEXTO
+// ========================================
+
+function escaparHTML(texto) {
+
+    return String(texto)
+
+        .replace(/&/g, "&amp;")
+
+        .replace(/</g, "&lt;")
+
+        .replace(/>/g, "&gt;")
+
+        .replace(/"/g, "&quot;")
+
+        .replace(/'/g, "&#039;");
 
 }
 
