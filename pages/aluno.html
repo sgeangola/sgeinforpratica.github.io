@@ -498,55 +498,130 @@ async function carregarConteudosAluno() {
 
 async function carregarTutoriaisAluno() {
 
-    const lista = document.getElementById("listaTutoriais");
+    const lista =
+        document.getElementById("listaTutoriais");
 
     try {
 
-        const snapshot = await db
-            .collection("tutoriais")
-            .where("ativo", "==", true)
-            .get();
+        const cursosDoAluno =
+            alunoAtual.cursos || [];
 
-        lista.innerHTML = "";
 
-        if (snapshot.empty) {
+        // ========================================
+        // VERIFICAR SE O ALUNO TEM CURSOS
+        // ========================================
+
+        if (!cursosDoAluno.length) {
 
             lista.innerHTML =
-                '<div class="mensagem-vazia">▶️ Nenhum tutorial disponível.</div>';
+                '<div class="mensagem-vazia">▶️ Ainda não existem cursos associados à sua conta.</div>';
 
             return;
         }
 
+
+        // ========================================
+        // BUSCAR TUTORIAIS ATIVOS
+        // ========================================
+
+        const snapshot =
+            await db
+                .collection("tutoriais")
+                .where("ativo", "==", true)
+                .get();
+
+
+        lista.innerHTML = "";
+
+        let encontrados = 0;
+
+
+        // ========================================
+        // FILTRAR PELOS CURSOS DO ALUNO
+        // ========================================
+
         snapshot.forEach(function(doc) {
 
-            const tutorial = doc.data();
+            const tutorial =
+                doc.data();
 
-            lista.innerHTML += `
-                <div class="aluno-item">
 
-                    <span class="categoria">
-                        ${escaparHTML(tutorial.categoria || "Tutorial")}
-                    </span>
+            /*
+            O tutorial só aparece se o seu
+            cursoId estiver associado ao aluno.
+            */
 
-                    <h3>
-                        ${escaparHTML(tutorial.titulo || "Tutorial")}
-                    </h3>
+            if (
+                tutorial.cursoId &&
+                cursosDoAluno.includes(
+                    tutorial.cursoId
+                )
+            ) {
 
-                    <p>
-                        ${escaparHTML(
-                            tutorial.resumo ||
-                            tutorial.descricao ||
-                            "Sem descrição."
-                        )}
-                    </p>
+                encontrados++;
 
-                    <button onclick="abrirTutorial('${doc.id}')">
-                        ▶️ Assistir tutorial
-                    </button>
 
-                </div>
-            `;
+                lista.innerHTML += `
+
+                    <div class="aluno-item">
+
+                        <span class="categoria">
+
+                            ${escaparHTML(
+                                tutorial.categoria ||
+                                "Tutorial"
+                            )}
+
+                        </span>
+
+
+                        <h3>
+
+                            ${escaparHTML(
+                                tutorial.titulo ||
+                                "Tutorial"
+                            )}
+
+                        </h3>
+
+
+                        <p>
+
+                            ${escaparHTML(
+                                tutorial.resumo ||
+                                tutorial.descricao ||
+                                "Sem descrição."
+                            )}
+
+                        </p>
+
+
+                        <button
+                            onclick="abrirTutorial('${doc.id}')"
+                        >
+                            📖 Ver tutorial
+                        </button>
+
+                    </div>
+
+                `;
+
+            }
+
         });
+
+
+        // ========================================
+        // NENHUM TUTORIAL PARA OS CURSOS
+        // ========================================
+
+        if (encontrados === 0) {
+
+            lista.innerHTML =
+                '<div class="mensagem-vazia">▶️ Ainda não existem tutoriais disponíveis para os seus cursos.</div>';
+
+        }
+
 
     } catch (erro) {
 
@@ -554,9 +629,10 @@ async function carregarTutoriaisAluno() {
 
         lista.innerHTML =
             '<div class="mensagem-vazia">❌ Não foi possível carregar os tutoriais.</div>';
-    }
-}
 
+    }
+
+}
 
 async function carregarMateriaisAluno() {
 
