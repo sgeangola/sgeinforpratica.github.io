@@ -134,6 +134,56 @@
             font-weight: 600;
         }
 
+        /* ========================================
+   PROGRESSO DO CURSO
+======================================== */
+
+.progresso-curso {
+    margin-top: 15px;
+    padding: 14px;
+    background: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #dce8f3;
+}
+
+.progresso-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    gap: 10px;
+}
+
+.progresso-topo strong {
+    color: #063b73;
+}
+
+.progresso-percentagem {
+    font-weight: bold;
+    color: #0875c9;
+}
+
+.barra-progresso {
+    width: 100%;
+    height: 12px;
+    background: #dce8f3;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.barra-progresso-preenchida {
+    height: 100%;
+    background: linear-gradient(90deg, #0875c9, #063b73);
+    border-radius: 20px;
+    transition: width 0.5s ease;
+}
+
+.progresso-info {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #666;
+    }
+
         @media (max-width: 600px) {
             .area-aluno {
                 padding: 10px;
@@ -360,7 +410,8 @@ async function carregarMeusCursos(aluno) {
 
         for (const cursoId of cursos) {
 
-            const cursoDoc = await db.collection("cursos").doc(cursoId).get();
+            const cursoDoc =
+                await db.collection("cursos").doc(cursoId).get();
 
             if (!cursoDoc.exists) {
                 continue;
@@ -368,29 +419,153 @@ async function carregarMeusCursos(aluno) {
 
             const curso = cursoDoc.data();
 
-            lista.innerHTML += `
-                <div class="aluno-item">
-                    <h3>🎓 ${escaparHTML(curso.nome || "Curso")}</h3>
+            /* ========================================
+               BUSCAR TODOS OS CONTEÚDOS DO CURSO
+            ======================================== */
 
-                    <p>${escaparHTML(curso.descricao || "Sem descrição.")}</p>
+            const conteudosSnapshot =
+                await db
+                    .collection("conteudos")
+                    .where("ativo", "==", true)
+                    .get();
+
+            let totalConteudos = 0;
+            let conteudosConcluidos = 0;
+
+            conteudosSnapshot.forEach(function(doc) {
+
+                const conteudo = doc.data();
+
+                if (conteudo.cursoId === cursoId) {
+                    totalConteudos++;
+                }
+
+            });
+
+
+            /* ========================================
+               BUSCAR PROGRESSO DO ALUNO
+            ======================================== */
+
+            if (totalConteudos > 0) {
+
+                const progressoSnapshot =
+                    await db
+                        .collection("progresso")
+                        .where("alunoUid", "==", auth.currentUser.uid)
+                        .where("cursoId", "==", cursoId)
+                        .where("concluido", "==", true)
+                        .get();
+
+                conteudosConcluidos =
+                    progressoSnapshot.size;
+
+            }
+
+
+            /* ========================================
+               CALCULAR PERCENTAGEM
+            ======================================== */
+
+            let percentagem = 0;
+
+            if (totalConteudos > 0) {
+
+                percentagem =
+                    Math.round(
+                        (conteudosConcluidos / totalConteudos) * 100
+                    );
+
+            }
+
+
+            /* ========================================
+               MOSTRAR CURSO + PROGRESSO
+            ======================================== */
+
+            lista.innerHTML += `
+
+                <div class="aluno-item">
+
+                    <h3>
+                        🎓 ${escaparHTML(
+                            curso.nome || "Curso"
+                        )}
+                    </h3>
+
+                    <p>
+                        ${escaparHTML(
+                            curso.descricao || "Sem descrição."
+                        )}
+                    </p>
 
                     <p>
                         <strong>Duração:</strong>
-                        ${escaparHTML(curso.duracao || "Não informada")}
+                        ${escaparHTML(
+                            curso.duracao || "Não informada"
+                        )}
                     </p>
 
                     <p>
                         <strong>Modalidade:</strong>
-                        ${escaparHTML(curso.modalidade || "Não informada")}
+                        ${escaparHTML(
+                            curso.modalidade || "Não informada"
+                        )}
                     </p>
+
+
+                    <!-- PROGRESSO -->
+
+                    <div class="progresso-curso">
+
+                        <div class="progresso-topo">
+
+                            <strong>
+                                📊 Progresso do curso
+                            </strong>
+
+                            <span class="progresso-percentagem">
+                                ${percentagem}%
+                            </span>
+
+                        </div>
+
+
+                        <div class="barra-progresso">
+
+                            <div
+                                class="barra-progresso-preenchida"
+                                style="width: ${percentagem}%"
+                            ></div>
+
+                        </div>
+
+
+                        <div class="progresso-info">
+
+                            ${
+                                totalConteudos === 0
+
+                                ? "📚 Ainda não existem conteúdos neste curso."
+
+                                : `✅ ${conteudosConcluidos} de ${totalConteudos} conteúdos concluídos.`
+                            }
+
+                        </div>
+
+                    </div>
+
                 </div>
+
             `;
         }
+
 
         if (!lista.innerHTML) {
 
             lista.innerHTML =
                 '<div class="mensagem-vazia">🎓 Nenhum curso disponível.</div>';
+
         }
 
     } catch (erro) {
@@ -399,8 +574,10 @@ async function carregarMeusCursos(aluno) {
 
         lista.innerHTML =
             '<div class="mensagem-vazia">❌ Erro ao carregar os seus cursos.</div>';
+
     }
-}
+
+    }
 
 
 async function carregarConteudosAluno() {
