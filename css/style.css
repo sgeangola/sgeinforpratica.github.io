@@ -90,7 +90,7 @@ nav a:hover {
 
 /* BOTÃO DO MENU */
 
-.menu-btn {
+.botao-menu {
     display: none;
     border: none;
     background: transparent;
@@ -393,8 +393,8 @@ footer hr {
 
 @media (max-width: 850px) {
 
-    .menu-btn {
-        display: block;
+    .botao-menu {
+    display: block;
     }
 
     nav {
