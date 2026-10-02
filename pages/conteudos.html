@@ -545,13 +545,12 @@ const firebaseConfig = {
 
 if (!firebase.apps.length) {
 
-    firebase.initializeApp(firebaseConfig);
+    firebase.initializeApp(firebaseConfigConteudos);
 
 }
 
 
-const db =
-    firebase.firestore();
+const firebaseConfigConteudos = {
 
 const auth =
     firebase.auth();
