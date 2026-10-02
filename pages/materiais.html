@@ -90,8 +90,8 @@
     <img src="../assets/logo.png" alt="SGE Informática Prática">
     <strong>SGE Informática Prática</strong>
     </div>
-
-    <button class="botao-menu" onclick="abrirMenu()">☰</button>
+    
+<button class="menu-btn" onclick="abrirMenu()">☰</button>
 
     <nav id="menu">
 
@@ -218,9 +218,8 @@ async function carregarMateriaisPublicos() {
     try {
 
         const snapshot = await db
-            .collection("materiais")
-            .where("ativo", "==", true)
-            .get();
+    .collection("materiais")
+    .get();
 
 
         lista.innerHTML = "";
@@ -267,11 +266,11 @@ async function carregarMateriaisPublicos() {
                 </p>
 
                 <a
-                    href="${material.link || "#"}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="material-botao"
-                >
+    href="${material.link || "#"}"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="material-botao"
+>
                     📖 Abrir material
                 </a>
 
@@ -307,8 +306,17 @@ document.addEventListener(
 
 </script>
 
+<script>
+function abrirMenu() {
+    const menu = document.getElementById("menu");
+
+    if (menu) {
+        menu.classList.toggle("ativo");
+    }
+}
+</script>
 
 <script src="../js/script.js"></script>
 
 </body>
-                </html>
+</html>
