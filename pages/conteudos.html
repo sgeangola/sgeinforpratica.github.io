@@ -1105,6 +1105,8 @@ function escaparAtributo(texto) {
 }
 
 
+<script>
+
 // ========================================
 // INICIAR
 // ========================================
@@ -1118,23 +1120,26 @@ document.addEventListener(
     }
 );
 
-
-// ========================================
-// ATUALIZAR QUANDO O LOGIN MUDAR
-// ========================================
-
-auth.onAuthStateChanged(
-    function() {
-
-        carregarConteudosPublicos();
-
-    }
-);
-
 </script>
 
 
-<script src="../js/script.js"></script>
+<script>
+
+function abrirMenu() {
+
+    const menu =
+        document.getElementById("menu");
+
+    if (menu) {
+
+        menu.classList.toggle("ativo");
+
+    }
+
+}
+
+</script>
+
 
 </body>
 </html>
