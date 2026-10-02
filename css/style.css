@@ -485,3 +485,9 @@ footer hr {
         font-size: 25px;
     }
 }
+
+.logo-area img {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+}
