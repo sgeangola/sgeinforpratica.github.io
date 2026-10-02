@@ -636,55 +636,132 @@ async function carregarTutoriaisAluno() {
 
 async function carregarMateriaisAluno() {
 
-    const lista = document.getElementById("listaMateriais");
+    const lista =
+        document.getElementById("listaMateriais");
 
     try {
 
-        const snapshot = await db
-            .collection("materiais")
-            .where("ativo", "==", true)
-            .get();
+        const cursosDoAluno =
+            alunoAtual.cursos || [];
 
-        lista.innerHTML = "";
 
-        if (snapshot.empty) {
+        // ========================================
+        // VERIFICAR SE O ALUNO TEM CURSOS
+        // ========================================
+
+        if (!cursosDoAluno.length) {
 
             lista.innerHTML =
-                '<div class="mensagem-vazia">📁 Nenhum material disponível.</div>';
+                '<div class="mensagem-vazia">📁 Ainda não existem cursos associados à sua conta.</div>';
 
             return;
         }
 
+
+        // ========================================
+        // BUSCAR MATERIAIS ATIVOS
+        // ========================================
+
+        const snapshot =
+            await db
+                .collection("materiais")
+                .where("ativo", "==", true)
+                .get();
+
+
+        lista.innerHTML = "";
+
+        let encontrados = 0;
+
+
+        // ========================================
+        // FILTRAR PELOS CURSOS DO ALUNO
+        // ========================================
+
         snapshot.forEach(function(doc) {
 
-            const material = doc.data();
+            const material =
+                doc.data();
 
-            lista.innerHTML += `
-                <div class="aluno-item">
 
-                    <span class="categoria">
-                        ${escaparHTML(material.categoria || "Material")}
-                    </span>
+            /*
+            O material só aparece se o seu
+            cursoId estiver associado ao aluno.
+            */
 
-                    <h3>
-                        ${escaparHTML(material.titulo || "Material")}
-                    </h3>
+            if (
+                material.cursoId &&
+                cursosDoAluno.includes(
+                    material.cursoId
+                )
+            ) {
 
-                    <p>
-                        ${escaparHTML(
-                            material.descricao ||
-                            "Sem descrição."
-                        )}
-                    </p>
+                encontrados++;
 
-                    <button onclick="abrirMaterial(this.dataset.link)"
-        data-link="${escaparHTML(material.link || "")}">
-    📁 Abrir material
-</button>
 
-                </div>
-            `;
+                lista.innerHTML += `
+
+                    <div class="aluno-item">
+
+                        <span class="categoria">
+
+                            ${escaparHTML(
+                                material.categoria ||
+                                "Material"
+                            )}
+
+                        </span>
+
+
+                        <h3>
+
+                            ${escaparHTML(
+                                material.titulo ||
+                                "Material"
+                            )}
+
+                        </h3>
+
+
+                        <p>
+
+                            ${escaparHTML(
+                                material.descricao ||
+                                "Sem descrição."
+                            )}
+
+                        </p>
+
+
+                        <button
+                            onclick="abrirMaterial(this.dataset.link)"
+                            data-link="${escaparHTML(
+                                material.link || ""
+                            )}"
+                        >
+                            📁 Abrir material
+                        </button>
+
+                    </div>
+
+                `;
+
+            }
+
         });
+
+
+        // ========================================
+        // NENHUM MATERIAL PARA OS CURSOS
+        // ========================================
+
+        if (encontrados === 0) {
+
+            lista.innerHTML =
+                '<div class="mensagem-vazia">📁 Ainda não existem materiais disponíveis para os seus cursos.</div>';
+
+        }
+
 
     } catch (erro) {
 
@@ -692,9 +769,10 @@ async function carregarMateriaisAluno() {
 
         lista.innerHTML =
             '<div class="mensagem-vazia">❌ Não foi possível carregar os materiais.</div>';
-    }
-}
 
+    }
+
+}
 
 function abrirConteudo(id) {
 
