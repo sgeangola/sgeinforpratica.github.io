@@ -458,8 +458,15 @@ function escaparAtributo(texto) {
 
 carregarTutoriaisPublicos();
 
-</script>
+    <script>
+function abrirMenu() {
+    const menu = document.getElementById("menu");
 
+    if (menu) {
+        menu.classList.toggle("ativo");
+    }
+}
+    </script>
 
 <script src="../js/script.js"></script>
 
