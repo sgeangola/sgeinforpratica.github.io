@@ -47,6 +47,7 @@ auth.onAuthStateChanged(async function(user) {
             return;
         }
 
+        await carregarCursosMateriais();
         carregarMateriais();
 
     } catch (erro) {
@@ -59,16 +60,128 @@ auth.onAuthStateChanged(async function(user) {
 
 
 // ========================================
+// CARREGAR CURSOS
+// ========================================
+
+async function carregarCursosMateriais() {
+
+    const select =
+        document.getElementById("cursoMaterial");
+
+    if (!select) {
+        return;
+    }
+
+    select.innerHTML = `
+        <option value="">
+            ⏳ A carregar cursos...
+        </option>
+    `;
+
+    try {
+
+        const snapshot = await db
+            .collection("cursos")
+            .where("ativo", "==", true)
+            .get();
+
+        select.innerHTML = `
+            <option value="">
+                Selecionar curso
+            </option>
+        `;
+
+        if (snapshot.empty) {
+
+            select.innerHTML = `
+                <option value="">
+                    Nenhum curso disponível
+                </option>
+            `;
+
+            return;
+        }
+
+        snapshot.forEach(function(doc) {
+
+            const curso = doc.data();
+
+            const option =
+                document.createElement("option");
+
+            option.value = doc.id;
+
+            option.textContent =
+                curso.nome || "Curso sem nome";
+
+            select.appendChild(option);
+
+        });
+
+    } catch (erro) {
+
+        select.innerHTML = `
+            <option value="">
+                ❌ Erro ao carregar cursos
+            </option>
+        `;
+
+        alert(
+            "Erro ao carregar cursos: " +
+            erro.message
+        );
+
+    }
+
+}
+
+
+// ========================================
+// OBTER NOME DO CURSO
+// ========================================
+
+async function obterNomeCursoMaterial(cursoId) {
+
+    if (!cursoId) {
+        return "Sem curso";
+    }
+
+    try {
+
+        const doc = await db
+            .collection("cursos")
+            .doc(cursoId)
+            .get();
+
+        if (!doc.exists) {
+            return "Curso não encontrado";
+        }
+
+        return doc.data().nome || "Curso sem nome";
+
+    } catch (erro) {
+
+        return "Curso não encontrado";
+
+    }
+
+}
+
+
+// ========================================
 // CARREGAR MATERIAIS
 // ========================================
 
 async function carregarMateriais() {
 
-    const lista = document.getElementById("listaMateriais");
+    const lista =
+        document.getElementById("listaMateriais");
 
     lista.innerHTML = `
         <tr>
-            <td colspan="5">⏳ A carregar materiais...</td>
+            <td colspan="6">
+                ⏳ A carregar materiais...
+            </td>
         </tr>
     `;
 
@@ -84,7 +197,7 @@ async function carregarMateriais() {
 
             lista.innerHTML = `
                 <tr>
-                    <td colspan="5">
+                    <td colspan="6">
                         Nenhum material cadastrado.
                     </td>
                 </tr>
@@ -93,20 +206,38 @@ async function carregarMateriais() {
             return;
         }
 
-        snapshot.forEach(function(doc) {
+        for (const doc of snapshot.docs) {
 
             const material = doc.data();
 
-            const estado = material.ativo === true;
+            const estado =
+                material.ativo === true;
 
-            const tr = document.createElement("tr");
+            const nomeCurso =
+                await obterNomeCursoMaterial(
+                    material.cursoId
+                );
+
+            const tr =
+                document.createElement("tr");
 
             tr.innerHTML = `
-                <td>${material.titulo || ""}</td>
 
-                <td>${material.categoria || ""}</td>
+                <td>
+                    ${material.titulo || ""}
+                </td>
 
-                <td>${material.descricao || ""}</td>
+                <td>
+                    ${material.categoria || ""}
+                </td>
+
+                <td>
+                    ${nomeCurso}
+                </td>
+
+                <td>
+                    ${material.descricao || ""}
+                </td>
 
                 <td>
                     ${
@@ -117,6 +248,7 @@ async function carregarMateriais() {
                 </td>
 
                 <td>
+
                     <div class="acoes">
 
                         <button
@@ -141,25 +273,31 @@ async function carregarMateriais() {
                         </button>
 
                     </div>
+
                 </td>
             `;
 
             lista.appendChild(tr);
 
-        });
+        }
 
     } catch (erro) {
 
         lista.innerHTML = `
             <tr>
-                <td colspan="5">
+                <td colspan="6">
                     ❌ Erro ao carregar materiais.
                 </td>
             </tr>
         `;
 
-        alert("Erro ao carregar materiais: " + erro.message);
+        alert(
+            "Erro ao carregar materiais: " +
+            erro.message
+        );
+
     }
+
 }
 
 
@@ -171,17 +309,23 @@ function novoMaterial() {
 
     materialEditando = null;
 
-    document.getElementById("tituloFormulario").textContent =
-        "Novo material";
+    document.getElementById(
+        "tituloFormulario"
+    ).textContent = "Novo material";
 
-    document.getElementById("materialForm").reset();
+    document.getElementById(
+        "materialForm"
+    ).reset();
 
-    document.getElementById("formMaterial").style.display = "block";
+    document.getElementById(
+        "formMaterial"
+    ).style.display = "block";
 
     window.scrollTo({
         top: 0,
         behavior: "smooth"
     });
+
 }
 
 
@@ -193,9 +337,14 @@ function cancelarMaterial() {
 
     materialEditando = null;
 
-    document.getElementById("materialForm").reset();
+    document.getElementById(
+        "materialForm"
+    ).reset();
 
-    document.getElementById("formMaterial").style.display = "none";
+    document.getElementById(
+        "formMaterial"
+    ).style.display = "none";
+
 }
 
 
@@ -203,29 +352,55 @@ function cancelarMaterial() {
 // GUARDAR
 // ========================================
 
-document.getElementById("materialForm").addEventListener(
+document.getElementById(
+    "materialForm"
+).addEventListener(
     "submit",
     async function(event) {
 
         event.preventDefault();
 
         const titulo =
-            document.getElementById("tituloMaterial").value.trim();
+            document.getElementById(
+                "tituloMaterial"
+            ).value.trim();
 
         const categoria =
-            document.getElementById("categoriaMaterial").value;
+            document.getElementById(
+                "categoriaMaterial"
+            ).value;
+
+        const cursoId =
+            document.getElementById(
+                "cursoMaterial"
+            ).value;
 
         const descricao =
-            document.getElementById("descricaoMaterial").value.trim();
+            document.getElementById(
+                "descricaoMaterial"
+            ).value.trim();
 
         const link =
-            document.getElementById("linkMaterial").value.trim();
+            document.getElementById(
+                "linkMaterial"
+            ).value.trim();
 
-        if (!titulo || !categoria || !descricao || !link) {
 
-            alert("Preencha todos os campos.");
+        if (
+            !titulo ||
+            !categoria ||
+            !cursoId ||
+            !descricao ||
+            !link
+        ) {
+
+            alert(
+                "Preencha todos os campos."
+            );
+
             return;
         }
+
 
         try {
 
@@ -237,15 +412,25 @@ document.getElementById("materialForm").addEventListener(
                     .update({
 
                         titulo: titulo,
+
                         categoria: categoria,
+
+                        cursoId: cursoId,
+
                         descricao: descricao,
+
                         link: link,
+
                         dataAtualizacao:
-                            firebase.firestore.FieldValue.serverTimestamp()
+                            firebase.firestore
+                            .FieldValue
+                            .serverTimestamp()
 
                     });
 
-                alert("Material atualizado com sucesso!");
+                alert(
+                    "Material atualizado com sucesso!"
+                );
 
             } else {
 
@@ -254,18 +439,30 @@ document.getElementById("materialForm").addEventListener(
                     .add({
 
                         titulo: titulo,
+
                         categoria: categoria,
+
+                        cursoId: cursoId,
+
                         descricao: descricao,
+
                         link: link,
+
                         ativo: true,
+
                         dataCriacao:
-                            firebase.firestore.FieldValue.serverTimestamp()
+                            firebase.firestore
+                            .FieldValue
+                            .serverTimestamp()
 
                     });
 
-                alert("Material cadastrado com sucesso!");
+                alert(
+                    "Material cadastrado com sucesso!"
+                );
 
             }
+
 
             cancelarMaterial();
 
@@ -273,7 +470,10 @@ document.getElementById("materialForm").addEventListener(
 
         } catch (erro) {
 
-            alert("Erro ao guardar material: " + erro.message);
+            alert(
+                "Erro ao guardar material: " +
+                erro.message
+            );
 
         }
 
@@ -289,37 +489,59 @@ async function editarMaterial(id) {
 
     try {
 
-        const doc = await db
-            .collection("materiais")
-            .doc(id)
-            .get();
+        const doc =
+            await db
+                .collection("materiais")
+                .doc(id)
+                .get();
 
         if (!doc.exists) {
 
-            alert("Material não encontrado.");
+            alert(
+                "Material não encontrado."
+            );
+
             return;
         }
 
-        const material = doc.data();
+        const material =
+            doc.data();
 
         materialEditando = id;
 
-        document.getElementById("tituloFormulario").textContent =
+        document.getElementById(
+            "tituloFormulario"
+        ).textContent =
             "Editar material";
 
-        document.getElementById("tituloMaterial").value =
+        document.getElementById(
+            "tituloMaterial"
+        ).value =
             material.titulo || "";
 
-        document.getElementById("categoriaMaterial").value =
+        document.getElementById(
+            "categoriaMaterial"
+        ).value =
             material.categoria || "";
 
-        document.getElementById("descricaoMaterial").value =
+        document.getElementById(
+            "cursoMaterial"
+        ).value =
+            material.cursoId || "";
+
+        document.getElementById(
+            "descricaoMaterial"
+        ).value =
             material.descricao || "";
 
-        document.getElementById("linkMaterial").value =
+        document.getElementById(
+            "linkMaterial"
+        ).value =
             material.link || "";
 
-        document.getElementById("formMaterial").style.display =
+        document.getElementById(
+            "formMaterial"
+        ).style.display =
             "block";
 
         window.scrollTo({
@@ -329,7 +551,10 @@ async function editarMaterial(id) {
 
     } catch (erro) {
 
-        alert("Erro ao editar material: " + erro.message);
+        alert(
+            "Erro ao editar material: " +
+            erro.message
+        );
 
     }
 
@@ -340,9 +565,13 @@ async function editarMaterial(id) {
 // ATIVAR / DESATIVAR
 // ========================================
 
-async function alterarEstadoMaterial(id, atualmenteAtivo) {
+async function alterarEstadoMaterial(
+    id,
+    atualmenteAtivo
+) {
 
-    const novoEstado = !atualmenteAtivo;
+    const novoEstado =
+        !atualmenteAtivo;
 
     try {
 
@@ -350,7 +579,9 @@ async function alterarEstadoMaterial(id, atualmenteAtivo) {
             .collection("materiais")
             .doc(id)
             .update({
+
                 ativo: novoEstado
+
             });
 
         alert(
@@ -379,9 +610,10 @@ async function alterarEstadoMaterial(id, atualmenteAtivo) {
 
 async function eliminarMaterial(id) {
 
-    const confirmar = confirm(
-        "Tem certeza que deseja eliminar este material?"
-    );
+    const confirmar =
+        confirm(
+            "Tem certeza que deseja eliminar este material?"
+        );
 
     if (!confirmar) {
         return;
@@ -394,7 +626,9 @@ async function eliminarMaterial(id) {
             .doc(id)
             .delete();
 
-        alert("Material eliminado com sucesso!");
+        alert(
+            "Material eliminado com sucesso!"
+        );
 
         carregarMateriais();
 
@@ -407,4 +641,4 @@ async function eliminarMaterial(id) {
 
     }
 
-      }
+}
