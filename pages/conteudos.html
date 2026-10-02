@@ -1,83 +1,154 @@
-<!DOCTYPE html><html lang="pt">
+<!DOCTYPE html>
+<html lang="pt">
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Conteúdos | SGE Informática Prática</title>
 
-<link rel="stylesheet" href="../css/style.css">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<style>
+    <title>
+        Conteúdos | SGE Informática Prática
+    </title>
 
-    .conteudos-publicados {
-        margin-top: 40px;
-    }
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
 
-    .conteudo-data {
-        font-size: 13px;
-        color: #666;
-        margin-top: 12px;
-    }
+    <style>
 
-    .conteudo-categoria {
-        display: inline-block;
-        background: #eaf6ff;
-        color: #0875c9;
-        padding: 5px 10px;
-        border-radius: 20px;
-        font-size: 13px;
-        font-weight: bold;
-        margin-bottom: 10px;
-    }
+        .conteudos-publicados {
+            margin-top: 40px;
+        }
 
-    .conteudo-card {
-        background: white;
-        border-radius: 16px;
-        padding: 22px;
-        box-shadow: 0 5px 25px rgba(0,0,0,0.08);
-    }
+        .conteudo-data {
+            font-size: 13px;
+            color: #666;
+            margin-top: 12px;
+        }
 
-    .conteudo-card h3 {
-        margin-top: 5px;
-    }
+        .conteudo-categoria {
+            display: inline-block;
+            background: #eaf6ff;
+            color: #0875c9;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
 
-    .conteudo-texto {
-        white-space: pre-line;
-        line-height: 1.7;
-    }
+        .conteudo-card {
+            background: white;
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+        }
 
-    .mensagem-conteudos {
-        text-align: center;
-        padding: 25px;
-    }
+        .conteudo-card h3 {
+            margin-top: 5px;
+        }
 
-</style>
+        .conteudo-texto {
+            white-space: pre-line;
+            line-height: 1.7;
+        }
 
-</head><body><header class="cabecalho"><div class="logo">
-    <span>SGE</span>
-    <strong>Informática Prática</strong>
-</div>
+        .mensagem-conteudos {
+            text-align: center;
+            padding: 25px;
+        }
 
-<button class="botao-menu" onclick="abrirMenu()">☰</button>
+        .botao-concluir {
+            margin-top: 20px;
+        }
 
-<nav id="menu">
+        .botao-concluir:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
 
-    <a href="../index.html">Início</a>
-    <a href="cursos.html">Cursos</a>
-    <a href="conteudos.html">Conteúdos</a>
-    <a href="tutoriais.html">Tutoriais</a>
-    <a href="materiais.html">Materiais</a>
-    <a href="comunidade.html">Comunidade</a>
-    <a href="sobre.html">Sobre</a>
-    <a href="contactos.html">Contactos</a>
+    </style>
 
-</nav>
+</head>
 
-</header><main><!-- HERO -->
+<body>
+
+<header class="cabecalho">
+
+    <div class="logo">
+
+        <span>SGE</span>
+
+        <strong>
+            Informática Prática
+        </strong>
+
+    </div>
+
+
+    <button
+        class="botao-menu"
+        onclick="abrirMenu()"
+    >
+        ☰
+    </button>
+
+
+    <nav id="menu">
+
+        <a href="../index.html">
+            Início
+        </a>
+
+        <a href="cursos.html">
+            Cursos
+        </a>
+
+        <a href="conteudos.html">
+            Conteúdos
+        </a>
+
+        <a href="tutoriais.html">
+            Tutoriais
+        </a>
+
+        <a href="materiais.html">
+            Materiais
+        </a>
+
+        <a href="comunidade.html">
+            Comunidade
+        </a>
+
+        <a href="sobre.html">
+            Sobre
+        </a>
+
+        <a href="contactos.html">
+            Contactos
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main>
+
+
+<!-- HERO -->
 
 <section class="hero">
 
     <div class="hero-conteudo">
 
-        <h1>Conteúdos de Informática</h1>
+        <h1>
+            Conteúdos de Informática
+        </h1>
 
         <p>
             Conhecimentos simples e práticos para aprender
@@ -95,12 +166,16 @@
 
     <div class="container">
 
-        <h2>Aprenda informática de forma simples</h2>
+        <h2>
+            Aprenda informática de forma simples
+        </h2>
 
         <p>
+
             Aqui vamos publicar conteúdos educativos,
             dicas, explicações e conhecimentos práticos
             relacionados com informática e tecnologia.
+
         </p>
 
     </div>
@@ -114,22 +189,35 @@
 
     <div class="container">
 
-        <h2>Principais conteúdos</h2>
+        <h2>
+            Principais conteúdos
+        </h2>
+
 
         <div class="cards">
 
+
             <article class="card">
 
-                <div class="icone">💻</div>
+                <div class="icone">
+                    💻
+                </div>
 
-                <h3>Informática Básica</h3>
+                <h3>
+                    Informática Básica
+                </h3>
 
                 <p>
+
                     Conceitos fundamentais de informática,
                     computador, hardware, software e sistemas.
+
                 </p>
 
-                <a href="#conteudosPublicados" class="botao">
+                <a
+                    href="#conteudosPublicados"
+                    class="botao"
+                >
                     Ver conteúdos →
                 </a>
 
@@ -138,16 +226,25 @@
 
             <article class="card">
 
-                <div class="icone">📝</div>
+                <div class="icone">
+                    📝
+                </div>
 
-                <h3>Microsoft Word</h3>
+                <h3>
+                    Microsoft Word
+                </h3>
 
                 <p>
+
                     Formatação de textos, documentos,
                     tabelas, imagens e ferramentas do Word.
+
                 </p>
 
-                <a href="#conteudosPublicados" class="botao">
+                <a
+                    href="#conteudosPublicados"
+                    class="botao"
+                >
                     Ver conteúdos →
                 </a>
 
@@ -156,16 +253,25 @@
 
             <article class="card">
 
-                <div class="icone">📊</div>
+                <div class="icone">
+                    📊
+                </div>
 
-                <h3>Microsoft Excel</h3>
+                <h3>
+                    Microsoft Excel
+                </h3>
 
                 <p>
+
                     Fórmulas, funções, tabelas, cálculos,
                     gráficos e organização de dados.
+
                 </p>
 
-                <a href="#conteudosPublicados" class="botao">
+                <a
+                    href="#conteudosPublicados"
+                    class="botao"
+                >
                     Ver conteúdos →
                 </a>
 
@@ -174,16 +280,25 @@
 
             <article class="card">
 
-                <div class="icone">📽️</div>
+                <div class="icone">
+                    📽️
+                </div>
 
-                <h3>PowerPoint</h3>
+                <h3>
+                    PowerPoint
+                </h3>
 
                 <p>
+
                     Criação de apresentações, utilização
                     de slides, imagens, textos e animações.
+
                 </p>
 
-                <a href="#conteudosPublicados" class="botao">
+                <a
+                    href="#conteudosPublicados"
+                    class="botao"
+                >
                     Ver conteúdos →
                 </a>
 
@@ -192,16 +307,25 @@
 
             <article class="card">
 
-                <div class="icone">📱</div>
+                <div class="icone">
+                    📱
+                </div>
 
-                <h3>Android</h3>
+                <h3>
+                    Android
+                </h3>
 
                 <p>
+
                     Dicas para utilizar smartphones,
                     aplicações, configurações e segurança.
+
                 </p>
 
-                <a href="#conteudosPublicados" class="botao">
+                <a
+                    href="#conteudosPublicados"
+                    class="botao"
+                >
                     Ver conteúdos →
                 </a>
 
@@ -210,16 +334,25 @@
 
             <article class="card">
 
-                <div class="icone">🌐</div>
+                <div class="icone">
+                    🌐
+                </div>
 
-                <h3>Internet</h3>
+                <h3>
+                    Internet
+                </h3>
 
                 <p>
+
                     Navegação, pesquisas, e-mail,
                     redes sociais e segurança na Internet.
+
                 </p>
 
-                <a href="#conteudosPublicados" class="botao">
+                <a
+                    href="#conteudosPublicados"
+                    class="botao"
+                >
                     Ver conteúdos →
                 </a>
 
@@ -228,16 +361,25 @@
 
             <article class="card">
 
-                <div class="icone">🔧</div>
+                <div class="icone">
+                    🔧
+                </div>
 
-                <h3>Manutenção</h3>
+                <h3>
+                    Manutenção
+                </h3>
 
                 <p>
+
                     Noções de manutenção de computadores,
                     diagnóstico e cuidados com equipamentos.
+
                 </p>
 
-                <a href="#conteudosPublicados" class="botao">
+                <a
+                    href="#conteudosPublicados"
+                    class="botao"
+                >
                     Ver conteúdos →
                 </a>
 
@@ -246,20 +388,30 @@
 
             <article class="card">
 
-                <div class="icone">🔐</div>
+                <div class="icone">
+                    🔐
+                </div>
 
-                <h3>Segurança Digital</h3>
+                <h3>
+                    Segurança Digital
+                </h3>
 
                 <p>
+
                     Proteção de contas, senhas, dados pessoais
                     e utilização segura da Internet.
+
                 </p>
 
-                <a href="#conteudosPublicados" class="botao">
+                <a
+                    href="#conteudosPublicados"
+                    class="botao"
+                >
                     Ver conteúdos →
                 </a>
 
             </article>
+
 
         </div>
 
@@ -270,13 +422,18 @@
 
 <!-- CONTEÚDOS PUBLICADOS -->
 
-<section class="secao conteudos-publicados" id="conteudosPublicados">
+<section
+    class="secao conteudos-publicados"
+    id="conteudosPublicados"
+>
 
     <div class="container">
 
         <div class="titulo-secao">
 
-            <p>APRENDA NA PRÁTICA</p>
+            <p>
+                APRENDA NA PRÁTICA
+            </p>
 
             <h2>
                 Conteúdos publicados
@@ -287,7 +444,8 @@
 
         <div
             class="cards"
-            id="listaConteudosPublicos">
+            id="listaConteudosPublicos"
+        >
 
             <div class="mensagem-conteudos">
 
@@ -308,14 +466,21 @@
 
     <div class="container">
 
-        <h2>Quer aprender ainda mais?</h2>
+        <h2>
+            Quer aprender ainda mais?
+        </h2>
 
         <p>
+
             Acompanhe os nossos conteúdos e conheça
             os cursos disponíveis.
+
         </p>
 
-        <a href="cursos.html" class="botao">
+        <a
+            href="cursos.html"
+            class="botao"
+        >
             Ver cursos
         </a>
 
@@ -323,16 +488,42 @@
 
 </section>
 
-</main><footer class="rodape"><p>
-    © 2026 SGE Informática Prática.
-    Todos os direitos reservados.
-</p>
 
-</footer><!-- FIREBASE --><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script><script>
+</main>
+
+
+<footer class="rodape">
+
+    <p>
+
+        © 2026 SGE Informática Prática.
+        Todos os direitos reservados.
+
+    </p>
+
+</footer>
+
+
+<!-- FIREBASE -->
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+
+<script>
+
+
+// ========================================
+// CONFIGURAÇÃO FIREBASE
+// ========================================
 
 const firebaseConfig = {
 
-    apiKey: "AIzaSyDoekE76yr3qT0r3MJxJ12Rk5moryQFGbk",
+    apiKey:
+        "AIzaSyDoekE76yr3qT0r3MJxJ12Rk5moryQFGbk",
 
     authDomain:
         "sge-informatica-pratica-4ad2d.firebaseapp.com",
@@ -359,30 +550,39 @@ if (!firebase.apps.length) {
 }
 
 
-const db = firebase.firestore();
+const db =
+    firebase.firestore();
+
+const auth =
+    firebase.auth();
 
 
 // ========================================
-// CARREGAR CONTEÚDOS PUBLICADOS
+// CARREGAR CONTEÚDOS
 // ========================================
 
 async function carregarConteudosPublicos() {
 
     const lista =
-        document.getElementById("listaConteudosPublicos");
+        document.getElementById(
+            "listaConteudosPublicos"
+        );
+
 
     try {
 
-        // Verifica se foi enviado um ID pela URL
         const parametros =
-            new URLSearchParams(window.location.search);
+            new URLSearchParams(
+                window.location.search
+            );
+
 
         const idConteudo =
             parametros.get("id");
 
 
         // ========================================
-        // ABRIR UM CONTEÚDO ESPECÍFICO
+        // CONTEÚDO ESPECÍFICO
         // ========================================
 
         if (idConteudo) {
@@ -397,14 +597,17 @@ async function carregarConteudosPublicos() {
             if (!documento.exists) {
 
                 lista.innerHTML = `
+
                     <div class="mensagem-conteudos">
 
                         ❌ Conteúdo não encontrado.
 
                     </div>
+
                 `;
 
                 return;
+
             }
 
 
@@ -415,14 +618,53 @@ async function carregarConteudosPublicos() {
             if (dados.ativo !== true) {
 
                 lista.innerHTML = `
+
                     <div class="mensagem-conteudos">
 
                         ⚠️ Este conteúdo não está disponível.
 
                     </div>
+
                 `;
 
                 return;
+
+            }
+
+
+            // ========================================
+            // VERIFICAR SE JÁ FOI CONCLUÍDO
+            // ========================================
+
+            let concluido = false;
+
+
+            const usuario =
+                auth.currentUser;
+
+
+            if (usuario) {
+
+                const progressoId =
+                    usuario.uid +
+                    "_" +
+                    documento.id;
+
+
+                const progresso =
+                    await db
+                        .collection("progresso")
+                        .doc(progressoId)
+                        .get();
+
+
+                if (progresso.exists) {
+
+                    concluido =
+                        progresso.data().concluido === true;
+
+                }
+
             }
 
 
@@ -430,10 +672,12 @@ async function carregarConteudosPublicos() {
 
                 <article class="conteudo-card">
 
+
                     <span class="conteudo-categoria">
 
                         ${escaparHTML(
-                            dados.categoria || "Informática"
+                            dados.categoria ||
+                            "Informática"
                         )}
 
                     </span>
@@ -442,7 +686,8 @@ async function carregarConteudosPublicos() {
                     <h2>
 
                         ${escaparHTML(
-                            dados.titulo || "Conteúdo"
+                            dados.titulo ||
+                            "Conteúdo"
                         )}
 
                     </h2>
@@ -451,7 +696,8 @@ async function carregarConteudosPublicos() {
                     <p>
 
                         ${escaparHTML(
-                            dados.resumo || ""
+                            dados.resumo ||
+                            ""
                         )}
 
                     </p>
@@ -463,10 +709,40 @@ async function carregarConteudosPublicos() {
                     <div class="conteudo-texto">
 
                         ${escaparHTML(
-                            dados.conteudo || ""
+                            dados.conteudo ||
+                            ""
                         )}
 
                     </div>
+
+
+                    <br>
+
+
+                    <button
+
+                        id="botaoConcluir"
+
+                        class="botao botao-concluir"
+
+                        onclick="marcarComoConcluido(
+                            '${documento.id}',
+                            '${escaparAtributo(
+                                dados.cursoId || ""
+                            )}'
+                        )"
+
+                        ${concluido ? "disabled" : ""}
+
+                    >
+
+                        ${
+                            concluido
+                            ? "✅ Conteúdo concluído"
+                            : "☑️ Marcar como concluído"
+                        }
+
+                    </button>
 
 
                     <p class="conteudo-data">
@@ -475,22 +751,28 @@ async function carregarConteudosPublicos() {
 
                     </p>
 
+
                 </article>
 
             `;
 
             return;
+
         }
 
 
         // ========================================
-        // CARREGAR TODOS OS CONTEÚDOS
+        // TODOS OS CONTEÚDOS
         // ========================================
 
         const snapshot =
             await db
                 .collection("conteudos")
-                .where("ativo", "==", true)
+                .where(
+                    "ativo",
+                    "==",
+                    true
+                )
                 .get();
 
 
@@ -511,82 +793,110 @@ async function carregarConteudosPublicos() {
             `;
 
             return;
+
         }
 
 
-        snapshot.forEach(function(doc) {
+        snapshot.forEach(
+            function(doc) {
 
-            const dados = doc.data();
-
-
-            const card =
-                document.createElement("article");
+                const dados =
+                    doc.data();
 
 
-            card.className =
-                "conteudo-card";
+                const card =
+                    document.createElement(
+                        "article"
+                    );
 
 
-            card.innerHTML = `
-
-                <span class="conteudo-categoria">
-
-                    ${escaparHTML(
-                        dados.categoria || "Informática"
-                    )}
-
-                </span>
+                card.className =
+                    "conteudo-card";
 
 
-                <h3>
+                card.innerHTML = `
 
-                    ${escaparHTML(
-                        dados.titulo || "Conteúdo"
-                    )}
+                    <span class="conteudo-categoria">
 
-                </h3>
+                        ${escaparHTML(
+                            dados.categoria ||
+                            "Informática"
+                        )}
 
-
-                <p>
-
-                    ${escaparHTML(
-                        dados.resumo || ""
-                    )}
-
-                </p>
+                    </span>
 
 
-                <details>
+                    <h3>
 
-                    <summary>
-                        📖 Ler conteúdo
-                    </summary>
+                        ${escaparHTML(
+                            dados.titulo ||
+                            "Conteúdo"
+                        )}
+
+                    </h3>
+
+
+                    <p>
+
+                        ${escaparHTML(
+                            dados.resumo ||
+                            ""
+                        )}
+
+                    </p>
+
+
+                    <details>
+
+                        <summary>
+
+                            📖 Ler conteúdo
+
+                        </summary>
+
+
+                        <br>
+
+
+                        <div class="conteudo-texto">
+
+                            ${escaparHTML(
+                                dados.conteudo ||
+                                ""
+                            )}
+
+                        </div>
+
+
+                    </details>
+
 
                     <br>
 
-                    <div class="conteudo-texto">
 
-                        ${escaparHTML(
-                            dados.conteudo || ""
-                        )}
+                    <a
+                        href="conteudos.html?id=${encodeURIComponent(doc.id)}"
+                        class="botao"
+                    >
 
-                    </div>
+                        📖 Abrir conteúdo
 
-                </details>
-
-
-                <p class="conteudo-data">
-
-                    💻 SGE Informática Prática
-
-                </p>
-
-            `;
+                    </a>
 
 
-            lista.appendChild(card);
+                    <p class="conteudo-data">
 
-        });
+                        💻 SGE Informática Prática
+
+                    </p>
+
+                `;
+
+
+                lista.appendChild(card);
+
+            }
+        );
 
 
     } catch (erro) {
@@ -618,6 +928,113 @@ async function carregarConteudosPublicos() {
 
 
 // ========================================
+// MARCAR COMO CONCLUÍDO
+// ========================================
+
+async function marcarComoConcluido(
+    conteudoId,
+    cursoId
+) {
+
+    const usuario =
+        auth.currentUser;
+
+
+    if (!usuario) {
+
+        alert(
+
+            "🔐 Entre na Área do Aluno " +
+            "para marcar este conteúdo como concluído."
+
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        const progressoId =
+            usuario.uid +
+            "_" +
+            conteudoId;
+
+
+        await db
+            .collection("progresso")
+            .doc(progressoId)
+            .set({
+
+                alunoUid:
+                    usuario.uid,
+
+                cursoId:
+                    cursoId || "",
+
+                conteudoId:
+                    conteudoId,
+
+                concluido:
+                    true,
+
+                dataConclusao:
+                    firebase.firestore
+                        .FieldValue
+                        .serverTimestamp()
+
+            }, {
+
+                merge: true
+
+            });
+
+
+        const botao =
+            document.getElementById(
+                "botaoConcluir"
+            );
+
+
+        if (botao) {
+
+            botao.innerHTML =
+                "✅ Conteúdo concluído";
+
+            botao.disabled =
+                true;
+
+        }
+
+
+        alert(
+            "✅ Conteúdo marcado como concluído!"
+        );
+
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao guardar progresso:",
+            erro
+        );
+
+
+        alert(
+
+            "❌ Não foi possível guardar " +
+            "o progresso.\n\n" +
+            (erro.message || "")
+
+        );
+
+    }
+
+}
+
+
+// ========================================
 // PROTEGER TEXTO
 // ========================================
 
@@ -625,15 +1042,66 @@ function escaparHTML(texto) {
 
     return String(texto)
 
-        .replace(/&/g, "&amp;")
+        .replace(
+            /&/g,
+            "&amp;"
+        )
 
-        .replace(/</g, "&lt;")
+        .replace(
+            /</g,
+            "&lt;"
+        )
 
-        .replace(/>/g, "&gt;")
+        .replace(
+            />/g,
+            "&gt;"
+        )
 
-        .replace(/"/g, "&quot;")
+        .replace(
+            /"/g,
+            "&quot;"
+        )
 
-        .replace(/'/g, "&#039;");
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+// ========================================
+// PROTEGER ATRIBUTO
+// ========================================
+
+function escaparAtributo(texto) {
+
+    return String(texto)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        );
 
 }
 
@@ -651,4 +1119,23 @@ document.addEventListener(
     }
 );
 
-</script><script src="../js/script.js"></script></body></html>
+
+// ========================================
+// ATUALIZAR QUANDO O LOGIN MUDAR
+// ========================================
+
+auth.onAuthStateChanged(
+    function() {
+
+        carregarConteudosPublicos();
+
+    }
+);
+
+</script>
+
+
+<script src="../js/script.js"></script>
+
+</body>
+</html>
