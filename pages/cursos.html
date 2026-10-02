@@ -165,7 +165,6 @@ async function carregarCursosPublicos() {
 
         const snapshot = await db
     .collection("cursos")
-    .where("ativo", "==", true)
     .get();
 
         lista.innerHTML = "";
@@ -243,12 +242,12 @@ async function carregarCursosPublicos() {
 // INICIAR
 
 document.addEventListener("DOMContentLoaded", function() {
-
     carregarCursosPublicos();
-
 });
 
-    <script>
+</script>
+
+<script>
 function abrirMenu() {
     const menu = document.getElementById("menu");
 
@@ -257,6 +256,8 @@ function abrirMenu() {
     }
 }
 </script>
-    
-</script><script src="../js/script.js"></script></body>
-    </html>
+
+<script src="../js/script.js"></script>
+
+</body>
+</html>
