@@ -195,6 +195,18 @@
                 <div class="campo">
                     <label for="categoriaMaterial">Categoria</label>
 
+<div class="campo">
+    <label for="cursoMaterial">
+        📚 Curso
+    </label>
+
+    <select id="cursoMaterial" required>
+        <option value="">
+            ⏳ A carregar cursos...
+        </option>
+    </select>
+</div>
+                    
                     <select id="categoriaMaterial" required>
                         <option value="">Selecionar categoria</option>
                         <option value="Informática Básica">Informática Básica</option>
@@ -259,19 +271,20 @@
                 <table>
 
                     <thead>
-                        <tr>
-                            <th>Título</th>
-                            <th>Categoria</th>
-                            <th>Descrição</th>
-                            <th>Estado</th>
-                            <th>Ações</th>
-                        </tr>
+                       <tr>
+    <th>Título</th>
+    <th>Categoria</th>
+    <th>Curso</th>
+    <th>Descrição</th>
+    <th>Estado</th>
+    <th>Ações</th>
+</tr>
                     </thead>
 
                     <tbody id="listaMateriais">
 
                         <tr>
-                            <td colspan="5">
+                            <td colspan="6">
                                 ⏳ A carregar materiais...
                             </td>
                         </tr>
